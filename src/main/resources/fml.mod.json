@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "hwite",
+  "version": "b0.1.0",
+  "depends": {
+    "fishmodloader": ">=3.2.2"
+  },
+  "environment": "client",
+  "name": "Here's What Is Too Easy",
+  "description": "哪天,你终于知道你面前是什么玩意了",
+  "authors": [
+    "Xy_Lose",
+    "Huix"
+  ],
+  "entrypoints": {
+    "CLIENT": [
+      "cn.xylose.mitemod.hwite,HwiteMod"
+    ]
+  },
+  "mixins": [
+    "hwite.mixins.json"
+  ],
+  "accessWidener": "hwite.accesswidener"
+}

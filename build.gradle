@@ -1,0 +1,82 @@
+plugins {
+	id 'fml-loom' version '0.1.local'
+	id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	mavenLocal()
+	maven {
+		name = "Spongepowered"
+		url = "https://repo.spongepowered.org/repository/maven-public/"
+	}
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/hwite.accesswidener")
+	mergedMinecraftJar()
+	setFML(new File("libs\\FishModLoader-v3.2.3.jar"))
+	mods {
+		"Hwite" {
+			sourceSet sourceSets.main
+		}
+	}
+
+}
+
+runClient{
+	args("--username", "Player", "--session", "a.a.a.a", "--width", 854, "--height", 480)
+}
+
+dependencies {
+	// To change the versions see the gradle.properties file
+
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.fmlMCPMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+//	implementation("org.spongepowered:mixin:0.8.5")
+
+	implementation files(loom.getFML().toPath())
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fml.mod.json") {
+		expand "version": project.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 17
+}
+
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${project.base.archivesName.get()}"}
+	}
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+
+	repositories {
+	}
+}
