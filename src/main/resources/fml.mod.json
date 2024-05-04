@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "hwite",
-  "version": "b0.1.0",
+  "version": "b0.2.0",
   "depends": {
     "fishmodloader": ">=3.2.2"
   },
@@ -19,6 +19,5 @@
   },
   "mixins": [
     "hwite.mixins.json"
-  ],
-  "accessWidener": "hwite.accesswidener"
+  ]
 }

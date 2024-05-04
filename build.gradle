@@ -19,7 +19,6 @@ repositories {
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/hwite.accesswidener")
 	mergedMinecraftJar()
 	setFML(new File("libs\\FishModLoader-v3.2.3.jar"))
 	mods {

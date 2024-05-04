@@ -8,8 +8,9 @@ public class HwiteMod implements ClientModInitializer {
 
     public static String info;
     public static String info_line_1;
+    public static String info_line_2;
     public static EntityLivingBase entityInfo;
-
+    public static EntityLivingBase blockInfo;
 
     @Override
     public void onInitializeClient() {
