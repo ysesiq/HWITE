@@ -8,6 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static cn.xylose.mitemod.hwite.HwiteMod.blockInfo;
+import static cn.xylose.mitemod.hwite.mixin.GuiIngameMixin.itemRenderer;
 import static net.minecraft.EntityRenderer.setDebugInfoForSelectedObject;
 
 @Mixin(EntityRenderer.class)
@@ -33,18 +35,21 @@ public class EntityRendererMixin {
                         total_melee_damage = 0.0F;
                     }
                     if (total_melee_damage == 0.0F) {
-                        HwiteMod.info = entityLivingBase.getEntityName() + " 血量:" + entityLivingBase.getHealth() + "/" + entityLivingBase.getMaxHealth();
+                        HwiteMod.info = entityLivingBase.getEntityName() + " 血量:" + (int)entityLivingBase.getHealth() + "/" + (int)entityLivingBase.getMaxHealth();
                         HwiteMod.info_line_1 = "";
                     } else {
                         HwiteMod.info = entityLivingBase.getEntityName();
-                        HwiteMod.info_line_1 = "血量:" + entityLivingBase.getHealth() + "/" + entityLivingBase.getMaxHealth() + " 伤害:" + total_melee_damage;
+                        HwiteMod.info_line_1 = EnumChatFormatting.GRAY + "血量:" + (int)entityLivingBase.getHealth() + "/" + (int)entityLivingBase.getMaxHealth() + " 伤害:" + total_melee_damage;
                     }
                 } else {
                     HwiteMod.info = entity.getTranslatedEntityName();
+                    HwiteMod.info_line_1 = " ";
+                    HwiteMod.info_line_2 = " ";
                 }
 
             } else if (rc.isBlock()) {
                 Block block = Block.blocksList[player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z)];
+                blockInfo = block;
                 float block_hardness = player.worldObj.getBlockHardness(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
                 int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
                 int min_harvest_level = block.getMinHarvestLevel(metadata);
@@ -52,19 +57,19 @@ public class EntityRendererMixin {
                 HwiteMod.info_line_2 = "";
                 HwiteMod.info = block.getLocalizedName() + " (" + block.blockID + ":" + metadata + ")";
                 if (min_harvest_level == 0) {
-                    if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) == 0.0) {
-                        HwiteMod.info_line_1 = "硬度:" + block_hardness;
-                        HwiteMod.info_line_2 = EnumChatFormatting.DARK_RED + "×" + EnumChatFormatting.WHITE;
+                    if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
+                        HwiteMod.info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness;
+                        HwiteMod.info_line_2 = EnumChatFormatting.DARK_RED + "X" + EnumChatFormatting.WHITE;
                     } else {
-                        HwiteMod.info_line_1 = "硬度:" + block_hardness + " 挖掘速度:" + player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
+                        HwiteMod.info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘速度:" + (byte)player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
                     }
                 } else {
-                    if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) == 0.0) {
-                        HwiteMod.info_line_1 = "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
-                        HwiteMod.info_line_2 = EnumChatFormatting.DARK_RED + "×" + EnumChatFormatting.WHITE;
+                    if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
+                        HwiteMod.info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
+                        HwiteMod.info_line_2 = EnumChatFormatting.DARK_RED + "X" + EnumChatFormatting.WHITE;
                     } else {
-                        HwiteMod.info_line_1 = "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
-                        HwiteMod.info_line_2 = "挖掘速度:" + player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
+                        HwiteMod.info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
+                        HwiteMod.info_line_2 = EnumChatFormatting.DARK_GRAY + "挖掘速度:" + (byte)player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
                     }
                 }
             } else {

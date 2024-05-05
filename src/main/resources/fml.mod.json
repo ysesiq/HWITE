@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "hwite",
-  "version": "b0.2.0",
+  "version": "b0.3.0",
   "depends": {
-    "fishmodloader": ">=3.2.2"
+    "fishmodloader": ">=3.1.0"
   },
   "environment": "client",
   "name": "Here's What Is Too Easy",
