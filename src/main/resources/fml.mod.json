@@ -1,9 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "hwite",
-  "version": "b0.3.0",
+  "version": "b0.4.0",
   "depends": {
-    "fishmodloader": ">=3.1.0"
+    "fishmodloader": ">=3.2.2",
+    "many-lib": ">=1.0.0"
   },
   "environment": "client",
   "name": "Here's What Is Too Easy",
@@ -14,7 +15,10 @@
   ],
   "entrypoints": {
     "CLIENT": [
-      "cn.xylose.mitemod.hwite,HwiteMod"
+      "cn.xylose.mitemod.hwite,HwiteModClient"
+    ],
+    "main": [
+      "cn.xylose.mitemod.hwite.HwiteMod"
     ]
   },
   "mixins": [

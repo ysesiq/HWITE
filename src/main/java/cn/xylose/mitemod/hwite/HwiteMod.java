@@ -1,20 +1,14 @@
 package cn.xylose.mitemod.hwite;
 
-import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.Block;
-import net.minecraft.Entity;
-import net.minecraft.EntityLivingBase;
+import fi.dy.masa.malilib.gui.screen.ModsScreen;
+import net.fabricmc.api.ModInitializer;
 
-public class HwiteMod implements ClientModInitializer {
-
-    public static String info;
-    public static String info_line_1;
-    public static String info_line_2;
-    public static EntityLivingBase entityInfo;
-    public static Block blockInfo;
+public class HwiteMod implements ModInitializer {
 
     @Override
-    public void onInitializeClient() {
-
+    public void onInitialize() {
+        HwiteConfigs.init();
+        HwiteConfigs.getInstance().load();
+        ModsScreen.getInstance().addConfig(HwiteConfigs.getInstance());
     }
 }

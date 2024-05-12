@@ -1,6 +1,7 @@
 package cn.xylose.mitemod.hwite.mixin;
 
-import cn.xylose.mitemod.hwite.HwiteMod;
+import com.github.Debris.ModernMite.ModernMiteConfig;
+import cn.xylose.mitemod.hwite.client.HwiteModClient;
 import cn.xylose.mitemod.hwite.RenderItemHwite;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
@@ -14,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
-import static cn.xylose.mitemod.hwite.HwiteMod.*;
-import static net.minecraft.GuiIngame.server_load;
+import static cn.xylose.mitemod.hwite.client.HwiteModClient.*;
+import static cn.xylose.mitemod.hwite.HwiteConfigs.*;
 
 @Mixin(GuiIngame.class)
 public class GuiIngameMixin extends Gui {
@@ -23,11 +24,8 @@ public class GuiIngameMixin extends Gui {
     @Final
     @Shadow
     private Minecraft mc;
-    @Shadow
-    static final RenderItem itemRenderer = new RenderItem();
 
     private RenderItemHwite itemRenderBlocks = new RenderItemHwite();
-
     private static final ResourceLocation canBreakTexPath = new ResourceLocation("textures/gui/cannot_break.png");
     private static final ResourceLocation cannotBreakTexPath = new ResourceLocation("textures/gui/can_break.png");
 
@@ -37,122 +35,83 @@ public class GuiIngameMixin extends Gui {
                     shift = At.Shift.BEFORE)})
     private void injectRenderHWITEHud(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
         FontRenderer fontRenderer = this.mc.fontRenderer;
-//        if (server_load >= 0 || this.mc.gameSettings.gui_mode == 0) {
-//            ScaledResolution sr = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-//            String text = server_load + "%";
-//            this.drawString(fontRenderer, text, sr.getScaledWidth() - fontRenderer.getStringWidth(text) - 2, 2, 0xE0E0E0);
-//        }
 
-        int start = 12;
+        int info_x = InfoX.get();
+        int info_y = InfoY.get();
+        int entity_info_x = EntityInfoX.get();
+        int entity_info_y = EntityInfoY.get();
+        int entity_info_size = EntityInfoSize.get();
+        int block_info_x = BlockInfoX.get();
+        int block_info_y_big = BlockInfoYBig.get();
+        int block_info_y_small = BlockInfoYSmall.get();
+
         if (this.mc.gameSettings.gui_mode == 0 && !this.mc.gameSettings.keyBindPlayerList.pressed) {
-            ScaledResolution var5 = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-            int var6 = var5.getScaledWidth();
+            ScaledResolution scaledResolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+            int var6 = scaledResolution.getScaledWidth();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(canBreakTexPath);
             this.drawTexturedModalRect(var6 - 17, 2, 0, 0, 16, 16);
+
             //draw text
-            this.drawString(fontRenderer, info, 183, start, 0xE0E0E0);
-            this.drawString(fontRenderer, info_line_1, 183, start + 10, 0xE0E0E0);
-            this.drawString(fontRenderer, info_line_2, 183, start + 20, 0xE0E0E0);
+            this.drawString(fontRenderer, info, info_x, info_y, 0xE0E0E0);
+            this.drawString(fontRenderer, info_line_1, info_x, info_y + 10, 0xE0E0E0);
+            this.drawString(fontRenderer, info_line_2, info_x, info_y + 20, 0xE0E0E0);
+//            this.drawString(fontRenderer, break_info, info_x + 80, info_y, 0xE0E0E0);
 
             //draw model
             if (!Objects.equals(info, "") && entityInfo != null) {
                 //x, y, size, ?, ?
-                GuiInventory.func_110423_a(160, 43, 18, 0, 0, HwiteMod.entityInfo);
+                GuiInventory.func_110423_a(entity_info_x, entity_info_y, entity_info_size, 0, 0, HwiteModClient.entityInfo);
             }
             if (!Objects.equals(info, "") && entityInfo != null) {
-                this.renderBoxEntity(par3, par4);
+                this.renderBox(par3, par4);
             } else if (Objects.equals(info_line_2, "") && !Objects.equals(info, "")) {
-                this.renderBoxSmall(par3, par4);
-                itemRenderBlocks.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.getTextureManager(), blockInfo, 165, 14);
+                this.renderBox(par3, par4);
+                itemRenderBlocks.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.getTextureManager(), blockInfo, block_info_x, block_info_y_small);
             } else if (Objects.equals(info_line_1, " ") && Objects.equals(info_line_2, " ") && !Objects.equals(info, "")) {
-                this.renderBoxMini(par3, par4);
+                this.renderBox(par3, par4);
             } else if (!Objects.equals(info, "")) {
                 this.renderBox(par3, par4);
-                itemRenderBlocks.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.getTextureManager(), blockInfo, 165, 18);
+                itemRenderBlocks.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.getTextureManager(), blockInfo, block_info_x, block_info_y_big);
             }
         }
-    }
-
-    @Unique
-    private void renderBoxEntity(int mouseX, int mouseY) {
-        //绘制一个以屏幕左上角为零点的方形,通过剔除实现更丰富的形状
-
-        //边缘(底层)颜色
-        int var9 = -267386864;
-        var9 = var9 & 16777215 | -369098752;
-        //绘制边缘(底层)
-        ///第一个参数=宽度,第二个参数=长度,第三个参数=左边剔除宽度(剔除宽度为第二个参数),第四个参数=顶部剔除长度(剔除长度为第二个参数),第五,六个参数=颜色(不是特别明白)
-        //五行代码代表中间跟四个方向
-        //透明度:最深;左
-        this.drawGradientRect(140, 45, 139, 8, var9, var9);
-        //透明度:较浅;右
-        this.drawGradientRect(271, 45, 270, 8, var9, var9);
-        //透明度:深;上
-        this.drawGradientRect(270, 8, 140, 7, var9, var9);
-        //透明度:较深;下
-        this.drawGradientRect(270, 46, 140, 45, var9, var9);
-        //透明度:最浅;中
-        this.drawGradientRect(270, 45, 140, 8, var9, var9);
-
-        //边框颜色
-        int var10 = 1347420415;
-        int var11 = (var10 & 16711422) >> 1 | var10 & -16777216;
-        //绘制边框
-        ///第一个参数=宽度,第二个参数=长度,第三个参数=左边剔除宽度(剔除宽度为第二个参数),第四个参数=顶部剔除长度(剔除长度为第二个参数),第五,六个参数=颜色(不是特别明白)
-        //五行代码绘制四条线
-        //左
-        this.drawGradientRect(141, 45, 140, 8, var10, var11);
-        //右
-        this.drawGradientRect(270, 45, 269, 8, var10, var11);
-        //上
-        this.drawGradientRect(270, 9, 140, 8, var10, var10);
-        //下
-        this.drawGradientRect(270, 45, 140, 44, var11, var11);
-
     }
 
     @Unique
     private void renderBox(int mouseX, int mouseY) {
         //绘制一个以屏幕左上角为零点的方形,通过剔除实现更丰富的形状
 
-        //边缘(底层)颜色
-        int var9 = -267386864;
-        var9 = var9 & 16777215 | -369098752;
-        //绘制边缘(底层)
-        ///第一个参数=宽度,第二个参数=长度,第三个参数=左边剔除宽度(剔除宽度为第二个参数),第四个参数=顶部剔除长度(剔除长度为第二个参数),第五,六个参数=颜色(不是特别明白)
-        //五行代码代表中间跟四个方向
-        //透明度:最深;左
-        this.drawGradientRect(160, 45, 159, 8, var9, var9);
-        //透明度:较浅;右
-        this.drawGradientRect(269, 45, 268, 8, var9, var9);
-        //透明度:深;上
-        this.drawGradientRect(268, 8, 160, 7, var9, var9);
-        //透明度:较深;下
-        this.drawGradientRect(268, 46, 160, 45, var9, var9);
-        //透明度:最浅;中
-        this.drawGradientRect(268, 45, 160, 8, var9, var9);
+        ScaledResolution scaledResolution = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+        int scaledWidth = scaledResolution.getScaledWidth();
+        int scaledHeight = scaledResolution.getScaledHeight();
 
-        //边框颜色
-        int var10 = 1347420415;
-        int var11 = (var10 & 16711422) >> 1 | var10 & -16777216;
-        //绘制边框
-        ///第一个参数=宽度,第二个参数=长度,第三个参数=左边剔除宽度(剔除宽度为第二个参数),第四个参数=顶部剔除长度(剔除长度为第二个参数),第五,六个参数=颜色(不是特别明白)
-        //五行代码绘制四条线
-        //左
-        this.drawGradientRect(161, 45, 160, 8, var10, var11);
-        //右
-        this.drawGradientRect(268, 45, 267, 8, var10, var11);
-        //上
-        this.drawGradientRect(268, 9, 161, 8, var10, var10);
-        //下
-        this.drawGradientRect(268, 45, 160, 44, var11, var11);
+        int length;
+        int width = BGWidth.get();
+//        int width = scaledWidth / 2;
+        int height = BGHeight.get();
+        int leftEliminate = BGLeftEliminate.get();
+        int topEliminate = BGTopEliminate.get();
 
-    }
+        length = Math.max(info.length(), Math.max(info_line_1.length(), info_line_2.length()));
+//        if (ModernMiteConfig.ASCIIFont.getBooleanValue()) {
+//            length *= 1.5;
+//        }
 
-    @Unique
-    private void renderBoxSmall(int mouseX, int mouseY) {
-        //绘制一个以屏幕左上角为零点的方形,通过剔除实现更丰富的形状
+        if (Objects.equals(info_line_2, "") && !Objects.equals(info, "")) {
+            height -= 10;
+        } else if (Objects.equals(info_line_1, " ") && Objects.equals(info_line_2, " ") && !Objects.equals(info, "")) {
+            height -= 20;
+        }
+
+        if (!Objects.equals(info, "") && entityInfo != null) {
+            leftEliminate -= 20;
+            width += 2;
+            height = 45;
+        }
+
+        if (Objects.equals(info_line_1, " ") && Objects.equals(info_line_2, " ") && !Objects.equals(info, "")) {
+            leftEliminate += 18;
+        }
 
         //边缘(底层)颜色
         int var9 = -267386864;
@@ -161,15 +120,15 @@ public class GuiIngameMixin extends Gui {
         ///第一个参数=宽度,第二个参数=长度,第三个参数=左边剔除宽度(剔除宽度为第二个参数),第四个参数=顶部剔除长度(剔除长度为第二个参数),第五,六个参数=颜色(不是特别明白)
         //五行代码代表中间跟四个方向
         //透明度:最深;左
-        this.drawGradientRect(160, 35, 159, 8, var9, var9);
+        this.drawGradientRect(leftEliminate, height, leftEliminate - 1, topEliminate, var9, var9);
         //透明度:较浅;右
-        this.drawGradientRect(269, 35, 268, 8, var9, var9);
+        this.drawGradientRect(width + 1 + length, height, width + length, topEliminate, var9, var9);
         //透明度:深;上
-        this.drawGradientRect(268, 8, 160, 7, var9, var9);
+        this.drawGradientRect(width + length, topEliminate, leftEliminate, topEliminate - 1, var9, var9);
         //透明度:较深;下
-        this.drawGradientRect(268, 36, 160, 35, var9, var9);
+        this.drawGradientRect(width + length, height + 1, leftEliminate, height, var9, var9);
         //透明度:最浅;中
-        this.drawGradientRect(268, 35, 160, 8, var9, var9);
+        this.drawGradientRect(width + length, height, leftEliminate, topEliminate, var9, var9);
 
         //边框颜色
         int var10 = 1347420415;
@@ -178,51 +137,13 @@ public class GuiIngameMixin extends Gui {
         ///第一个参数=宽度,第二个参数=长度,第三个参数=左边剔除宽度(剔除宽度为第二个参数),第四个参数=顶部剔除长度(剔除长度为第二个参数),第五,六个参数=颜色(不是特别明白)
         //五行代码绘制四条线
         //左
-        this.drawGradientRect(161, 35, 160, 8, var10, var11);
+        this.drawGradientRect(leftEliminate + 1, height, leftEliminate, topEliminate, var10, var11);
         //右
-        this.drawGradientRect(268, 35, 267, 8, var10, var11);
+        this.drawGradientRect(width + length, height, width - 1 + length, topEliminate, var10, var11);
         //上
-        this.drawGradientRect(268, 9, 161, 8, var10, var10);
+        this.drawGradientRect(width + length, topEliminate + 1, leftEliminate + 1, topEliminate, var10, var10);
         //下
-        this.drawGradientRect(268, 35, 160, 34, var11, var11);
-
-    }
-
-    @Unique
-    private void renderBoxMini(int mouseX, int mouseY) {
-        //绘制一个以屏幕左上角为零点的方形,通过剔除实现更丰富的形状
-
-        //边缘(底层)颜色
-        int var9 = -267386864;
-        var9 = var9 & 16777215 | -369098752;
-        //绘制边缘(底层)
-        ///第一个参数=宽度,第二个参数=长度,第三个参数=左边剔除宽度(剔除宽度为第二个参数),第四个参数=顶部剔除长度(剔除长度为第二个参数),第五,六个参数=颜色(不是特别明白)
-        //五行代码代表中间跟四个方向
-        //透明度:最深;左
-        this.drawGradientRect(178, 25, 177, 8, var9, var9);
-        //透明度:较浅;右
-        this.drawGradientRect(269, 25, 268, 8, var9, var9);
-        //透明度:深;上
-        this.drawGradientRect(268, 8, 178, 7, var9, var9);
-        //透明度:较深;下
-        this.drawGradientRect(268, 26, 178, 25, var9, var9);
-        //透明度:最浅;中
-        this.drawGradientRect(268, 25, 178, 8, var9, var9);
-
-        //边框颜色
-        int var10 = 1347420415;
-        int var11 = (var10 & 16711422) >> 1 | var10 & -16777216;
-        //绘制边框
-        ///第一个参数=宽度,第二个参数=长度,第三个参数=左边剔除宽度(剔除宽度为第二个参数),第四个参数=顶部剔除长度(剔除长度为第二个参数),第五,六个参数=颜色(不是特别明白)
-        //五行代码绘制四条线
-        //左
-        this.drawGradientRect(179, 25, 178, 8, var10, var11);
-        //右
-        this.drawGradientRect(268, 25, 267, 8, var10, var11);
-        //上
-        this.drawGradientRect(268, 9, 179, 8, var10, var10);
-        //下
-        this.drawGradientRect(268, 25, 178, 24, var11, var11);
+        this.drawGradientRect(width + length, height, leftEliminate, height - 1, var11, var11);
 
     }
 
