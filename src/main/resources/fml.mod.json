@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
   "id": "hwite",
-  "version": "b0.4.0",
+  "version": "b0.4.1",
   "depends": {
     "fishmodloader": ">=3.2.2",
     "many-lib": ">=1.0.0"
   },
   "environment": "client",
   "name": "Here's What Is Too Easy",
-  "description": "哪天,你终于知道你面前是什么玩意了",
+  "description": "那天,你终于知道你面前是什么玩意了",
   "authors": [
     "Xy_Lose",
     "Huix"
   ],
   "entrypoints": {
     "CLIENT": [
-      "cn.xylose.mitemod.hwite,HwiteModClient"
+      "cn.xylose.mitemod.hwite.client.HwiteModClient"
     ],
     "main": [
       "cn.xylose.mitemod.hwite.HwiteMod"

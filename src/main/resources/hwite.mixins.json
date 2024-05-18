@@ -6,7 +6,7 @@
   "minVersion": "0.8.3",
   "mixins": [
     "EntityRendererMixin",
-    "GuiIngameMixin",
+    "GuiIngameMixin"
   ],
   "injectors": {
     "defaultRequire": 1

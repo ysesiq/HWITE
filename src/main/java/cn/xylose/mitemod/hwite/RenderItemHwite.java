@@ -13,7 +13,7 @@ public class RenderItemHwite extends Render {
         int var6 = par3Block.blockID;
         int block_subtype = par3Block.getBlockSubtype(0);
         int item_subtype = par3Block.getItemSubtype(0);
-        if (!(par3Block instanceof BlockSlab)) {
+        if (!(par3Block instanceof BlockSlab) && !(par3Block instanceof BlockTallGrass)) {
             Icon var8 = par3Block.getIcon(1, 2);
             if (RenderBlocks.renderItemIn3d(Block.blocksList[var6].getRenderType())) {
                 par2TextureManager.bindTexture(TextureMap.locationBlocksTexture);
