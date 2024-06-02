@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "hwite",
-  "version": "b0.4.1",
+  "version": "b0.5.0",
   "depends": {
     "fishmodloader": ">=3.2.2",
     "many-lib": ">=1.0.0"
