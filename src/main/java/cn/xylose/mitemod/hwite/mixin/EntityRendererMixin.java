@@ -64,22 +64,22 @@ public class EntityRendererMixin {
                     if (HwiteConfigs.shiftMoreInfo.get()) {
                         if (GuiScreen.isShiftKeyDown()) {
                             if (total_melee_damage == 0.0F) {
-                                info_line_1 = EnumChatFormatting.GRAY + "血量:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth();
+                                info_line_1 = EnumChatFormatting.GRAY + "health:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth();
                                 info_line_2 = " ";
                                 break_info = "  ";
                             } else {
-                                info_line_1 = EnumChatFormatting.GRAY + "血量:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth() + " 伤害:" + total_melee_damage;
+                                info_line_1 = EnumChatFormatting.GRAY + "health:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth() + " atk:" + total_melee_damage;
                                 info_line_2 = " ";
                                 break_info = "  ";
                             }
                         }
                     } else {
                         if (total_melee_damage == 0.0F) {
-                            info_line_1 = EnumChatFormatting.GRAY + "血量:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth();
+                            info_line_1 = EnumChatFormatting.GRAY + "health:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth();
                             info_line_2 = "  ";
                             break_info = "  ";
                         } else {
-                            info_line_1 = EnumChatFormatting.GRAY + "血量:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth() + " 伤害:" + total_melee_damage;
+                            info_line_1 = EnumChatFormatting.GRAY + "health:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth() + " atk:" + total_melee_damage;
                             info_line_2 = "  ";
                             break_info = "  ";
                         }
@@ -105,19 +105,19 @@ public class EntityRendererMixin {
                     if (GuiScreen.isShiftKeyDown()) {
                         if (min_harvest_level == 0) {
                             if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-                                info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness;
+                                info_line_1 = EnumChatFormatting.GRAY + "hardness:" + block_hardness;
                                 break_info = EnumChatFormatting.DARK_RED + "X" + EnumChatFormatting.WHITE;
                             } else {
-                                info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘速度:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
+                                info_line_1 = EnumChatFormatting.GRAY + "hardness:" + block_hardness + " str_vs:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
                                 break_info = EnumChatFormatting.DARK_GREEN + "√" + EnumChatFormatting.WHITE;
                             }
                         } else {
                             if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-                                info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
+                                info_line_1 = EnumChatFormatting.GRAY + "hardness:" + block_hardness + " minHL:" + min_harvest_level;
                                 break_info = EnumChatFormatting.DARK_RED + "X" + EnumChatFormatting.WHITE;
                             } else {
-                                info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
-                                info_line_2 = EnumChatFormatting.DARK_GRAY + "挖掘速度:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
+                                info_line_1 = EnumChatFormatting.GRAY + "hardness:" + block_hardness + " minHL:" + min_harvest_level;
+                                info_line_2 = EnumChatFormatting.DARK_GRAY + "str_vs:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
                                 break_info = EnumChatFormatting.DARK_GREEN + "√" + EnumChatFormatting.WHITE;
                             }
                         }
@@ -125,19 +125,19 @@ public class EntityRendererMixin {
                 } else {
                     if (min_harvest_level == 0) {
                         if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-                            info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness;
+                            info_line_1 = EnumChatFormatting.GRAY + "hardness:" + block_hardness;
                             break_info = EnumChatFormatting.DARK_RED + "X" + EnumChatFormatting.WHITE;
                         } else {
-                            info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘速度:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
+                            info_line_1 = EnumChatFormatting.GRAY + "hardness:" + block_hardness + " str_vs:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
                             break_info = EnumChatFormatting.DARK_GREEN + "√" + EnumChatFormatting.WHITE;
                         }
                     } else {
                         if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-                            info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
+                            info_line_1 = EnumChatFormatting.GRAY + "hardness:" + block_hardness + " minHL:" + min_harvest_level;
                             break_info = EnumChatFormatting.DARK_RED + "X" + EnumChatFormatting.WHITE;
                         } else {
-                            info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
-                            info_line_2 = EnumChatFormatting.DARK_GRAY + "挖掘速度:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
+                            info_line_1 = EnumChatFormatting.GRAY + "hardness:" + block_hardness + " minHL:" + min_harvest_level;
+                            info_line_2 = EnumChatFormatting.DARK_GRAY + "str_vs:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
                             break_info = EnumChatFormatting.DARK_GREEN + "√" + EnumChatFormatting.WHITE;
                         }
                     }

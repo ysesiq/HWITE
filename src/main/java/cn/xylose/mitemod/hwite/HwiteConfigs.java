@@ -15,21 +15,21 @@ import java.util.List;
 
 public class HwiteConfigs extends SimpleConfigs {
 
-    public static final ConfigBoolean InfoHide = new ConfigBoolean("HWITE总开关", true,  "HWITE总开关");
-    public static final ConfigBoolean EntityInfoHide = new ConfigBoolean("隐藏实体渲染(WIP)", true, "隐藏实体渲染(WIP)");
-    public static final ConfigBoolean BlockInfoHide = new ConfigBoolean("隐藏方块渲染", false,"隐藏方块渲染");
-    public static final ConfigBoolean Liquids = new ConfigBoolean("是否显示流体信息", false, "是否显示流体信息");
-    public static final ConfigBoolean shiftMoreInfo = new ConfigBoolean("按住Shift显示详细信息(WIP)", false, "按住Shift显示详细信息(WIP)");
-    public static final ConfigBoolean HUDPos = new ConfigBoolean("打开HUD位置调整", false, "用于调整HUD位置,打开后请使用后2项配置项调整");
+    public static final ConfigBoolean InfoHide = new ConfigBoolean("HWITE Main Switch", true,  "HWITE Main Switch");
+    public static final ConfigBoolean EntityInfoHide = new ConfigBoolean("Hide Entity Render(WIP)", true, "Hide Entity Render(WIP)");
+    public static final ConfigBoolean BlockInfoHide = new ConfigBoolean("Hide Block Render", false,"Hide Block Render");
+    public static final ConfigBoolean Liquids = new ConfigBoolean("Display Liquid Render", false, "Display Liquid Render");
+    public static final ConfigBoolean shiftMoreInfo = new ConfigBoolean("Shift Display Detailed Information(WIP)", false, "Shift Display Detailed Information(WIP)");
+    public static final ConfigBoolean HUDPos = new ConfigBoolean("Open HUD Pos Adjustment", false, "Used to adjust the HUD pos. After opening, please use the next two configuration to adjust");
 
-    public static final ConfigInteger HUDX = new ConfigInteger("HUD的x轴渲染位置", 190, 0, 500, "请打开HUD位置调整");
-    public static final ConfigInteger HUDY = new ConfigInteger("HUD的y轴渲染位置", 18, 0, 300, "请打开HUD位置调整");
-    public static final ConfigInteger EntityInfoX = new ConfigInteger("实体渲染x轴位置", 180, 0, 500, "请关闭隐藏实体渲染(WIP)");
-    public static final ConfigInteger EntityInfoY = new ConfigInteger("实体渲染y轴位置", 43, 0, 300, "请关闭隐藏实体渲染(WIP)");
-    public static final ConfigInteger EntityInfoSize = new ConfigInteger("实体渲染大小", 18, 0, 100, "请关闭隐藏实体渲染(WIP)");
-    public static final ConfigInteger BlockInfoX = new ConfigInteger("方块渲染x轴位置", 165, 0, 500, "请关闭隐藏方块渲染");
-    public static final ConfigInteger BlockInfoYBig = new ConfigInteger("4行信息显示时的方块渲染y轴位置", 18, 0, 300, "请关闭隐藏方块渲染");
-    public static final ConfigInteger BlockInfoYSmall = new ConfigInteger("3行信息显示时的方块渲染y轴位置", 14, 0, 300, "请关闭隐藏方块渲染");
+    public static final ConfigInteger HUDX = new ConfigInteger("The x-axis render pos of HUD", 190, 0, 500, "Please open HUD pos adjustment");
+    public static final ConfigInteger HUDY = new ConfigInteger("The y-axis render pos of HUD", 18, 0, 300, "Please open HUD pos adjustment");
+    public static final ConfigInteger EntityInfoX = new ConfigInteger("The x-axis render pos of Entity", 180, 0, 500, "Please turn off hide entity render (WIP");
+    public static final ConfigInteger EntityInfoY = new ConfigInteger("The y-axis render pos of Entity", 43, 0, 300, "Please turn off hide entity render (WIP");
+    public static final ConfigInteger EntityInfoSize = new ConfigInteger("Entity rendering size", 18, 0, 100, "Please turn off hide entity render (WIP)");
+    public static final ConfigInteger BlockInfoX = new ConfigInteger("The x-axis render pos of Block", 165, 0, 500, "Please turn off hide block render");
+    public static final ConfigInteger BlockInfoYBig = new ConfigInteger("The y-axis pos of the block rendering when displaying 4-line information", 18, 0, 300, "Please turn off hide block render");
+    public static final ConfigInteger BlockInfoYSmall = new ConfigInteger("The y-axis pos of the block rendering when displaying 3-line information", 14, 0, 300, "Please turn off hide block render");
 
     private static HwiteConfigs Instance;
     public static List<ConfigBase> hide;
