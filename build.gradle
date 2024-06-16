@@ -21,7 +21,7 @@ repositories {
 loom {
 	accessWidenerPath = file("src/main/resources/hwite.accesswidener")
 	mergedMinecraftJar()
-	setFML(new File("libs\\FishModLoader-v3.2.4.jar"))
+	setFML(new File("libs\\FishModLoader-v3.3.0.jar"))
 	mods {
 		"Hwite" {
 			sourceSet sourceSets.main
@@ -42,7 +42,7 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 //	implementation("org.spongepowered:mixin:0.8.5")
 
-	implementation files("libs\\ManyLib-1.1.1.jar")
+	implementation files("libs\\ManyLib-1.1.2.jar")
 	implementation files(loom.getFML().toPath())
 }
 
