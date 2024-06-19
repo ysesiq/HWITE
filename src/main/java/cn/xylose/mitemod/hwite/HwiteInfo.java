@@ -5,10 +5,9 @@ import cn.xylose.mitemod.hwite.render.RenderItemHwite;
 import net.minecraft.*;
 import net.xiaoyu233.fml.api.block.IBlock;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
-import static cn.xylose.mitemod.hwite.render.HudBackGroundRender.drawTooltipBackGround;
+import static cn.xylose.mitemod.hwite.render.HUDBackGroundRender.drawTooltipBackGround;
 import static cn.xylose.mitemod.hwite.HwiteConfigs.*;
 import static cn.xylose.mitemod.hwite.client.HwiteModClient.*;
 
@@ -42,7 +41,7 @@ public class HwiteInfo extends Gui {
             } else if (rc.isEntity()) {
                 Entity entity = rc.getEntityHit();
                 if (entity instanceof EntityLivingBase entityLivingBase) {
-                    int id = entityLivingBase.entityId;
+                    int id = EntityList.getEntityID(entityLivingBase);
                     if (id <= 100 || id == 120 || id == 200) {
                         modInfo = EnumChatFormatting.BLUE + "§o" + "Minecraft";
                     } else if (id >= 512 && id <= 540) {
@@ -151,6 +150,7 @@ public class HwiteInfo extends Gui {
         }
     }
 
+
     public static void RenderHWITEHud(Gui gui, Minecraft mc, double zLevel) {
         FontRenderer fontRenderer = mc.fontRenderer;
         ArrayList list = new ArrayList();
@@ -240,7 +240,7 @@ public class HwiteInfo extends Gui {
                 }
                 list.add(modInfo);
                 drawTooltipBackGround(list, hud_x, hud_y, false, mc, zLevel);
-                if (BlockRender.get()) {
+                if (BlockRender.get() && blockInfo != null) {
                     itemRenderBlocks.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(blockPosX, blockPosY, blockPosZ)), block_info_x, block_info_y_small);
                 }
             } else if (Objects.equals(info_line_1, " ") && Objects.equals(info_line_2, " ") && !Objects.equals(info, "")) {
@@ -260,6 +260,9 @@ public class HwiteInfo extends Gui {
 //                    mc.getTextureManager().bindTexture(hwiteIconTexPath);
 //                    this.zLevel = -90.0F;
 //                    this.drawTexturedModalRect(width / 2 + 10, height - (height - 30), 0, 0, 16, 16);
+//                } else if (isViewMode && ViewMode.getBooleanValue()) {
+//                    list.add(info);
+//                    list.add(modInfo);
                 } else {
                     list.add(info);
                     if (breakProgress > 0 && BreakProgress.get()) {
@@ -272,10 +275,11 @@ public class HwiteInfo extends Gui {
                 }
                 list.add(modInfo);
                 drawTooltipBackGround(list, hud_x, hud_y, false, mc, zLevel);
-                if (BlockRender.get()) {
+                if (BlockRender.get() && blockInfo != null) {
                     itemRenderBlocks.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(blockPosX, blockPosY, blockPosZ)), block_info_x, block_info_y_big);
                 }
             }
         }
     }
+
 }

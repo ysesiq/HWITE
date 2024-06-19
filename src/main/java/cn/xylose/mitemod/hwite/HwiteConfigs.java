@@ -15,6 +15,7 @@ import java.util.List;
 
 public class HwiteConfigs extends SimpleConfigs {
 
+    public static final ConfigBoolean ViewMode = new ConfigBoolean("预览", false, "配置界面预览");
     public static final ConfigBoolean HwiteHud = new ConfigBoolean("HWITE总开关", true);
     public static final ConfigBoolean EntityRender = new ConfigBoolean("实体渲染(WIP)", false);
     public static final ConfigBoolean BlockRender = new ConfigBoolean("方块渲染", true);
@@ -54,7 +55,7 @@ public class HwiteConfigs extends SimpleConfigs {
     }
 
     public static void init() {
-        hide = List.of(HwiteHud, BlockRender, EntityRender, Liquids, shiftMoreInfo, IDSUB, CanBreak, BreakProgress, BreakProgressLine, NonCollidableEntity, HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDPos);
+        hide = List.of(ViewMode, HwiteHud, BlockRender, EntityRender, Liquids, shiftMoreInfo, IDSUB, CanBreak, BreakProgress, BreakProgressLine, NonCollidableEntity, HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDPos);
         pos = List.of(HUDX, HUDY, EntityInfoX, EntityInfoY, EntityInfoSize, HUDBGColor, HUDBGColor1, HUDBGColor2, HUDFrameColor, HUDFrameColor1, HUDFrameColor2);
         ArrayList<ConfigBase> values = new ArrayList<ConfigBase>();
         values.addAll(hide);

@@ -8,7 +8,8 @@
     "EntityPlayerMixin",
     "EntityRendererMixin",
     "GuiIngameMixin",
-    "PlayerControllerMPMixin"
+    "PlayerControllerMPMixin",
+    "RaycastCollisionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

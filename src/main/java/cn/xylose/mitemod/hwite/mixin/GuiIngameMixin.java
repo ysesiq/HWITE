@@ -1,6 +1,7 @@
 package cn.xylose.mitemod.hwite.mixin;
 
 import cn.xylose.mitemod.hwite.HwiteInfo;
+import net.minecraft.EntityPlayer;
 import net.minecraft.Gui;
 import net.minecraft.GuiIngame;
 import net.minecraft.Minecraft;
@@ -22,6 +23,7 @@ public class GuiIngameMixin extends Gui {
                     target = "Lnet/minecraft/Minecraft;inDevMode()Z",
                     shift = At.Shift.BEFORE)})
     private void injectRenderHWITEHud(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
+        EntityPlayer player = (EntityPlayer)this.mc.renderViewEntity;
         HwiteInfo.RenderHWITEHud(this, this.mc, 300);
     }
 }

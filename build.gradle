@@ -42,7 +42,7 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 //	implementation("org.spongepowered:mixin:0.8.5")
 
-	implementation files("libs\\ManyLib-1.1.2.jar")
+	implementation files("libs\\ManyLib-2.0.0.jar")
 	implementation files(loom.getFML().toPath())
 }
 

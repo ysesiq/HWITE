@@ -12,7 +12,7 @@ import java.util.Objects;
 import static cn.xylose.mitemod.hwite.HwiteConfigs.*;
 import static cn.xylose.mitemod.hwite.client.HwiteModClient.*;
 
-public class HudBackGroundRender extends Gui {
+public class HUDBackGroundRender extends Gui {
 
     private static RenderItem itemRenderer = new RenderItem();
 
