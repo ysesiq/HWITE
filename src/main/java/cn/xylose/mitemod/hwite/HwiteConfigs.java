@@ -16,12 +16,12 @@ import java.util.List;
 public class HwiteConfigs extends SimpleConfigs {
 
     public static final ConfigBoolean ViewMode = new ConfigBoolean("预览", false, "配置界面预览");
-    public static final ConfigBoolean HwiteHud = new ConfigBoolean("HWITE总开关", true);
+    public static final ConfigBoolean RenderHwiteHud = new ConfigBoolean("HWITE总开关", true);
     public static final ConfigBoolean EntityRender = new ConfigBoolean("实体渲染(WIP)", false);
     public static final ConfigBoolean BlockRender = new ConfigBoolean("方块渲染", true);
     public static final ConfigBoolean Liquids = new ConfigBoolean("流体信息", false);
     public static final ConfigBoolean shiftMoreInfo = new ConfigBoolean("Shift显示详细信息", true, "按住Shift显示详细信息");
-    public static final ConfigBoolean IDSUB = new ConfigBoolean("ID与附加值", false);
+    public static final ConfigBoolean ShowIDAndMetadata = new ConfigBoolean("ID与附加值", false);
     public static final ConfigBoolean CanBreak = new ConfigBoolean("挖掘提示", true, "指向方块时,如果能挖掘显示'√',不能挖掘显示'X'");
     public static final ConfigBoolean BreakProgress = new ConfigBoolean("挖掘进度", true);
     public static final ConfigBoolean BreakProgressLine = new ConfigBoolean("挖掘进度条(WIP)", false);
@@ -30,7 +30,7 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigBoolean HUDRoundedRectangle = new ConfigBoolean("圆角矩形", true);
     public static final ConfigBoolean HUDFrame = new ConfigBoolean("边框", true);
     public static final ConfigBoolean HUDCentralBackground = new ConfigBoolean("中心背景", true);
-    public static final ConfigBoolean HUDPos = new ConfigBoolean("HUD位置调整", false, "打开后请使用后2项配置项调整");
+    public static final ConfigBoolean HUDPosOverride = new ConfigBoolean("HUD位置调整", false, "打开后请使用后2项配置项调整");
 
     public static final ConfigInteger HUDX = new ConfigInteger("HUD的x轴渲染位置", 190, 0, 500, true, "请打开HUD位置调整");
     public static final ConfigInteger HUDY = new ConfigInteger("HUD的y轴渲染位置", 18, 0, 300, true, "请打开HUD位置调整");
@@ -55,7 +55,7 @@ public class HwiteConfigs extends SimpleConfigs {
     }
 
     public static void init() {
-        hide = List.of(ViewMode, HwiteHud, BlockRender, EntityRender, Liquids, shiftMoreInfo, IDSUB, CanBreak, BreakProgress, BreakProgressLine, NonCollidableEntity, HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDPos);
+        hide = List.of(ViewMode, RenderHwiteHud, BlockRender, EntityRender, Liquids, shiftMoreInfo, ShowIDAndMetadata, CanBreak, BreakProgress, BreakProgressLine, NonCollidableEntity, HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDPosOverride);
         pos = List.of(HUDX, HUDY, EntityInfoX, EntityInfoY, EntityInfoSize, HUDBGColor, HUDBGColor1, HUDBGColor2, HUDFrameColor, HUDFrameColor1, HUDFrameColor2);
         ArrayList<ConfigBase> values = new ArrayList<ConfigBase>();
         values.addAll(hide);

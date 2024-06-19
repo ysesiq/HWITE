@@ -1,16 +1,14 @@
 package cn.xylose.mitemod.hwite.client;
 
 import cn.xylose.mitemod.hwite.HwiteConfigs;
-import fi.dy.masa.malilib.gui.screen.ValueScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.Block;
 import net.minecraft.EntityLivingBase;
-import net.minecraft.Gui;
 import net.minecraft.GuiScreen;
 
 public class HwiteModClient implements ClientModInitializer{
 
-    public static String info;
+    public static String infoMain;
     public static String info_line_1 = "";
     public static String info_line_2 = "";
     public static String info_line_3 = "";

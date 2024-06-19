@@ -16,7 +16,8 @@ import static net.minecraft.EntityRenderer.setDebugInfoForSelectedObject;
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin implements INamespaced {
 
-    @Shadow private Minecraft mc;
+    @Shadow
+    private Minecraft mc;
 
     @Inject(method = "setDebugInfoForSelectedObject", at = @At("HEAD"))
     private static void setHwiteInfoForSelectedObject(RaycastCollision rc, EntityPlayer player, CallbackInfo ci) {
@@ -25,8 +26,8 @@ public class EntityRendererMixin implements INamespaced {
 
     @Inject(method = "getMouseOver", at = @At("TAIL"))
     public void getMouseOverHwite(float partial_tick, CallbackInfo ci) {
-        EntityPlayer player = (EntityPlayer)this.mc.renderViewEntity;
-        setDebugInfoForSelectedObject(player.getSelectedObject(partial_tick, Liquids.get(), NonCollidableEntity.get(), (EnumEntityReachContext) null), player);
+        EntityPlayer player = (EntityPlayer) this.mc.renderViewEntity;
+        setDebugInfoForSelectedObject(player.getSelectedObject(partial_tick, Liquids.getBooleanValue(), NonCollidableEntity.getBooleanValue(), null), player);
     }
 
 }

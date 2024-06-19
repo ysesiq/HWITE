@@ -12,18 +12,24 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static cn.xylose.mitemod.hwite.HwiteConfigs.RenderHwiteHud;
+
 
 @Mixin(GuiIngame.class)
 public class GuiIngameMixin extends Gui {
 
-    @Shadow @Final private Minecraft mc;
+    @Shadow
+    @Final
+    private Minecraft mc;
 
     @Inject(method = {"renderGameOverlay(FZII)V"},
             at = {@At(value = "INVOKE",
                     target = "Lnet/minecraft/Minecraft;inDevMode()Z",
                     shift = At.Shift.BEFORE)})
     private void injectRenderHWITEHud(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
-        EntityPlayer player = (EntityPlayer)this.mc.renderViewEntity;
-        HwiteInfo.RenderHWITEHud(this, this.mc, 300);
+        if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && RenderHwiteHud.getBooleanValue()) {
+            EntityPlayer player = (EntityPlayer) this.mc.renderViewEntity;
+            HwiteInfo.RenderHWITEHud(this, this.mc, 300);
+        }
     }
 }
