@@ -26,11 +26,14 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigBoolean BreakProgress = new ConfigBoolean("挖掘进度", true);
     public static final ConfigBoolean BreakProgressLine = new ConfigBoolean("挖掘进度条(WIP)", false);
     public static final ConfigBoolean NonCollidableEntity = new ConfigBoolean("不可碰撞实体", false, "例如经验球,掉落物,钓鱼竿的浮标");
+    public static final ConfigBoolean GrowthValue = new ConfigBoolean("作物生长进度", true);
+    public static final ConfigBoolean Redstone = new ConfigBoolean("红石信息", true, "红石能量强度,拉杆.压力板状态,比较器状态,中继器状态");
+    public static final ConfigBoolean SpawnerType = new ConfigBoolean("刷怪笼种类", true);
     public static final ConfigBoolean HUDBackGround = new ConfigBoolean("背景总开关", true);
     public static final ConfigBoolean HUDRoundedRectangle = new ConfigBoolean("圆角矩形", true);
     public static final ConfigBoolean HUDFrame = new ConfigBoolean("边框", true);
     public static final ConfigBoolean HUDCentralBackground = new ConfigBoolean("中心背景", true);
-    public static final ConfigBoolean HUDPosOverride = new ConfigBoolean("HUD位置调整", false, "打开后请使用后2项配置项调整");
+    public static final ConfigBoolean HUDPosOverride = new ConfigBoolean("HUD位置调整", false, "打开后请使用位置子页面第1,2个配置项调整");
 
     public static final ConfigInteger HUDX = new ConfigInteger("HUD的x轴渲染位置", 190, 0, 500, true, "请打开HUD位置调整");
     public static final ConfigInteger HUDY = new ConfigInteger("HUD的y轴渲染位置", 18, 0, 300, true, "请打开HUD位置调整");
@@ -57,7 +60,7 @@ public class HwiteConfigs extends SimpleConfigs {
     }
 
     static {
-        hide = List.of(ViewMode, RenderHwiteHud, BlockRender, EntityRender, Liquids, shiftMoreInfo, ShowIDAndMetadata, CanBreak, BreakProgress, BreakProgressLine, NonCollidableEntity, HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDPosOverride);
+        hide = List.of(RenderHwiteHud, BlockRender, EntityRender, Liquids, shiftMoreInfo, ShowIDAndMetadata, CanBreak, BreakProgress, BreakProgressLine, NonCollidableEntity, GrowthValue, Redstone, SpawnerType, HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDPosOverride);
         pos = List.of(HUDX, HUDY, EntityInfoX, EntityInfoY, EntityInfoSize, HUDBGColor, HUDBGColor1, HUDBGColor2, HUDFrameColor, HUDFrameColor1, HUDFrameColor2);
         List<ConfigBase<?>> values = new ArrayList<>();
         values.addAll(hide);

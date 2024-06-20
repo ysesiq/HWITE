@@ -5,6 +5,7 @@ import cn.xylose.mitemod.hwite.api.IBreakingProgress;
 import cn.xylose.mitemod.hwite.render.util.EnumRenderFlag;
 import cn.xylose.mitemod.hwite.render.util.ScreenConstants;
 import net.minecraft.*;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,6 @@ import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
 import static cn.xylose.mitemod.hwite.render.HUDBackGroundRender.drawTooltipBackGround;
 
 public class HUDRenderer {
-    private static final RenderItemHwite itemRenderBlocks = new RenderItemHwite();
 
     public static void RenderHWITEHud(Gui gui, Minecraft mc, double zLevel) {
         ArrayList<String> list = new ArrayList<>();
@@ -32,12 +32,14 @@ public class HUDRenderer {
         //draw text and tooltip background
         EnumRenderFlag enumRenderFlag = addInfoToList(list);
         drawTooltipBackGround(list, ScreenConstants.getHudX(screenWidth), ScreenConstants.getHudY(), false, mc, zLevel);
+        RenderItem renderItem = new RenderItem();
         switch (enumRenderFlag) {
             case Small ->
-                    itemRenderBlocks.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), HwiteInfo.blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)), block_info_x, ScreenConstants.getBlockInfoYSmall());
+                    renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, HwiteInfo.blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)), block_info_x, ScreenConstants.getBlockInfoYSmall());
             case Big ->
-                    itemRenderBlocks.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), HwiteInfo.blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)), block_info_x, ScreenConstants.getBlockInfoYBig());
+                    renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, HwiteInfo.blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)), block_info_x, ScreenConstants.getBlockInfoYBig());
         }
+        GL11.glDisable(GL11.GL_LIGHTING);
     }
 
     private static EnumRenderFlag addInfoToList(List<String> list) {
@@ -58,6 +60,9 @@ public class HUDRenderer {
         if (HwiteInfo.entityInfo != null) {
             list.add(HwiteInfo.infoMain);
             tryAddBreakProgress(list, breakProgress);
+            tryAddGrowthValue(list);
+            tryAddRedstoneValue(list);
+            tryAddSpawnerValue(list);
             if (!line1Empty) {
                 list.add(HwiteInfo.info_line_1);
             }
@@ -65,6 +70,9 @@ public class HUDRenderer {
             if (!Objects.equals(HwiteInfo.break_info, "") && CanBreak.getBooleanValue()) {
                 list.add(HwiteInfo.infoMain + "  " + HwiteInfo.break_info);
                 tryAddBreakProgress(list, breakProgress);
+                tryAddGrowthValue(list);
+                tryAddRedstoneValue(list);
+                tryAddSpawnerValue(list);
                 //WIP
 //                    mc.getTextureManager().bindTexture(hwiteIconTexPath);
 //                    this.zLevel = -90.0F;
@@ -72,6 +80,9 @@ public class HUDRenderer {
             } else {
                 list.add(HwiteInfo.infoMain);
                 tryAddBreakProgress(list, breakProgress);
+                tryAddGrowthValue(list);
+                tryAddRedstoneValue(list);
+                tryAddSpawnerValue(list);
             }
             if (!line1Empty) {
                 list.add(HwiteInfo.info_line_1);
@@ -88,6 +99,9 @@ public class HUDRenderer {
             if (!Objects.equals(HwiteInfo.break_info, "") && CanBreak.getBooleanValue()) {
                 list.add(HwiteInfo.infoMain + "  " + HwiteInfo.break_info);
                 tryAddBreakProgress(list, breakProgress);
+                tryAddGrowthValue(list);
+                tryAddRedstoneValue(list);
+                tryAddSpawnerValue(list);
                 //WIP
 //                    mc.getTextureManager().bindTexture(hwiteIconTexPath);
 //                    this.zLevel = -90.0F;
@@ -98,6 +112,9 @@ public class HUDRenderer {
             } else {
                 list.add(HwiteInfo.infoMain);
                 tryAddBreakProgress(list, breakProgress);
+                tryAddGrowthValue(list);
+                tryAddRedstoneValue(list);
+                tryAddSpawnerValue(list);
             }
             if (!line1Empty) {
                 list.add(HwiteInfo.info_line_1);
@@ -122,6 +139,21 @@ public class HUDRenderer {
     private static void tryAddBreakProgress(List<String> list, int breakProgress) {
         if (breakProgress > 0 && BreakProgress.getBooleanValue()) {
             list.add(String.format(EnumChatFormatting.DARK_GRAY + "进度: " + "%d", breakProgress) + "%");
+        }
+    }
+    private static void tryAddGrowthValue(List<String> list) {
+        if (GrowthValue.getBooleanValue() && !Objects.equals(HwiteInfo.growth_info, "")) {
+            list.add(HwiteInfo.growth_info);
+        }
+    }
+    private static void tryAddRedstoneValue(List<String> list) {
+        if (Redstone.getBooleanValue() && !Objects.equals(HwiteInfo.redstone_info, "")) {
+            list.add(HwiteInfo.redstone_info);
+        }
+    }
+    private static void tryAddSpawnerValue(List<String> list) {
+        if (SpawnerType.getBooleanValue() && !Objects.equals(HwiteInfo.spawner_info, "")) {
+            list.add(HwiteInfo.spawner_info);
         }
     }
 }
