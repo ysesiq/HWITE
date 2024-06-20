@@ -1,4 +1,4 @@
-package cn.xylose.mitemod.hwite.render;
+package cn.xylose.mitemod.hwite.render.util;
 
 public enum EnumRenderFlag {
     Nothing,

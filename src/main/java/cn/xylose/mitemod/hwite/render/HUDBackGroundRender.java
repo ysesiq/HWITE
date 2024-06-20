@@ -1,16 +1,15 @@
 package cn.xylose.mitemod.hwite.render;
 
+import cn.xylose.mitemod.hwite.info.HwiteInfo;
 import cn.xylose.mitemod.hwite.api.IBreakingProgress;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.xylose.mitemod.hwite.HwiteConfigs.*;
-import static cn.xylose.mitemod.hwite.client.HwiteModClient.*;
+import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
 
 public class HUDBackGroundRender extends Gui {
 
@@ -67,17 +66,17 @@ public class HUDBackGroundRender extends Gui {
         }
 
         int BlockRenderLeftEliminate = 0;
-        if (entityInfo == null) {
+        if (HwiteInfo.entityInfo == null) {
             if (shiftMoreInfo.getBooleanValue()) {
-                if (!Objects.equals(infoMain, "") && !Objects.equals(break_info, "  ") && BlockRender.get()) {
+                if (!Objects.equals(HwiteInfo.infoMain, "") && !Objects.equals(HwiteInfo.break_info, "  ") && BlockRender.get()) {
                     BlockRenderLeftEliminate += 20;
-                } else if (!Objects.equals(break_info, " ") && BlockRender.get()) {
+                } else if (!Objects.equals(HwiteInfo.break_info, " ") && BlockRender.get()) {
                     BlockRenderLeftEliminate += 20;
                 }
             } else {
-                if (Objects.equals(info_line_2, "") && !Objects.equals(infoMain, "") && !Objects.equals(info_line_1, "") && !Objects.equals(break_info, "  ") && BlockRender.get()) {
+                if (Objects.equals(HwiteInfo.info_line_2, "") && !Objects.equals(HwiteInfo.infoMain, "") && !Objects.equals(HwiteInfo.info_line_1, "") && !Objects.equals(HwiteInfo.break_info, "  ") && BlockRender.get()) {
                     BlockRenderLeftEliminate += 20;
-                } else if (!Objects.equals(info_line_2, "") && !Objects.equals(break_info, " ") && BlockRender.get()) {
+                } else if (!Objects.equals(HwiteInfo.info_line_2, "") && !Objects.equals(HwiteInfo.break_info, " ") && BlockRender.get()) {
                     BlockRenderLeftEliminate += 20;
                 }
             }

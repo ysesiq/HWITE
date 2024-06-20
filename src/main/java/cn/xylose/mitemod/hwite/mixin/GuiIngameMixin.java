@@ -1,6 +1,6 @@
 package cn.xylose.mitemod.hwite.mixin;
 
-import cn.xylose.mitemod.hwite.HwiteInfo;
+import cn.xylose.mitemod.hwite.render.HUDRenderer;
 import net.minecraft.EntityPlayer;
 import net.minecraft.Gui;
 import net.minecraft.GuiIngame;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static cn.xylose.mitemod.hwite.HwiteConfigs.RenderHwiteHud;
+import static cn.xylose.mitemod.hwite.config.HwiteConfigs.RenderHwiteHud;
 
 
 @Mixin(GuiIngame.class)
@@ -29,7 +29,7 @@ public class GuiIngameMixin extends Gui {
     private void injectRenderHWITEHud(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
         if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && RenderHwiteHud.getBooleanValue()) {
             EntityPlayer player = (EntityPlayer) this.mc.renderViewEntity;
-            HwiteInfo.RenderHWITEHud(this, this.mc, 300);
+            HUDRenderer.RenderHWITEHud(this, this.mc, 300);
         }
     }
 }

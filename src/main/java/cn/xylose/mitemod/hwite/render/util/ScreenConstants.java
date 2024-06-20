@@ -1,7 +1,7 @@
-package cn.xylose.mitemod.hwite.render;
+package cn.xylose.mitemod.hwite.render.util;
 
-import static cn.xylose.mitemod.hwite.HwiteConfigs.*;
-import static cn.xylose.mitemod.hwite.HwiteConfigs.HUDY;
+import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
+import static cn.xylose.mitemod.hwite.config.HwiteConfigs.HUDY;
 
 public class ScreenConstants {
     public static int getHudY() {
