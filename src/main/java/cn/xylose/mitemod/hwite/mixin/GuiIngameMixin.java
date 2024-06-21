@@ -1,5 +1,6 @@
 package cn.xylose.mitemod.hwite.mixin;
 
+import cn.xylose.mitemod.hwite.client.HwiteModClient;
 import cn.xylose.mitemod.hwite.render.HUDRenderer;
 import net.minecraft.EntityPlayer;
 import net.minecraft.Gui;
@@ -28,7 +29,6 @@ public class GuiIngameMixin extends Gui {
                     shift = At.Shift.BEFORE)})
     private void injectRenderHWITEHud(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
         if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && RenderHwiteHud.getBooleanValue()) {
-            EntityPlayer player = (EntityPlayer) this.mc.renderViewEntity;
             HUDRenderer.RenderHWITEHud(this, this.mc, 300);
         }
     }

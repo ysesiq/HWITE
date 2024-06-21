@@ -13,6 +13,8 @@ import java.util.Objects;
 
 import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
 import static cn.xylose.mitemod.hwite.render.HUDBackGroundRender.drawTooltipBackGround;
+import static cn.xylose.mitemod.hwite.render.util.EnumRenderFlag.Big;
+import static cn.xylose.mitemod.hwite.render.util.EnumRenderFlag.Small;
 
 public class HUDRenderer {
 
@@ -20,6 +22,7 @@ public class HUDRenderer {
         ArrayList<String> list = new ArrayList<>();
         ScaledResolution scaledResolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         int screenWidth = scaledResolution.getScaledWidth();
+        int screenHeight = scaledResolution.getScaledHeight();
         int block_info_x = ScreenConstants.getBlockInfoX(screenWidth);
 
         //draw model
@@ -33,11 +36,14 @@ public class HUDRenderer {
         EnumRenderFlag enumRenderFlag = addInfoToList(list);
         drawTooltipBackGround(list, ScreenConstants.getHudX(screenWidth), ScreenConstants.getHudY(), false, mc, zLevel);
         RenderItem renderItem = new RenderItem();
-        switch (enumRenderFlag) {
-            case Small ->
-                    renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, HwiteInfo.blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)), block_info_x, ScreenConstants.getBlockInfoYSmall());
-            case Big ->
-                    renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, HwiteInfo.blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)), block_info_x, ScreenConstants.getBlockInfoYBig());
+        if (HwiteInfo.blockInfo != null) {
+            switch (enumRenderFlag) {
+                case Small, Big -> {
+                    ItemStack itemStack = HwiteInfo.blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ));
+                    renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemStack, block_info_x, HUDBackGroundRender.stringWidth / 3);
+                    renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemStack, block_info_x, HUDBackGroundRender.stringWidth / 3);
+                }
+            }
         }
         GL11.glDisable(GL11.GL_LIGHTING);
     }
@@ -128,10 +134,10 @@ public class HUDRenderer {
         list.add(HwiteInfo.modInfo);
 
         if (smallFlag) {
-            return EnumRenderFlag.Small;
+            return Small;
         }
         if (bigFlag) {
-            return EnumRenderFlag.Big;
+            return Big;
         }
         return EnumRenderFlag.Nothing;
     }

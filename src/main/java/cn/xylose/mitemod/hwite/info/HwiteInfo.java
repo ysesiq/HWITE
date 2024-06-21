@@ -17,6 +17,7 @@ public class HwiteInfo extends Gui {
     public static String spawner_info = "";
     public static EntityLivingBase entityInfo;
     public static Block blockInfo;
+    public static ItemStack itemStackInfo;
     public static String modInfo = "";
     public static int blockPosX = 0;
     public static int blockPosY = 0;
@@ -123,9 +124,10 @@ public class HwiteInfo extends Gui {
 
     private static void updateBlockInfo(RaycastCollision rc, EntityPlayer player) {
         Block block = Block.blocksList[player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z)];
-        blockInfo = block;
-        float block_hardness = player.worldObj.getBlockHardness(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
         int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
+        blockInfo = block;
+        itemStackInfo = block.createStackedBlock(metadata);
+        float block_hardness = player.worldObj.getBlockHardness(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
         int min_harvest_level = block.getMinHarvestLevel(metadata);
         info_line_1 = "";
         info_line_2 = "";
@@ -133,19 +135,11 @@ public class HwiteInfo extends Gui {
         redstone_info = "";
         spawner_info = "";
         updateBreakInfo(rc, player);
-        updateInfoMain(block, metadata);
-        if (shiftMoreInfo.getBooleanValue()) {
-            if (GuiScreen.isShiftKeyDown()) {
-                updateInfoLine12(min_harvest_level, rc, block_hardness, player);
-            }
-        } else {
+        updateInfoMain(block.createStackedBlock(metadata), block, metadata);
+        if (MITEDetailsInfo.getBooleanValue()) {
             updateInfoLine12(min_harvest_level, rc, block_hardness, player);
         }
     }
-
-//    private static void updateInfoLine12Detail(int min_harvest_level, RaycastCollision rc, float block_hardness, EntityPlayer player) {
-//        updateInfoLine12(min_harvest_level, rc, block_hardness, player);// TODO seems same now
-//    }
 
     private static void updateInfoLine12(int min_harvest_level, RaycastCollision rc, float block_hardness, EntityPlayer player) {
         if (min_harvest_level == 0) {
@@ -179,9 +173,9 @@ public class HwiteInfo extends Gui {
             if (rc.getBlockHitID() == wheatCropID || (Block.blocksList[blockID] instanceof BlockCrops) || Block.blocksList[blockID] instanceof BlockStem || blockID == netherStalkID) {
                 int growthValue = (int)(blockID == netherStalkID ? metadata / 3.0F * 100F : (metadata & 7) / 7.0F * 100.0F);
                 if (growthValue != 100.0D) {
-                    growth_info = EnumChatFormatting.GRAY + "生长状态: " + growthValue + "%";
+                    growth_info = EnumChatFormatting.GRAY + "生长状态 : " + growthValue + "%";
                 } else {
-                    growth_info = EnumChatFormatting.GRAY + "成熟";
+                    growth_info = EnumChatFormatting.GRAY + "生长状态 : 成熟";
                 }
             }
         } else {
@@ -194,27 +188,27 @@ public class HwiteInfo extends Gui {
         int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
         if (Redstone.getBooleanValue()) {
             if (blockID == leverID) {
-                String leverOn = ((metadata & 0x8) == 0) ? EnumChatFormatting.RED + "关" : EnumChatFormatting.GREEN + "开";
-                redstone_info = EnumChatFormatting.GRAY + "状态: " + leverOn;
+                String leverOn = ((metadata & 0x8) == 0) ? EnumChatFormatting.RED + "关闭" : EnumChatFormatting.GREEN + "开启";
+                redstone_info = EnumChatFormatting.GRAY + "状态 : " + leverOn;
             }
             if ((Block.blocksList[blockID] instanceof BlockPressurePlate) || (Block.blocksList[blockID] instanceof BlockPressurePlateWeighted)) {
-                String plateOn = ((metadata & 1) == 0) ? EnumChatFormatting.RED + "关" : EnumChatFormatting.GREEN + "开";
-                redstone_info = EnumChatFormatting.GRAY + "状态: " + plateOn;
+                String plateOn = ((metadata & 1) == 0) ? EnumChatFormatting.RED + "关闭" : EnumChatFormatting.GREEN + "开启";
+                redstone_info = EnumChatFormatting.GRAY + "状态 : " + plateOn;
             }
             if (blockID == repeaterIdle || blockID == repeaterActv) {
                 int tick = (metadata >> 2) + 1;
                 if (tick == 1) {
-                    redstone_info = EnumChatFormatting.GRAY + "延迟: " + tick + " tick";
+                    redstone_info = EnumChatFormatting.GRAY + "延迟 : " + tick + " tick";
                 } else {
-                    redstone_info = EnumChatFormatting.GRAY + "延迟: " + tick + " ticks";
+                    redstone_info = EnumChatFormatting.GRAY + "延迟 : " + tick + " ticks";
                 }
             }
             if (blockID == comparatorIdl || blockID == comparatorAct) {
-                String mode = ((metadata >> 2 & 0x1) == 0) ? "比较" : "作差";
-                redstone_info = EnumChatFormatting.GRAY + "模式: " + mode;
+                String mode = ((metadata >> 2 & 0x1) == 0) ? "比较器" : "减法器";
+                redstone_info = EnumChatFormatting.GRAY + "模式 : " + mode;
             }
             if (blockID == redstone) {
-                redstone_info = EnumChatFormatting.GRAY + "强度: " + metadata;
+                redstone_info = EnumChatFormatting.GRAY + "能量 : " + metadata;
             }
         } else {
             redstone_info = "";
@@ -231,11 +225,19 @@ public class HwiteInfo extends Gui {
         }
     }
 
-    private static void updateInfoMain(Block block, int metadata) {
-        if (ShowIDAndMetadata.getBooleanValue()) {
-            infoMain = block.getLocalizedName() + " (" + block.blockID + ":" + metadata + ")";
+    private static void updateInfoMain(ItemStack itemStack, Block block, int metadata) {
+        if (itemStack != null) {
+            if (ShowIDAndMetadata.getBooleanValue()) {
+                infoMain = itemStack.getDisplayName() + " (" + itemStack.itemID + ":" + metadata + ")";
+            } else {
+                infoMain = itemStack.getDisplayName();
+            }
         } else {
-            infoMain = block.getLocalizedName();
+            if (ShowIDAndMetadata.getBooleanValue()) {
+                infoMain = block.getLocalizedName() + " (" + block.blockID + ":" + metadata + ")";
+            } else {
+                infoMain = block.getLocalizedName();
+            }
         }
     }
 
