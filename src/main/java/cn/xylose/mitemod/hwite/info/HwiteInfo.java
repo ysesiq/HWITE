@@ -106,14 +106,14 @@ public class HwiteInfo extends Gui {
         infoMain = entityLivingBase.getEntityName();
 
         if (total_melee_damage == 0.0F) {
-            info_line_1 = EnumChatFormatting.GRAY + "血量:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth();
+            info_line_1 = EnumChatFormatting.GRAY + I18n.getString("hwite.info.health") + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth();
             info_line_2 = " ";
             break_info = "  ";
             growth_info = "";
             redstone_info = "";
             spawner_info = "";
         } else {
-            info_line_1 = EnumChatFormatting.GRAY + "血量:" + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth() + " 伤害:" + total_melee_damage;
+            info_line_1 = EnumChatFormatting.GRAY + I18n.getString("hwite.info.health") + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth() + I18n.getString("hwite.info.attack") + total_melee_damage;
             info_line_2 = " ";
             break_info = "  ";
             growth_info = "";
@@ -144,25 +144,25 @@ public class HwiteInfo extends Gui {
     private static void updateInfoLine12(int min_harvest_level, RaycastCollision rc, float block_hardness, EntityPlayer player) {
         if (min_harvest_level == 0) {
             if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-                info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness;
+                info_line_1 = EnumChatFormatting.GRAY + I18n.getString("hwite.info.hardness") + block_hardness;
             } else {
-                info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘速度:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
+                info_line_1 = EnumChatFormatting.GRAY + I18n.getString("hwite.info.hardness") + block_hardness + I18n.getString("hwite.info.str_vs_block") + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
             }
         } else {
             if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-                info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
+                info_line_1 = EnumChatFormatting.GRAY + I18n.getString("hwite.info.hardness") + block_hardness + I18n.getString("hwite.info.harvest_level") + min_harvest_level;
             } else {
-                info_line_1 = EnumChatFormatting.GRAY + "硬度:" + block_hardness + " 挖掘等级:" + min_harvest_level;
-                info_line_2 = EnumChatFormatting.DARK_GRAY + "挖掘速度:" + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
+                info_line_1 = EnumChatFormatting.GRAY + I18n.getString("hwite.info.hardness") + block_hardness + I18n.getString("hwite.info.harvest_level") + min_harvest_level;
+                info_line_2 = EnumChatFormatting.DARK_GRAY + I18n.getString("hwite.info.str_vs_block") + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
             }
         }
     }
 
     private static void updateBreakInfo(RaycastCollision rc, EntityPlayer player) {
         if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-            break_info = EnumChatFormatting.DARK_RED + "X" + EnumChatFormatting.WHITE;
+            break_info = EnumChatFormatting.DARK_RED + "✘" + EnumChatFormatting.WHITE;
         } else {
-            break_info = EnumChatFormatting.DARK_GREEN + "√" + EnumChatFormatting.WHITE;
+            break_info = EnumChatFormatting.DARK_GREEN + "✔" + EnumChatFormatting.WHITE;
         }
     }
 
@@ -173,9 +173,9 @@ public class HwiteInfo extends Gui {
             if (rc.getBlockHitID() == wheatCropID || (Block.blocksList[blockID] instanceof BlockCrops) || Block.blocksList[blockID] instanceof BlockStem || blockID == netherStalkID) {
                 int growthValue = (int)(blockID == netherStalkID ? metadata / 3.0F * 100F : (metadata & 7) / 7.0F * 100.0F);
                 if (growthValue != 100.0D) {
-                    growth_info = EnumChatFormatting.GRAY + "生长状态 : " + growthValue + "%";
+                    growth_info = EnumChatFormatting.GRAY + I18n.getString("hwite.info.growth_value") + growthValue + "%";
                 } else {
-                    growth_info = EnumChatFormatting.GRAY + "生长状态 : 成熟";
+                    growth_info = EnumChatFormatting.GRAY + I18n.getString("hwite.info.growth_value_mature");
                 }
             }
         } else {
@@ -188,27 +188,27 @@ public class HwiteInfo extends Gui {
         int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
         if (Redstone.getBooleanValue()) {
             if (blockID == leverID) {
-                String leverOn = ((metadata & 0x8) == 0) ? EnumChatFormatting.RED + "关闭" : EnumChatFormatting.GREEN + "开启";
-                redstone_info = EnumChatFormatting.GRAY + "状态 : " + leverOn;
+                String leverOn = ((metadata & 0x8) == 0) ? EnumChatFormatting.RED + I18n.getString("hwite.info.off") : EnumChatFormatting.GREEN + I18n.getString("hwite.info.on");
+                redstone_info = EnumChatFormatting.GRAY + I18n.getString("hwite.info.state") + leverOn;
             }
             if ((Block.blocksList[blockID] instanceof BlockPressurePlate) || (Block.blocksList[blockID] instanceof BlockPressurePlateWeighted)) {
-                String plateOn = ((metadata & 1) == 0) ? EnumChatFormatting.RED + "关闭" : EnumChatFormatting.GREEN + "开启";
-                redstone_info = EnumChatFormatting.GRAY + "状态 : " + plateOn;
+                String plateOn = ((metadata & 1) == 0) ? EnumChatFormatting.RED + I18n.getString("hwite.info.off") : EnumChatFormatting.GREEN + I18n.getString("hwite.info.on");
+                redstone_info = EnumChatFormatting.GRAY + I18n.getString("hwite.info.state") + plateOn;
             }
             if (blockID == repeaterIdle || blockID == repeaterActv) {
                 int tick = (metadata >> 2) + 1;
                 if (tick == 1) {
-                    redstone_info = EnumChatFormatting.GRAY + "延迟 : " + tick + " tick";
+                    redstone_info = EnumChatFormatting.GRAY + I18n.getString("hwite.info.delay") + tick + " tick";
                 } else {
-                    redstone_info = EnumChatFormatting.GRAY + "延迟 : " + tick + " ticks";
+                    redstone_info = EnumChatFormatting.GRAY + I18n.getString("hwite.info.delay") + tick + " ticks";
                 }
             }
             if (blockID == comparatorIdl || blockID == comparatorAct) {
-                String mode = ((metadata >> 2 & 0x1) == 0) ? "比较器" : "减法器";
-                redstone_info = EnumChatFormatting.GRAY + "模式 : " + mode;
+                String mode = ((metadata >> 2 & 0x1) == 0) ? I18n.getString("hwite.info.comparator") : I18n.getString("hwite.info.subtractor");
+                redstone_info = EnumChatFormatting.GRAY + I18n.getString("hwite.info.mode") + mode;
             }
             if (blockID == redstone) {
-                redstone_info = EnumChatFormatting.GRAY + "能量 : " + metadata;
+                redstone_info = EnumChatFormatting.GRAY + I18n.getString("hwite.info.power") + metadata;
             }
         } else {
             redstone_info = "";
@@ -219,7 +219,7 @@ public class HwiteInfo extends Gui {
         int blockID = player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
         TileEntity tileEntity = player.worldObj.getBlockTileEntity(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
         if (HwiteConfigs.SpawnerType.getBooleanValue() && blockID == mobSpawnerID && tileEntity instanceof TileEntityMobSpawner) {
-            spawner_info = EnumChatFormatting.GRAY + "种类: " + (((TileEntityMobSpawner) tileEntity).getSpawnerLogic().getEntityNameToSpawn());
+            spawner_info = EnumChatFormatting.GRAY + I18n.getString("hwite.info.type") + (((TileEntityMobSpawner) tileEntity).getSpawnerLogic().getEntityNameToSpawn());
         } else {
             spawner_info = "";
         }
@@ -262,7 +262,7 @@ public class HwiteInfo extends Gui {
             modInfo = EnumChatFormatting.BLUE + "§o" + "MITE";
         } else {
             // TODO entity needs a name space
-//                        modInfo = FishModLoader.getModContainer("modid").get().getMetadata().getName();
+//            modInfo = FishModLoader.getModContainer("modid").get().getMetadata().getName();
             modInfo = EnumChatFormatting.BLUE + "§o" + "Other Mod";
         }
     }

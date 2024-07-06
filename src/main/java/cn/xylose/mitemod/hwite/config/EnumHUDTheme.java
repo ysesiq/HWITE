@@ -7,12 +7,12 @@ public enum EnumHUDTheme {
     Dark("#CC131313", "#CC383838", "#CC242424"),
     TOP("#CC006699", "#CC9999ff", "#CC9999ff"),
     Create("#CC000000", "#CC2A2626", "#CC1A1717"),
+    Tooltip("#CC130211", "#CC1F0639", "#CC160321"),
     ;
 
     public final int backgroundColor;
     public final int frameColorTop;
     public final int frameColorBottom;
-
 
     EnumHUDTheme(String backgroundColor, String frameColorTop, String frameColorBottom) {
         this.backgroundColor = StringUtils.getColor(backgroundColor, 0);

@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "id": "hwite",
-  "version": "b0.9.0",
+  "version": "v1.0.0-pre",
   "depends": {
     "fishmodloader": ">=3.3.0",
-    "many-lib": ">=2.0.0"
+    "many-lib": ">=2.0.1"
   },
-  "environment": "client",
+  "environment": "*",
   "name": "Here's What Is Too Easy",
   "description": "那天,你终于知道你面前是什么玩意了",
   "authors": [

@@ -1,5 +1,6 @@
 package cn.xylose.mitemod.hwite.render;
 
+import cn.xylose.mitemod.hwite.config.HwiteConfigs;
 import cn.xylose.mitemod.hwite.info.HwiteInfo;
 import cn.xylose.mitemod.hwite.api.IBreakingProgress;
 import cn.xylose.mitemod.hwite.render.util.EnumRenderFlag;
@@ -40,12 +41,12 @@ public class HUDRenderer {
             switch (enumRenderFlag) {
                 case Small, Big -> {
                     ItemStack itemStack = HwiteInfo.blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ));
-                    renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemStack, block_info_x, HUDBackGroundRender.stringWidth / 3);
-                    renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemStack, block_info_x, HUDBackGroundRender.stringWidth / 3);
+                        renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemStack, block_info_x, (int) (HUDBackGroundRender.stringWidth / 3.5));
+                        renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemStack, block_info_x, (int) (HUDBackGroundRender.stringWidth / 3.5));
                 }
             }
+            GL11.glDisable(GL11.GL_LIGHTING);
         }
-        GL11.glDisable(GL11.GL_LIGHTING);
     }
 
     private static EnumRenderFlag addInfoToList(List<String> list) {

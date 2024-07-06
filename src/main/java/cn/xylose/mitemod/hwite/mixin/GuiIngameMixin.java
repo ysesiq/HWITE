@@ -1,10 +1,11 @@
 package cn.xylose.mitemod.hwite.mixin;
 
 import cn.xylose.mitemod.hwite.client.HwiteModClient;
+import cn.xylose.mitemod.hwite.config.HwiteConfigs;
 import cn.xylose.mitemod.hwite.render.HUDRenderer;
-import net.minecraft.EntityPlayer;
 import net.minecraft.Gui;
 import net.minecraft.GuiIngame;
+import net.minecraft.GuiScreen;
 import net.minecraft.Minecraft;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

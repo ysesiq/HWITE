@@ -1,0 +1,86 @@
+# Config
+## base
+config.name.RenderHwiteHud=Render HWITE HUD
+config.name.View=[WIP] View
+config.comment.View=Config screen render HUD
+config.name.EntityRender=[WIP] Entity Render
+config.name.BlockRender=Block Render
+config.name.Liquids=Liquids Info
+config.name.CanBreak=Break Tips
+config.name.BreakProgress=Break Progress
+config.name.BreakProgressLine=[WIP] Break Progress Line
+config.name.NonCollidingEntity=Non Colliding Entity
+config.comment.NonCollidingEntity=For example, experience balls, drops, fishing rod buoys
+config.name.GrowthValue=Crop Growth Value
+config.name.Redstone=Redstone Info
+config.comment.Redstone=Redstone Power, tie rod, Pressure Plate Status, Comparator Status, Repeater Status
+config.name.SpawnerType=Spawner Type
+## values
+config.name.HUDPosOverride=HUD Pos Override
+config.comment.HUDPosOverride=After opening, please use the 2nd and 3rd config items of the Values subpage to adjust
+config.name.HUDX=HUD X Pos
+config.comment.HUDX=Please turn on hud position adjustment
+config.name.HUDY=HUD Y Pos
+config.comment.HUDY=Please turn on HUD position adjustment
+config.name.EntityInfoX=Entity Render X Pos
+config.comment.EntityInfoX=Please turn on [WIP] Entity Render
+config.name.EntityInfoY=Entity Render Y Pos
+config.comment.EntityInfoY=Please turn on [WIP] Entity Render
+config.name.EntityInfoSize=Entity Render Size
+config.comment.EntityInfoSize=Please turn on [WIP] Entity Render
+## appearance
+config.name.HUDBackGround=HUD Background
+config.name.HUDRoundedRectangle=HUD Rounded Rectangle
+config.name.HUDFrame=HUD Frame
+config.name.HUDCentralBackground=HUD Central Background
+config.name.HUDThemeSwitch=HUD Theme Switch
+config.comment.HUDThemeSwitch=For custom themes, turn off this item
+config.name.HUDTheme=HUD Theme
+config.name.HUDBGColor=HUD Background Color
+config.comment.HUDBGColor=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
+config.name.HUDFrameColor=HUD Frame Color(Top)
+config.comment.HUDFrameColor=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
+config.name.HUDFrameColor1=HUD Frame Color(Bottom)
+config.comment.HUDFrameColor1=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
+config.name.BreakProgressLineColor=Break Progress Line Color
+config.comment.BreakProgressLineColor=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
+## dev
+config.name.MITEDetailsInfo=MITE Details Info
+config.comment.MITEDetailsInfo=Hardness, StrVsBlock, harvest level, these are the MITE is_active details display that comes with it
+config.name.ShowIDAndMetadata=ID And Metadata
+## hotkey
+config.name.ConfigGuiHotkey=Open Config Screen
+config.name.HUDHotkey=Show/Hide HUD
+config.name.LiquidsHotkey=Show/Hide Liquids
+## enum
+config.enum.HUDTheme.Waila=Waila
+config.enum.HUDTheme.Dark=Dark
+config.enum.HUDTheme.TOP=The One Probe
+config.enum.HUDTheme.Create=Create
+config.enum.HUDTheme.Tooltip=Tooltip
+## config Comment
+config.value.comment.HWITE=What am i looking at
+config.hotkey.comment.HWITE=Here's What You're Looking At
+## config tab
+config.tab.switch=Switch
+config.tab.values=Values
+config.tab.appearance=Appearance
+config.tab.dev=Dev
+
+# HWITE
+hwite.info.health=Health:
+hwite.info.attack= Attack:
+hwite.info.hardness=Hardness:
+hwite.info.str_vs_block= StrVsBlock:
+hwite.info.harvest_level= HarvestLevel:
+hwite.info.growth_value=Growth:
+hwite.info.growth_value_mature=Growth: Mature
+hwite.info.off=Off
+hwite.info.on=On
+hwite.info.state=State:
+hwite.info.delay=Delay:
+hwite.info.comparator=Comparator
+hwite.info.subtractor=Subtractor
+hwite.info.mode=Mode:
+hwite.info.power=Power:
+hwite.info.type=Type:
