@@ -1,16 +1,15 @@
 package cn.xylose.mitemod.hwite.render;
 
+import cn.xylose.mitemod.hwite.config.EnumHUDTheme;
 import cn.xylose.mitemod.hwite.info.HwiteInfo;
 import cn.xylose.mitemod.hwite.api.IBreakingProgress;
 import net.minecraft.*;
-import fi.dy.masa.malilib.util.StringUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import java.util.List;
 import java.util.Objects;
 
-import static cn.xylose.mitemod.hwite.config.EnumHUDTheme.*;
 import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
 
 public class HUDBackGroundRender extends Gui {
@@ -18,10 +17,6 @@ public class HUDBackGroundRender extends Gui {
     public static int stringWidth1;
     public static int stringWidth;
     public static int BlockRenderLeftEliminate;
-    public static String hudBGColor;
-    public static String hudFrameColorTop;
-    public static String hudFrameColorBottom;
-
     private static final RenderItem itemRenderer = new RenderItem();
 
     public int getStringWidth1() {
@@ -98,174 +93,68 @@ public class HUDBackGroundRender extends Gui {
         int hudFrameColorTop1;
         int hudFrameColorBottom1;
         if (HUDThemeSwitch.getBooleanValue()) {
-            if (HUDTheme.getEnumValue().equals(Waila)) {
-                hudBGColor = "#CC10010F";
-                hudFrameColorTop = "#CC5001FE";
-                hudFrameColorBottom = "#CC28017E";
-                hudBGColor1 = StringUtils.getColor(hudBGColor, 0);
-                hudFrameColorTop1 = StringUtils.getColor(hudFrameColorTop, 0);
-                hudFrameColorBottom1 = StringUtils.getColor(hudFrameColorBottom, 0);
-                if (HUDBackGround.getBooleanValue()) {
-                    //中
-                    if (HUDCentralBackground.getBooleanValue()) {
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                    }
-                    if (HUDRoundedRectangle.getBooleanValue()) {
-                        //上
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 4, stringWidth1 + var4 + 3, stringWidth - 3, hudBGColor1, hudBGColor1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, stringWidth1 + var4 + 3, stringWidth + var8 + 4, hudBGColor1, hudBGColor1, zLevel);
-                        drawGradientRect(stringWidth1 - 4 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                        //右
-                        drawGradientRect(stringWidth1 + var4 + 3, stringWidth - 3, stringWidth1 + var4 + 4, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                    }
-                    if (HUDFrame.getBooleanValue()) {
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3 + 1, stringWidth1 - 3 + 1 - BlockRenderLeftEliminate, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                        drawGradientRect(stringWidth1 + var4 + 2, stringWidth - 3 + 1, stringWidth1 + var4 + 3, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth - 3 + 1, hudFrameColorTop1, hudFrameColorTop1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 2, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudFrameColorBottom1, hudFrameColorBottom1, zLevel);
-                    }
-                }
-            }
-            if (HUDTheme.getEnumValue().equals(Dark)) {
-                hudBGColor = "#CC131313";
-                hudFrameColorTop = "#CC383838";
-                hudFrameColorBottom = "#CC242424";
-                hudBGColor1 = StringUtils.getColor(hudBGColor, 0);
-                hudFrameColorTop1 = StringUtils.getColor(hudFrameColorTop, 0);
-                hudFrameColorBottom1 = StringUtils.getColor(hudFrameColorBottom, 0);
-                if (HUDBackGround.getBooleanValue()) {
-                    //中
-                    if (HUDCentralBackground.getBooleanValue()) {
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                    }
-                    if (HUDRoundedRectangle.getBooleanValue()) {
-                        //上
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 4, stringWidth1 + var4 + 3, stringWidth - 3, hudBGColor1, hudBGColor1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, stringWidth1 + var4 + 3, stringWidth + var8 + 4, hudBGColor1, hudBGColor1, zLevel);
-                        drawGradientRect(stringWidth1 - 4 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                        //右
-                        drawGradientRect(stringWidth1 + var4 + 3, stringWidth - 3, stringWidth1 + var4 + 4, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                    }
-                    if (HUDFrame.getBooleanValue()) {
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3 + 1, stringWidth1 - 3 + 1 - BlockRenderLeftEliminate, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                        drawGradientRect(stringWidth1 + var4 + 2, stringWidth - 3 + 1, stringWidth1 + var4 + 3, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth - 3 + 1, hudFrameColorTop1, hudFrameColorTop1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 2, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudFrameColorBottom1, hudFrameColorBottom1, zLevel);
-                    }
-                }
-            }
-            if (HUDTheme.getEnumValue().equals(TOP)) {
-                hudBGColor = "#CC006699";
-                hudFrameColorTop = "#CC9999ff";
-                hudFrameColorBottom = "#CC9999ff";
-                hudBGColor1 = StringUtils.getColor(hudBGColor, 0);
-                hudFrameColorTop1 = StringUtils.getColor(hudFrameColorTop, 0);
-                hudFrameColorBottom1 = StringUtils.getColor(hudFrameColorBottom, 0);
-                if (HUDBackGround.getBooleanValue()) {
-                    //中
-                    if (HUDCentralBackground.getBooleanValue()) {
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                    }
-                    if (HUDRoundedRectangle.getBooleanValue()) {
-                        //上
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 4, stringWidth1 + var4 + 3, stringWidth - 3, hudBGColor1, hudBGColor1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, stringWidth1 + var4 + 3, stringWidth + var8 + 4, hudBGColor1, hudBGColor1, zLevel);
-                        drawGradientRect(stringWidth1 - 4 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                        //右
-                        drawGradientRect(stringWidth1 + var4 + 3, stringWidth - 3, stringWidth1 + var4 + 4, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                    }
-                    if (HUDFrame.getBooleanValue()) {
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3 + 1, stringWidth1 - 3 + 1 - BlockRenderLeftEliminate, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                        drawGradientRect(stringWidth1 + var4 + 2, stringWidth - 3 + 1, stringWidth1 + var4 + 3, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth - 3 + 1, hudFrameColorTop1, hudFrameColorTop1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 2, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudFrameColorBottom1, hudFrameColorBottom1, zLevel);
-                    }
-                }
-            }
-            if (HUDTheme.getEnumValue().equals(Create)) {
-                hudBGColor = "#CC000000";
-                hudFrameColorTop = "#CC2A2626";
-                hudFrameColorBottom = "#CC1A1717";
-                hudBGColor1 = StringUtils.getColor(hudBGColor, 0);
-                hudFrameColorTop1 = StringUtils.getColor(hudFrameColorTop, 0);
-                hudFrameColorBottom1 = StringUtils.getColor(hudFrameColorBottom, 0);
-                if (HUDBackGround.getBooleanValue()) {
-                    //中
-                    if (HUDCentralBackground.getBooleanValue()) {
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                    }
-                    if (HUDRoundedRectangle.getBooleanValue()) {
-                        //上
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 4, stringWidth1 + var4 + 3, stringWidth - 3, hudBGColor1, hudBGColor1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, stringWidth1 + var4 + 3, stringWidth + var8 + 4, hudBGColor1, hudBGColor1, zLevel);
-                        drawGradientRect(stringWidth1 - 4 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                        //右
-                        drawGradientRect(stringWidth1 + var4 + 3, stringWidth - 3, stringWidth1 + var4 + 4, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                    }
-                    if (HUDFrame.getBooleanValue()) {
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3 + 1, stringWidth1 - 3 + 1 - BlockRenderLeftEliminate, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                        drawGradientRect(stringWidth1 + var4 + 2, stringWidth - 3 + 1, stringWidth1 + var4 + 3, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth - 3 + 1, hudFrameColorTop1, hudFrameColorTop1, zLevel);
-                        drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 2, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudFrameColorBottom1, hudFrameColorBottom1, zLevel);
-                    }
-                }
-            }
+            EnumHUDTheme theme = HUDTheme.getEnumValue();
+            hudBGColor1 = theme.backgroundColor;
+            hudFrameColorTop1 = theme.frameColorTop;
+            hudFrameColorBottom1 = theme.frameColorBottom;
         } else {
             hudBGColor1 = HUDBGColor.getColorInteger();
             hudFrameColorTop1 = HUDFrameColor.getColorInteger();
             hudFrameColorBottom1 = HUDFrameColor1.getColorInteger();
-            if (HUDBackGround.getBooleanValue()) {
-                //中
-                if (HUDCentralBackground.getBooleanValue()) {
-                    drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                }
-                if (HUDRoundedRectangle.getBooleanValue()) {
-                    //上
-                    drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 4, stringWidth1 + var4 + 3, stringWidth - 3, hudBGColor1, hudBGColor1, zLevel);
-                    drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, stringWidth1 + var4 + 3, stringWidth + var8 + 4, hudBGColor1, hudBGColor1, zLevel);
-                    drawGradientRect(stringWidth1 - 4 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                    //右
-                    drawGradientRect(stringWidth1 + var4 + 3, stringWidth - 3, stringWidth1 + var4 + 4, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
-                }
-                if (HUDFrame.getBooleanValue()) {
-                    drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3 + 1, stringWidth1 - 3 + 1 - BlockRenderLeftEliminate, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                    drawGradientRect(stringWidth1 + var4 + 2, stringWidth - 3 + 1, stringWidth1 + var4 + 3, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                    drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth - 3 + 1, hudFrameColorTop1, hudFrameColorTop1, zLevel);
-                    drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 2, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudFrameColorBottom1, hudFrameColorBottom1, zLevel);
-                }
+        }
+
+        if (HUDBackGround.getBooleanValue()) {
+            //中
+            if (HUDCentralBackground.getBooleanValue()) {
+                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
+            }
+            if (HUDRoundedRectangle.getBooleanValue()) {
+                //上
+                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 4, stringWidth1 + var4 + 3, stringWidth - 3, hudBGColor1, hudBGColor1, zLevel);
+                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, stringWidth1 + var4 + 3, stringWidth + var8 + 4, hudBGColor1, hudBGColor1, zLevel);
+                drawGradientRect(stringWidth1 - 4 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
+                //右
+                drawGradientRect(stringWidth1 + var4 + 3, stringWidth - 3, stringWidth1 + var4 + 4, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
+            }
+            if (HUDFrame.getBooleanValue()) {
+                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3 + 1, stringWidth1 - 3 + 1 - BlockRenderLeftEliminate, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
+                drawGradientRect(stringWidth1 + var4 + 2, stringWidth - 3 + 1, stringWidth1 + var4 + 3, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
+                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth - 3 + 1, hudFrameColorTop1, hudFrameColorTop1, zLevel);
+                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 2, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudFrameColorBottom1, hudFrameColorBottom1, zLevel);
             }
         }
 
-            float breakProgress = ((IBreakingProgress) Minecraft.getMinecraft().playerController).getCurrentBreakingProgress();
-            if (breakProgress > 0 && BreakProgressLine.getBooleanValue()) {
-                int progress = (int) (breakProgress * 100F);
+
+        float breakProgress = ((IBreakingProgress) Minecraft.getMinecraft().playerController).getCurrentBreakingProgress();
+        if (breakProgress > 0 && BreakProgressLine.getBooleanValue()) {
+            int progress = (int) (breakProgress * 100F);
 //                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, stringWidth1 + var4 + 3, stringWidth + var8 + 4, var9, var9, zLevel);
-                drawGradientRect(
-                        progress + stringWidth1 - 3 - BlockRenderLeftEliminate,
-                        stringWidth + var8 + 3,
-                        stringWidth1 + var4 + 3,
-                        stringWidth + var8 + 4,
-                        BreakProgressLineColor.getColorInteger(), BreakProgressLineColor.getColorInteger(), zLevel);
+            drawGradientRect(
+                    progress + stringWidth1 - 3 - BlockRenderLeftEliminate,
+                    stringWidth + var8 + 3,
+                    stringWidth1 + var4 + 3,
+                    stringWidth + var8 + 4,
+                    BreakProgressLineColor.getColorInteger(), BreakProgressLineColor.getColorInteger(), zLevel);
 //
 //                drawHorizontalLineHwite(var15 + 10, var15 + 110, lineHeight, 0xFFFFFFFF);
 //                drawHorizontalLineHwite(var15 + 10, progress + var15 + 10, lineHeight, 0xFF000000);
 //                drawHorizontalLineHwite(stringWidth1 + var4 + 3, progress + stringWidth1 - BlockRenderLeftEliminate, stringWidth + var8 + 3, 0xFFFFFFFF);
-            }
-            for (int var12 = 0; var12 < par1List.size(); ++var12) {
-                String var13 = par1List.get(var12);
-                fontRenderer.drawStringWithShadow(var13, stringWidth1, stringWidth, -1);
+        }
+        for (int var12 = 0; var12 < par1List.size(); ++var12) {
+            String var13 = par1List.get(var12);
+            fontRenderer.drawStringWithShadow(var13, stringWidth1, stringWidth, -1);
 
-                if (var12 == 0 && has_title) {
-                    stringWidth += 2;
-                }
-
-                stringWidth += 10;
+            if (var12 == 0 && has_title) {
+                stringWidth += 2;
             }
+
+            stringWidth += 10;
+        }
 
 //            zLevel = 0.0F;
-            itemRenderer.zLevel = 0.0F;
-            GL11.glEnable(GL11.GL_DEPTH_TEST);
-            GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        itemRenderer.zLevel = 0.0F;
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
     }
 
     private static void drawHorizontalLineHwite(int par1, int par2, int par3, int par4) {

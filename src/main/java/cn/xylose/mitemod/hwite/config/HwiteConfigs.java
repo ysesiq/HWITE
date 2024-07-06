@@ -21,7 +21,7 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigBoolean CanBreak = new ConfigBoolean("挖掘提示", true, "指向方块时,如果能挖掘显示'√',不能挖掘显示'X'");
     public static final ConfigBoolean BreakProgress = new ConfigBoolean("挖掘进度", true);
     public static final ConfigBoolean BreakProgressLine = new ConfigBoolean("挖掘进度条(WIP)", false);
-    public static final ConfigBoolean NonCollidableEntity = new ConfigBoolean("不可碰撞实体", false, "例如经验球,掉落物,钓鱼竿的浮标");
+    public static final ConfigBoolean NonCollidingEntity = new ConfigBoolean("不可碰撞实体", false, "例如经验球,掉落物,钓鱼竿的浮标");
     public static final ConfigBoolean GrowthValue = new ConfigBoolean("作物生长进度", true);
     public static final ConfigBoolean Redstone = new ConfigBoolean("红石信息", true, "红石能量强度,拉杆.压力板状态,比较器状态,中继器状态");
     public static final ConfigBoolean SpawnerType = new ConfigBoolean("刷怪笼种类", true);
@@ -54,7 +54,7 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final List<ConfigBase<?>> values;
     public static final List<ConfigBase<?>> appearance;
     public static final List<ConfigBase<?>> dev;
-//    public static final List<ConfigHotkey> hotkey;
+    public static final List<ConfigHotkey> hotkey;
 
     public static final List<ConfigTab> tabs = new ArrayList<>();
 
@@ -63,11 +63,11 @@ public class HwiteConfigs extends SimpleConfigs {
     }
 
     static {
-        hwiteswitch = List.of(RenderHwiteHud, BlockRender, EntityRender, Liquids, CanBreak, BreakProgress, BreakProgressLine, NonCollidableEntity, GrowthValue, Redstone, SpawnerType);
+        hwiteswitch = List.of(RenderHwiteHud, BlockRender, EntityRender, Liquids, CanBreak, BreakProgress, BreakProgressLine, NonCollidingEntity, GrowthValue, Redstone, SpawnerType);
         values = List.of(HUDPosOverride, HUDX, HUDY, EntityInfoX, EntityInfoY, EntityInfoSize);
         appearance = List.of(HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDThemeSwitch, HUDTheme, HUDBGColor, HUDFrameColor, HUDFrameColor1, BreakProgressLineColor);
         dev = List.of(ShowIDAndMetadata, MITEDetailsInfo);
-//        hotkey = List.of(HUDHotkey);
+        hotkey = List.of(HUDHotkey);
         List<ConfigBase<?>> comfigValues = new ArrayList<>();
         comfigValues.addAll(hwiteswitch);
         comfigValues.addAll(appearance);
@@ -77,7 +77,10 @@ public class HwiteConfigs extends SimpleConfigs {
         tabs.add(new ConfigTab("数值", HwiteConfigs.values));
         tabs.add(new ConfigTab("外观", appearance));
         tabs.add(new ConfigTab("开发选项", dev));
-        Instance = new HwiteConfigs("HWITE", null, comfigValues);
+
+        HUDHotkey.setHotKeyPressCallBack(minecraft -> RenderHwiteHud.toggleBooleanValue());
+
+        Instance = new HwiteConfigs("HWITE", hotkey, comfigValues);
     }
 
     @Override
@@ -96,6 +99,7 @@ public class HwiteConfigs extends SimpleConfigs {
         ConfigUtils.writeConfigBase(root, "数值", values);
         ConfigUtils.writeConfigBase(root, "外观", appearance);
         ConfigUtils.writeConfigBase(root, "开发选项", dev);
+        ConfigUtils.writeConfigBase(root, "快捷键", hotkey);
         JsonUtils.writeJsonToFile(root, this.optionsFile);
     }
 
@@ -111,6 +115,7 @@ public class HwiteConfigs extends SimpleConfigs {
                 ConfigUtils.readConfigBase(root, "数值", values);
                 ConfigUtils.readConfigBase(root, "外观", appearance);
                 ConfigUtils.readConfigBase(root, "开发选项", dev);
+                ConfigUtils.readConfigBase(root, "快捷键", hotkey);
             }
         }
     }

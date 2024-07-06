@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static cn.xylose.mitemod.hwite.config.HwiteConfigs.Liquids;
-import static cn.xylose.mitemod.hwite.config.HwiteConfigs.NonCollidableEntity;
+import static cn.xylose.mitemod.hwite.config.HwiteConfigs.NonCollidingEntity;
 import static net.minecraft.EntityRenderer.setDebugInfoForSelectedObject;
 
 @Mixin(EntityRenderer.class)
@@ -27,7 +27,7 @@ public class EntityRendererMixin implements INamespaced {
     @Inject(method = "getMouseOver", at = @At("TAIL"))
     public void getMouseOverHwite(float partial_tick, CallbackInfo ci) {
         EntityPlayer player = (EntityPlayer) this.mc.renderViewEntity;
-        setDebugInfoForSelectedObject(player.getSelectedObject(partial_tick, Liquids.getBooleanValue(), NonCollidableEntity.getBooleanValue(), null), player);
+        setDebugInfoForSelectedObject(player.getSelectedObject(partial_tick, Liquids.getBooleanValue(), NonCollidingEntity.getBooleanValue(), null), player);
     }
 
 }

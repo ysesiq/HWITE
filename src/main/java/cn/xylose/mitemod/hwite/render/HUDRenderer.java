@@ -59,41 +59,34 @@ public class HUDRenderer {
         boolean line1Empty = Objects.equals(HwiteInfo.info_line_1, "");
         boolean line1IsABlank = Objects.equals(HwiteInfo.info_line_1, " ");
         boolean line2IsABlank = Objects.equals(HwiteInfo.info_line_2, " ");
+        boolean breadInfoEmpty = Objects.equals(HwiteInfo.break_info, "");
+        boolean blockInfoNonNull = HwiteInfo.blockInfo != null;
 
         boolean smallFlag = false;
         boolean bigFlag = false;
 
         if (HwiteInfo.entityInfo != null) {
             list.add(HwiteInfo.infoMain);
-            tryAddBreakProgress(list, breakProgress);
-            tryAddGrowthValue(list);
-            tryAddRedstoneValue(list);
-            tryAddSpawnerValue(list);
+            tryAddExtraInfo(list, breakProgress);
             if (!line1Empty) {
                 list.add(HwiteInfo.info_line_1);
             }
         } else if (line2Empty) {
-            if (!Objects.equals(HwiteInfo.break_info, "") && CanBreak.getBooleanValue()) {
+            if (!breadInfoEmpty && CanBreak.getBooleanValue()) {
                 list.add(HwiteInfo.infoMain + "  " + HwiteInfo.break_info);
-                tryAddBreakProgress(list, breakProgress);
-                tryAddGrowthValue(list);
-                tryAddRedstoneValue(list);
-                tryAddSpawnerValue(list);
+                tryAddExtraInfo(list, breakProgress);
                 //WIP
 //                    mc.getTextureManager().bindTexture(hwiteIconTexPath);
 //                    this.zLevel = -90.0F;
 //                    this.drawTexturedModalRect(screenWidth / 2 + 10, screenHeight - (screenHeight - 30), 0, 0, 16, 16);
             } else {
                 list.add(HwiteInfo.infoMain);
-                tryAddBreakProgress(list, breakProgress);
-                tryAddGrowthValue(list);
-                tryAddRedstoneValue(list);
-                tryAddSpawnerValue(list);
+                tryAddExtraInfo(list, breakProgress);
             }
             if (!line1Empty) {
                 list.add(HwiteInfo.info_line_1);
             }
-            if (BlockRender.getBooleanValue() && HwiteInfo.blockInfo != null) {
+            if (BlockRender.getBooleanValue() && blockInfoNonNull) {
                 smallFlag = true;
             }
         } else if (line1IsABlank && line2IsABlank) {
@@ -102,12 +95,9 @@ public class HUDRenderer {
                 list.add(String.format("%d", breakProgress) + "%");
             }
         } else {
-            if (!Objects.equals(HwiteInfo.break_info, "") && CanBreak.getBooleanValue()) {
+            if (!breadInfoEmpty && CanBreak.getBooleanValue()) {
                 list.add(HwiteInfo.infoMain + "  " + HwiteInfo.break_info);
-                tryAddBreakProgress(list, breakProgress);
-                tryAddGrowthValue(list);
-                tryAddRedstoneValue(list);
-                tryAddSpawnerValue(list);
+                tryAddExtraInfo(list, breakProgress);
                 //WIP
 //                    mc.getTextureManager().bindTexture(hwiteIconTexPath);
 //                    this.zLevel = -90.0F;
@@ -117,16 +107,13 @@ public class HUDRenderer {
 //                    list.add(modInfo);
             } else {
                 list.add(HwiteInfo.infoMain);
-                tryAddBreakProgress(list, breakProgress);
-                tryAddGrowthValue(list);
-                tryAddRedstoneValue(list);
-                tryAddSpawnerValue(list);
+                tryAddExtraInfo(list, breakProgress);
             }
             if (!line1Empty) {
                 list.add(HwiteInfo.info_line_1);
                 list.add(HwiteInfo.info_line_2);
             }
-            if (BlockRender.getBooleanValue() && HwiteInfo.blockInfo != null) {
+            if (BlockRender.getBooleanValue() && blockInfoNonNull) {
                 bigFlag = true;
             }
         }
@@ -142,21 +129,31 @@ public class HUDRenderer {
         return EnumRenderFlag.Nothing;
     }
 
+    private static void tryAddExtraInfo(List<String> list, int breakProgress) {
+        tryAddBreakProgress(list, breakProgress);
+        tryAddGrowthValue(list);
+        tryAddRedstoneValue(list);
+        tryAddSpawnerValue(list);
+    }
+
     private static void tryAddBreakProgress(List<String> list, int breakProgress) {
         if (breakProgress > 0 && BreakProgress.getBooleanValue()) {
             list.add(String.format(EnumChatFormatting.DARK_GRAY + "进度: " + "%d", breakProgress) + "%");
         }
     }
+
     private static void tryAddGrowthValue(List<String> list) {
         if (GrowthValue.getBooleanValue() && !Objects.equals(HwiteInfo.growth_info, "")) {
             list.add(HwiteInfo.growth_info);
         }
     }
+
     private static void tryAddRedstoneValue(List<String> list) {
         if (Redstone.getBooleanValue() && !Objects.equals(HwiteInfo.redstone_info, "")) {
             list.add(HwiteInfo.redstone_info);
         }
     }
+
     private static void tryAddSpawnerValue(List<String> list) {
         if (SpawnerType.getBooleanValue() && !Objects.equals(HwiteInfo.spawner_info, "")) {
             list.add(HwiteInfo.spawner_info);
