@@ -3,6 +3,7 @@
 config.name.hwite.RenderHwiteHud=渲染HUD
 config.name.hwite.View=[WIP]预览
 config.comment.hwite.View=配置界面预览
+config.name.hwite.debugRenderHud=调试界面渲染HUD
 config.name.hwite.EntityRender=[WIP]实体渲染
 config.name.hwite.BlockRender=方块渲染
 config.name.hwite.Liquids=流体信息
@@ -44,10 +45,17 @@ config.name.hwite.HUDFrameColor1=自定义HUD外框梯度颜色(底)
 config.comment.hwite.HUDFrameColor1=此项为16进制数,12位数为透明度,34位为红色通道,56位为绿色通道,78位为蓝色通道
 config.name.hwite.BreakProgressLineColor=自定义挖掘进度条颜色
 config.comment.hwite.BreakProgressLineColor=此项为16进制数,12位数为透明度,34位为红色通道,56位为绿色通道,78位为蓝色通道
+config.name.hwite.ModNameTextColor=模组名称颜色
+config.name.hwite.CanBreakString=可以破坏指示符
+config.name.hwite.CannotBreakString=无法破坏指示符
 ## dev
 config.name.hwite.MITEDetailsInfo=MITE详细信息
 config.comment.hwite.MITEDetailsInfo=硬度,挖掘速度,挖掘等级,这些是原版MITE is_active详细信息显示自带的
 config.name.hwite.ShowIDAndMetadata=ID与附加值
+config.name.hwite.ShowBlockOrEntityCoord=方块/实体 坐标
+config.name.hwite.ShowDistance=方块/实体 距离
+config.name.hwite.ShowDirection=方块朝向
+config.name.hwite.ShowBlockUnlocalizedName=方块注册名
 ## hotkey
 config.name.hwite.ConfigGuiHotkey=打开配置屏幕
 config.comment.hwite.ConfigGuiHotkey=打开配置屏幕
@@ -55,7 +63,12 @@ config.name.hwite.HUDHotkey=显示/隐藏 HUD
 config.comment.hwite.HUDHotkey=显示/隐藏 HUD
 config.name.hwite.LiquidsHotkey=显示/隐藏 流体
 config.comment.hwite.LiquidsHotkey=显示/隐藏 流体
+## HIWLA Config
+config.name.hiwla.AnimalGrowthTime=动物成长时间
+config.name.hiwla.LivingProtection=生物护甲值
+config.name.hiwla.VillagerProfession=村民职业
 ## enum
+configs.name.hwite.HUDTheme=HUD主题
 config.enum.HUDTheme.Waila=经典
 config.enum.HUDTheme.Dark=暗色
 config.enum.HUDTheme.TOP=TOP检测器
@@ -69,6 +82,7 @@ config.tab.hwite.switch=开关
 config.tab.hwite.values=数值
 config.tab.hwite.appearance=外观
 config.tab.hwite.dev=开发
+config.tab.hwite.hiwla=HIWLA
 
 # HWITE
 hwite.info.health=生命值:
@@ -87,5 +101,20 @@ hwite.info.subtractor=减法器
 hwite.info.mode=模式:
 hwite.info.power=能量:
 hwite.info.type=种类:
+hwite.info.breakProgress=进度:
+
+# HIWLA
+hiwla.info.animal_growing_time=剩余成长时间:
+hiwla.info.protection=护甲值:
+hiwla.info.profession=职业:
+hiwla.info.profession.villager=傻子
+hiwla.info.profession.farmer=农民
+hiwla.info.profession.librarian=图书馆管理员
+hiwla.info.profession.priest=牧师
+hiwla.info.profession.smith=武器匠
+hiwla.info.profession.butcher=屠夫
+hiwla.info.furnace.burn_time=剩余燃烧时间:
+hiwla.info.beacon.level=等级:
+hiwla.info.horse_jump=跳跃能力:
 
 

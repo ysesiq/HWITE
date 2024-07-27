@@ -3,6 +3,7 @@
 config.name.hwite.RenderHwiteHud=Render HWITE HUD
 config.name.hwite.View=[WIP] View
 config.comment.hwite.View=Config screen render HUD
+config.name.hwite.debugRenderHud=Render HWITE HUD on Debug Screen
 config.name.hwite.EntityRender=[WIP] Entity Render
 config.name.hwite.BlockRender=Block Render
 config.name.hwite.Liquids=Liquids Info
@@ -44,10 +45,17 @@ config.name.hwite.HUDFrameColor1=HUD Frame Color(Bottom)
 config.comment.hwite.HUDFrameColor1=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
 config.name.hwite.BreakProgressLineColor=Break Progress Line Color
 config.comment.hwite.BreakProgressLineColor=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
+config.name.hwite.ModNameTextColor=Mod Name Color
+config.name.hwite.CanBreakString=Can Break Indicator
+config.name.hwite.CannotBreakString=Cannot Break Indicator
 ## dev
 config.name.hwite.MITEDetailsInfo=MITE Details Info
 config.comment.hwite.MITEDetailsInfo=Hardness, StrVsBlock, harvest level, these are the MITE is_active details display that comes with it
 config.name.hwite.ShowIDAndMetadata=ID And Metadata
+config.name.hwite.ShowBlockOrEntityCoord=Block/Entity Coordinate
+config.name.hwite.ShowDistance=Block/Entity Distance
+config.name.hwite.ShowDirection=Block Direction
+config.name.hwite.ShowBlockUnlocalizedName=Block Unlocalized Name
 ## hotkey
 config.name.hwite.ConfigGuiHotkey=Open Config Screen
 config.comment.hwite.ConfigGuiHotkey=Open Config Screen
@@ -55,7 +63,12 @@ config.name.hwite.HUDHotkey=Show/Hide HUD
 config.comment.hwite.HUDHotkey=Show/Hide HUD
 config.name.hwite.LiquidsHotkey=Show/Hide Liquids
 config.comment.hwite.LiquidsHotkey=Show/Hide Liquids
+## HIWLA Config
+config.name.hiwla.AnimalGrowthTime=Animal Growth Time
+config.name.hiwla.LivingProtection=Living Protection
+config.name.hiwla.VillagerProfession=Villager Profession
 ## enum
+configs.name.hwite.HUDTheme=HUD Theme
 config.enum.HUDTheme.Waila=Waila
 config.enum.HUDTheme.Dark=Dark
 config.enum.HUDTheme.TOP=The One Probe
@@ -69,6 +82,7 @@ config.tab.hwite.switch=Switch
 config.tab.hwite.values=Values
 config.tab.hwite.appearance=Appearance
 config.tab.hwite.dev=Dev
+config.tab.hwite.hiwla=HIWLA
 
 # HWITE
 hwite.info.health=Health:
@@ -87,3 +101,18 @@ hwite.info.subtractor=Subtractor
 hwite.info.mode=Mode:
 hwite.info.power=Power:
 hwite.info.type=Type:
+hwite.info.breakProgress=Progress:
+
+# HIWLA
+hiwla.info.animal_growing_time=Remaining Growth Time:
+hiwla.info.protection=Protection:
+hiwla.info.profession=Profession:
+hiwla.info.profession.villager=Nitwit
+hiwla.info.profession.farmer=Farmer
+hiwla.info.profession.librarian=Librarian
+hiwla.info.profession.priest=Priest
+hiwla.info.profession.smith=Smith
+hiwla.info.profession.butcher=Butcher
+hiwla.info.furnace.burn_time=Burn Time:
+hiwla.info.beacon.level=Level:
+hiwla.info.horse_jump=Jump Strength:

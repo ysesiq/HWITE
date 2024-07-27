@@ -135,11 +135,13 @@ public class HUDRenderer {
         tryAddGrowthValue(list);
         tryAddRedstoneValue(list);
         tryAddSpawnerValue(list);
+        tryAddDevValue(list);
+        tryAddHiwlaValue(list);
     }
 
     private static void tryAddBreakProgress(List<String> list, int breakProgress) {
         if (breakProgress > 0 && BreakProgress.getBooleanValue()) {
-            list.add(String.format(EnumChatFormatting.DARK_GRAY + "进度: " + "%d", breakProgress) + "%");
+            list.add(String.format(EnumChatFormatting.DARK_GRAY + I18n.getString("hwite.info.breakProgress") + "%d", breakProgress) + "%");
         }
     }
 
@@ -160,4 +162,20 @@ public class HUDRenderer {
             list.add(HwiteInfo.spawner_info);
         }
     }
+
+    private static void tryAddDevValue(List<String> list) {
+        if (!Objects.equals(HwiteInfo.devInfo, "")) {
+            list.add(HwiteInfo.devInfo);
+        }
+        if (!Objects.equals(HwiteInfo.unlocalizedNameInfo, "")) {
+            list.add(HwiteInfo.unlocalizedNameInfo);
+        }
+    }
+
+    private static void tryAddHiwlaValue(List<String> list) {
+        if (!Objects.equals(HwiteInfo.hiwlaInfo, "")) {
+            list.add(HwiteInfo.hiwlaInfo);
+        }
+    }
+
 }

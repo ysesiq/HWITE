@@ -3,3 +3,5 @@ accessWidener v2 named
 accessible method net/minecraft/Block getItemSubtypes ()[I
 accessible field net/minecraft/Minecraft renderEngine Lnet/minecraft/TextureManager;
 accessible method net/minecraft/GuiIngame renderBossHealth ()V
+accessible field net/minecraft/EntityAnimal breeding I
+accessible field net/minecraft/GuiScreen mc Lnet/minecraft/Minecraft;
