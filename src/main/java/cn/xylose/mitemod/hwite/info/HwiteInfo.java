@@ -2,6 +2,7 @@ package cn.xylose.mitemod.hwite.info;
 
 import cn.xylose.mitemod.hwite.config.HwiteConfigs;
 import net.minecraft.*;
+import net.xiaoyu233.fml.FishModLoader;
 import net.xiaoyu233.fml.api.block.IBlock;
 import net.xiaoyu233.fml.api.entity.IEntity;
 
@@ -150,21 +151,23 @@ public class HwiteInfo extends Gui {
         Block block = Block.blocksList[player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z)];
         int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
         blockInfo = block;
-        itemStackInfo = block.createStackedBlock(metadata);
-        float block_hardness = player.worldObj.getBlockHardness(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-        int min_harvest_level = block.getMinHarvestLevel(metadata);
-        info_line_1 = "";
-        info_line_2 = "";
-        growth_info = "";
-        redstone_info = "";
-        spawner_info = "";
-        devInfo = "";
-        hiwlaInfo = "";
-        unlocalizedNameInfo = "";
-        updateBreakInfo(rc, player);
-        updateInfoMain(block.createStackedBlock(metadata), block, metadata);
-        if (MITEDetailsInfo.getBooleanValue()) {
-            updateInfoLine12(min_harvest_level, rc, block_hardness, player);
+        if (block != null) {
+            itemStackInfo = block.createStackedBlock(metadata);
+            float block_hardness = player.worldObj.getBlockHardness(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
+            int min_harvest_level = block.getMinHarvestLevel(metadata);
+            info_line_1 = "";
+            info_line_2 = "";
+            growth_info = "";
+            redstone_info = "";
+            spawner_info = "";
+            devInfo = "";
+            hiwlaInfo = "";
+            unlocalizedNameInfo = "";
+            updateBreakInfo(rc, player);
+            updateInfoMain(block.createStackedBlock(metadata), block, metadata);
+            if (MITEDetailsInfo.getBooleanValue()) {
+                updateInfoLine12(min_harvest_level, rc, block_hardness, player);
+            }
         }
     }
 
@@ -255,40 +258,42 @@ public class HwiteInfo extends Gui {
     private static void updateDevInfoInfo(RaycastCollision rc, EntityPlayer player) {
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         double distance = Double.parseDouble(decimalFormat.format(rc.getDistanceFromOriginToCollisionPoint()));
-        EnumDirection direction = rc.getBlockHit().getDirectionFacing(rc.block_hit_metadata);
-        if (rc.isBlock()) {
-            if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDistance.getBooleanValue() && ShowDirection.getBooleanValue() && direction != null) {
-                devInfo = EnumChatFormatting.GRAY + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z + " [" + distance + "]" + " {" + direction + "}";
-            } else if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDistance.getBooleanValue()) {
-                devInfo = EnumChatFormatting.GRAY + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z + " [" + distance + "]";
-            } else if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDirection.getBooleanValue() && direction != null) {
-                devInfo = EnumChatFormatting.GRAY + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z + " {" + direction + "}";
-            } else if (ShowDistance.getBooleanValue() && ShowDirection.getBooleanValue() && direction != null) {
-                devInfo = EnumChatFormatting.GRAY + "[" + distance + "]" + " {" + direction + "}";
-            } else if (ShowBlockOrEntityCoord.getBooleanValue()) {
-                devInfo = EnumChatFormatting.GRAY + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z;
-            } else if (ShowDistance.getBooleanValue()) {
-                devInfo = EnumChatFormatting.GRAY + "[" + distance + "]";
-            } else if (ShowDirection.getBooleanValue() && direction != null) {
-                devInfo = EnumChatFormatting.GRAY + "{" + direction + "}";
-            } else {
-                devInfo = "";
-            }
-            if (ShowBlockUnlocalizedName.getBooleanValue()) {
-                unlocalizedNameInfo = EnumChatFormatting.GRAY + rc.getBlockHit().getUnlocalizedName();
-            } else {
-                unlocalizedNameInfo = "";
-            }
-        } else if (rc.isEntity()) {
-            if (rc.getEntityHit() instanceof EntityLivingBase) {
-                if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDistance.getBooleanValue()) {
-                    devInfo = EnumChatFormatting.GRAY + String.valueOf((int) rc.getEntityHit().posX) + " " + (int) rc.getEntityHit().posY + " " + (int) rc.getEntityHit().posZ + " [" + distance + "]";
+        if (rc != null) {
+            if (rc.isBlock()) {
+                EnumDirection direction = rc.getBlockHit().getDirectionFacing(rc.block_hit_metadata);
+                if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDistance.getBooleanValue() && ShowDirection.getBooleanValue() && direction != null) {
+                    devInfo = EnumChatFormatting.GRAY + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z + " [" + distance + "]" + " {" + direction + "}";
+                } else if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDistance.getBooleanValue()) {
+                    devInfo = EnumChatFormatting.GRAY + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z + " [" + distance + "]";
+                } else if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDirection.getBooleanValue() && direction != null) {
+                    devInfo = EnumChatFormatting.GRAY + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z + " {" + direction + "}";
+                } else if (ShowDistance.getBooleanValue() && ShowDirection.getBooleanValue() && direction != null) {
+                    devInfo = EnumChatFormatting.GRAY + "[" + distance + "]" + " {" + direction + "}";
                 } else if (ShowBlockOrEntityCoord.getBooleanValue()) {
-                    devInfo = EnumChatFormatting.GRAY + String.valueOf((int) rc.getEntityHit().posX) + " " + (int) rc.getEntityHit().posY + " " + (int) rc.getEntityHit().posZ;
+                    devInfo = EnumChatFormatting.GRAY + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z;
                 } else if (ShowDistance.getBooleanValue()) {
-                    devInfo = "[" + distance + "]";
+                    devInfo = EnumChatFormatting.GRAY + "[" + distance + "]";
+                } else if (ShowDirection.getBooleanValue() && direction != null) {
+                    devInfo = EnumChatFormatting.GRAY + "{" + direction + "}";
                 } else {
                     devInfo = "";
+                }
+                if (ShowBlockUnlocalizedName.getBooleanValue()) {
+                    unlocalizedNameInfo = EnumChatFormatting.GRAY + rc.getBlockHit().getUnlocalizedName();
+                } else {
+                    unlocalizedNameInfo = "";
+                }
+            } else if (rc.isEntity()) {
+                if (rc.getEntityHit() instanceof EntityLivingBase) {
+                    if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDistance.getBooleanValue()) {
+                        devInfo = EnumChatFormatting.GRAY + String.valueOf((int) rc.getEntityHit().posX) + " " + (int) rc.getEntityHit().posY + " " + (int) rc.getEntityHit().posZ + " [" + distance + "]";
+                    } else if (ShowBlockOrEntityCoord.getBooleanValue()) {
+                        devInfo = EnumChatFormatting.GRAY + String.valueOf((int) rc.getEntityHit().posX) + " " + (int) rc.getEntityHit().posY + " " + (int) rc.getEntityHit().posZ;
+                    } else if (ShowDistance.getBooleanValue()) {
+                        devInfo = "[" + distance + "]";
+                    } else {
+                        devInfo = "";
+                    }
                 }
             }
         }
@@ -296,7 +301,8 @@ public class HwiteInfo extends Gui {
 
     private static void updateHiwlaExtraInfoInfo(RaycastCollision rc, EntityPlayer player) {
         TileEntity tileEntity = rc.world.getBlockTileEntity(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-        if (rc.isBlock()) {
+        if (rc != null) {
+            if (rc.isBlock()) {
 //            if (tileEntity instanceof TileEntityBeacon beacon) {
 //                hiwlaInfo = EnumChatFormatting.GRAY + I18n.getString("hiwla.info.beacon.level") + beacon.getLevels();
 //            } else {
@@ -308,15 +314,15 @@ public class HwiteInfo extends Gui {
 //            } else {
 //                hiwlaInfo = "";
 //            }
-        } else if (rc.isEntity()) {
-            if (rc.getEntityHit() instanceof EntityLivingBase living) {
-                if (LivingProtection.getBooleanValue() && living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)) > 0) {
-                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
-                    hiwlaInfo = EnumChatFormatting.GRAY + I18n.getString("hiwla.info.protection") + decimalFormat.format((living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null))));
-                } else {
-                    hiwlaInfo = "";
+            } else if (rc.isEntity()) {
+                if (rc.getEntityHit() instanceof EntityLivingBase living) {
+                    if (LivingProtection.getBooleanValue() && living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)) > 0) {
+                        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                        hiwlaInfo = EnumChatFormatting.GRAY + I18n.getString("hiwla.info.protection") + decimalFormat.format((living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null))));
+                    } else {
+                        hiwlaInfo = "";
+                    }
                 }
-            }
 //            if (rc.getEntityHit() instanceof EntityHorse horse) {
 //                if (HorseJump.getBooleanValue()) {
 //                    hiwlaInfo = EnumChatFormatting.GRAY + I18n.getString("hiwla.info.horse_jump") + horse.getOwnerName();
@@ -324,19 +330,20 @@ public class HwiteInfo extends Gui {
 //                    hiwlaInfo = "";
 //                }
 //            }
-            if (rc.getEntityHit() instanceof EntityAnimal animal) {
-                if (AnimalGrowthTime.getBooleanValue() && animal.getGrowingAge() < 0) {
-                    hiwlaInfo = EnumChatFormatting.GRAY + I18n.getString("hiwla.info.animal_growing_time") + Math.abs(animal.getGrowingAge()) / 20;
-                } else {
-                    hiwlaInfo = "";
+                if (rc.getEntityHit() instanceof EntityAnimal animal) {
+                    if (AnimalGrowthTime.getBooleanValue() && animal.getGrowingAge() < 0) {
+                        hiwlaInfo = EnumChatFormatting.GRAY + I18n.getString("hiwla.info.animal_growing_time") + Math.abs(animal.getGrowingAge()) / 20;
+                    } else {
+                        hiwlaInfo = "";
+                    }
                 }
-            }
-            if (rc.getEntityHit() instanceof EntityVillager villager) {
-                String villagerProfession = getProfession(villager);
-                if (VillagerProfession.getBooleanValue() && villager.getProfession() > -1) {
-                    hiwlaInfo = EnumChatFormatting.GRAY + I18n.getString("hiwla.info.profession") + villagerProfession;
-                } else {
-                    hiwlaInfo = "";
+                if (rc.getEntityHit() instanceof EntityVillager villager) {
+                    String villagerProfession = getProfession(villager);
+                    if (VillagerProfession.getBooleanValue() && villager.getProfession() > -1) {
+                        hiwlaInfo = EnumChatFormatting.GRAY + I18n.getString("hiwla.info.profession") + villagerProfession;
+                    } else {
+                        hiwlaInfo = "";
+                    }
                 }
             }
         }
@@ -402,5 +409,13 @@ public class HwiteInfo extends Gui {
         }
     }
 
-
+//    private static void hotKeyPress(RaycastCollision rc) {
+//        if(FishModLoader.hasMod("emi")) {
+//        RecipeHotkey.setHotKeyPressCallBack(minecraft -> {
+//            EmiApi.displayRecipes(rc.getBlockHit());
+//            if (rc != null) {
+//                EmiApi.focusRecipe(stack.getRecipeContext());
+//            }
+//            return true;
+//        } );
 }

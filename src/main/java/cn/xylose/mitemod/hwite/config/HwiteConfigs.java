@@ -12,6 +12,7 @@ import fi.dy.masa.malilib.util.JsonUtils;
 import net.minecraft.Block;
 import net.minecraft.GuiScreen;
 import net.minecraft.Minecraft;
+import net.xiaoyu233.fml.FishModLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,8 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigHotkey ConfigGuiHotkey = new ConfigHotkey("hwite.ConfigGuiHotkey", 82);
     public static final ConfigHotkey HUDHotkey = new ConfigHotkey("hwite.HUDHotkey", 79);
     public static final ConfigHotkey LiquidsHotkey = new ConfigHotkey("hwite.LiquidsHotkey", 80);
+    public static final ConfigHotkey RecipeHotkey = new ConfigHotkey("hwite.RecipeHotkey", 81);
+
     //Hard Is We Looking At
     public static final ConfigBoolean AnimalGrowthTime = new ConfigBoolean("hiwla.AnimalGrowthTime", true);
     public static final ConfigBoolean LivingProtection = new ConfigBoolean("hiwla.LivingProtection", true);
@@ -88,7 +91,7 @@ public class HwiteConfigs extends SimpleConfigs {
         values = List.of(HUDPosOverride, HUDX, HUDY, EntityInfoX, EntityInfoY, EntityInfoSize);
         appearance = List.of(HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDThemeSwitch, HUDTheme, HUDBGColor, HUDFrameColor, HUDFrameColor1, BreakProgressLineColor, CanBreakString, CannotBreakString);
         dev = List.of(ShowIDAndMetadata, MITEDetailsInfo, ShowBlockOrEntityCoord, ShowDistance, ShowDirection, ShowBlockUnlocalizedName);
-        hotkey = List.of(ConfigGuiHotkey, HUDHotkey, LiquidsHotkey);
+        hotkey = List.of(ConfigGuiHotkey, HUDHotkey, LiquidsHotkey, RecipeHotkey);
         hiwla = List.of(AnimalGrowthTime, LivingProtection, VillagerProfession);
         List<ConfigBase<?>> configValues = new ArrayList<>();
         configValues.addAll(hwiteswitch);
