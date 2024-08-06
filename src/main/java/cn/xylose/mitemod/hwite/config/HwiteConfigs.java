@@ -1,6 +1,5 @@
 package cn.xylose.mitemod.hwite.config;
 
-import cn.xylose.mitemod.hwite.info.HwiteInfo;
 import cn.xylose.mitemod.hwite.render.HUDRenderer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,10 +8,11 @@ import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.options.*;
 import fi.dy.masa.malilib.util.JsonUtils;
-import net.minecraft.Block;
+import fi.dy.masa.malilib.util.KeyCodes;
+import net.minecraft.EnumEntityReachContext;
 import net.minecraft.GuiScreen;
 import net.minecraft.Minecraft;
-import net.xiaoyu233.fml.FishModLoader;
+import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,16 +61,18 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigBoolean ShowDistance = new ConfigBoolean("hwite.ShowDistance", false);
     public static final ConfigBoolean ShowDirection = new ConfigBoolean("hwite.ShowDirection", false);
     //hotkey
-    public static final ConfigHotkey ConfigGuiHotkey = new ConfigHotkey("hwite.ConfigGuiHotkey", 82);
-    public static final ConfigHotkey HUDHotkey = new ConfigHotkey("hwite.HUDHotkey", 79);
-    public static final ConfigHotkey LiquidsHotkey = new ConfigHotkey("hwite.LiquidsHotkey", 80);
-    public static final ConfigHotkey RecipeHotkey = new ConfigHotkey("hwite.RecipeHotkey", 81);
-
+    public static final ConfigHotkey ConfigGuiHotkey = new ConfigHotkey("hwite.ConfigGuiHotkey", Keyboard.KEY_NUMPAD0);
+    public static final ConfigHotkey HUDHotkey = new ConfigHotkey("hwite.HUDHotkey", Keyboard.KEY_NUMPAD1);
+    public static final ConfigHotkey LiquidsHotkey = new ConfigHotkey("hwite.LiquidsHotkey", Keyboard.KEY_NUMPAD2);
+    public static final ConfigHotkey RecipeHotkey = new ConfigHotkey("hwite.RecipeHotkey", Keyboard.KEY_NUMPAD3);
+    public static final ConfigHotkey UsageHotkey = new ConfigHotkey("hwite.UsageHotkey", Keyboard.KEY_NUMPAD4);
     //Hard Is We Looking At
     public static final ConfigBoolean AnimalGrowthTime = new ConfigBoolean("hiwla.AnimalGrowthTime", true);
     public static final ConfigBoolean LivingProtection = new ConfigBoolean("hiwla.LivingProtection", true);
     public static final ConfigBoolean VillagerProfession = new ConfigBoolean("hiwla.VillagerProfession", true);
-    public static final ConfigBoolean HorseJump = new ConfigBoolean("hiwla.HorseJump", true);
+    public static final ConfigBoolean FurnaceInfo = new ConfigBoolean("hiwla.FurnaceInfo", false);
+    public static final ConfigBoolean BeaconLevel = new ConfigBoolean("hiwla.BeaconLevel", true);
+    public static final ConfigBoolean HorseInfo = new ConfigBoolean("hiwla.HorseInfo", true);
 
     private static final HwiteConfigs Instance;
     public static final List<ConfigBase<?>> hwiteswitch;
@@ -91,19 +93,21 @@ public class HwiteConfigs extends SimpleConfigs {
         values = List.of(HUDPosOverride, HUDX, HUDY, EntityInfoX, EntityInfoY, EntityInfoSize);
         appearance = List.of(HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDThemeSwitch, HUDTheme, HUDBGColor, HUDFrameColor, HUDFrameColor1, BreakProgressLineColor, CanBreakString, CannotBreakString);
         dev = List.of(ShowIDAndMetadata, MITEDetailsInfo, ShowBlockOrEntityCoord, ShowDistance, ShowDirection, ShowBlockUnlocalizedName);
-        hotkey = List.of(ConfigGuiHotkey, HUDHotkey, LiquidsHotkey, RecipeHotkey);
-        hiwla = List.of(AnimalGrowthTime, LivingProtection, VillagerProfession);
+        hotkey = List.of(ConfigGuiHotkey, HUDHotkey, LiquidsHotkey, RecipeHotkey, UsageHotkey);
+        hiwla = List.of(AnimalGrowthTime, LivingProtection, VillagerProfession, FurnaceInfo, BeaconLevel, HorseInfo);
         List<ConfigBase<?>> configValues = new ArrayList<>();
         configValues.addAll(hwiteswitch);
         configValues.addAll(appearance);
         configValues.addAll(dev);
         configValues.addAll(HwiteConfigs.values);
         configValues.addAll(hiwla);
+        configValues.addAll(hotkey);
         tabs.add(new ConfigTab("hwite.switch", hwiteswitch));
         tabs.add(new ConfigTab("hwite.values", HwiteConfigs.values));
         tabs.add(new ConfigTab("hwite.appearance", appearance));
         tabs.add(new ConfigTab("hwite.dev", dev));
         tabs.add(new ConfigTab("hwite.hiwla", hiwla));
+        tabs.add(new ConfigTab("hwite.hotkey", hotkey));
 
         ConfigGuiHotkey.setHotKeyPressCallBack(minecraft -> {
             minecraft.displayGuiScreen(HwiteConfigs.getInstance().getValueScreen((GuiScreen) null));

@@ -63,10 +63,17 @@ config.name.hwite.HUDHotkey=Show/Hide HUD
 config.comment.hwite.HUDHotkey=Show/Hide HUD
 config.name.hwite.LiquidsHotkey=Show/Hide Liquids
 config.comment.hwite.LiquidsHotkey=Show/Hide Liquids
+config.name.hwite.RecipeHotkey=View Recipes
+config.comment.hwite.RecipeHotkey=View Recipes
+config.name.hwite.UsageHotkey=View Usages
+config.comment.hwite.UsageHotkey=View Usages
 ## HIWLA Config
 config.name.hiwla.AnimalGrowthTime=Animal Growth Time
 config.name.hiwla.LivingProtection=Living Protection
 config.name.hiwla.VillagerProfession=Villager Profession
+config.name.hiwla.FurnaceInfo=Furnace Burning Info(WIP)
+config.name.hiwla.BeaconLevel=Beacon Level
+config.name.hiwla.HorseInfo=Horse Info
 ## enum
 configs.name.hwite.HUDTheme=HUD Theme
 config.enum.HUDTheme.Waila=Waila
@@ -83,6 +90,7 @@ config.tab.hwite.values=Values
 config.tab.hwite.appearance=Appearance
 config.tab.hwite.dev=Dev
 config.tab.hwite.hiwla=HIWLA
+config.tab.hwite.hotkey=Hotkeys
 
 # HWITE
 hwite.info.health=Health:
@@ -103,7 +111,12 @@ hwite.info.power=Power:
 hwite.info.type=Type:
 hwite.info.breakProgress=Progress:
 
-# HIWLA
+## Other
+hwite.info.second=Second
+hwite.info.minute=Minute
+hwite.info.hour=Hour
+
+## HIWLA
 hiwla.info.animal_growing_time=Remaining Growth Time:
 hiwla.info.protection=Protection:
 hiwla.info.profession=Profession:
@@ -113,6 +126,12 @@ hiwla.info.profession.librarian=Librarian
 hiwla.info.profession.priest=Priest
 hiwla.info.profession.smith=Smith
 hiwla.info.profession.butcher=Butcher
-hiwla.info.furnace.burn_time=Burn Time:
 hiwla.info.beacon.level=Level:
 hiwla.info.horse_jump=Jump Strength:
+hiwla.info.furnace.burn_time=Burn Time:
+hiwla.info.furnace.heat_level= Heat Level:
+hiwla.info.furnace.input=Input Item:
+hiwla.info.furnace.output=Output Item:
+hiwla.info.furnace.fuel=Fuel Item:
+hiwla.info.horse.jump=Jump Height:
+hiwla.info.horse.speed=Speed:

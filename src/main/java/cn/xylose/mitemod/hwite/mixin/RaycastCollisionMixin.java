@@ -2,10 +2,11 @@ package cn.xylose.mitemod.hwite.mixin;
 
 import cn.xylose.mitemod.hwite.api.IRaycastCollision;
 import net.minecraft.*;
+import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.*;
 
 @Mixin(RaycastCollision.class)
-public class RaycastCollisionMixin implements IRaycastCollision {
+public abstract class RaycastCollisionMixin implements IRaycastCollision {
 
     @Mutable @Final @Shadow private final Object object_hit;
     @Mutable @Final @Shadow public final World world;
@@ -21,6 +22,8 @@ public class RaycastCollisionMixin implements IRaycastCollision {
     @Shadow public boolean isBlock() {
         return this.object_hit instanceof Block;
     }
+
+    @Shadow public abstract boolean isLiquidBlock();
 
     public RaycastCollisionMixin(Raycast raycast, int x, int y, int z, EnumFace face_hit, Vec3 position_hit) {
         this.world = raycast.getWorld();
@@ -42,6 +45,14 @@ public class RaycastCollisionMixin implements IRaycastCollision {
             return this.setBlockHit().blockID;
         }
         return 0;
+    }
+
+    @Override
+    public boolean isLiquid(Material material) {
+        if (material.isLiquid()) {
+            return true;
+        }
+        return false;
     }
 
     @Override

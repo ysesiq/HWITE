@@ -5,7 +5,6 @@
   "target": "DEFAULT",
   "minVersion": "0.8.3",
   "mixins": [
-    "EntityPlayerMixin",
     "EntityRendererMixin",
     "GuiIngameMixin",
     "PlayerControllerMPMixin",

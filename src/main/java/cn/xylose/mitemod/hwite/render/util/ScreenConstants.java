@@ -11,7 +11,7 @@ public class ScreenConstants {
             if (HUDPosOverride.getBooleanValue()) {
                 return HUDY.getIntegerValue();
             } else {
-                return 16;
+                return 20;
             }
 //        } else if (BossStatus.bossName != null) {
 //            if (HUDPosOverride.getBooleanValue()) {
@@ -20,7 +20,7 @@ public class ScreenConstants {
 //                return 36;
 //            }
         }
-        return 18;
+        return 20;
     }
 
     public static int getBlockInfoX(int screenWidth) {

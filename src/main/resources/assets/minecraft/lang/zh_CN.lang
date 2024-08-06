@@ -63,10 +63,17 @@ config.name.hwite.HUDHotkey=显示/隐藏 HUD
 config.comment.hwite.HUDHotkey=显示/隐藏 HUD
 config.name.hwite.LiquidsHotkey=显示/隐藏 流体
 config.comment.hwite.LiquidsHotkey=显示/隐藏 流体
+config.name.hwite.RecipeHotkey=查看合成配方
+config.comment.hwite.RecipeHotkey=查看合成配方
+config.name.hwite.UsageHotkey=查看参与配方
+config.comment.hwite.UsageHotkey=查看参与配方
 ## HIWLA Config
 config.name.hiwla.AnimalGrowthTime=动物成长时间
 config.name.hiwla.LivingProtection=生物护甲值
 config.name.hiwla.VillagerProfession=村民职业
+config.name.hiwla.FurnaceInfo=熔炉烧制信息(WIP)
+config.name.hiwla.BeaconLevel=信标等级
+config.name.hiwla.HorseInfo=马匹信息
 ## enum
 configs.name.hwite.HUDTheme=HUD主题
 config.enum.HUDTheme.Waila=经典
@@ -83,6 +90,7 @@ config.tab.hwite.values=数值
 config.tab.hwite.appearance=外观
 config.tab.hwite.dev=开发
 config.tab.hwite.hiwla=HIWLA
+config.tab.hwite.hotkey=快捷键
 
 # HWITE
 hwite.info.health=生命值:
@@ -103,7 +111,12 @@ hwite.info.power=能量:
 hwite.info.type=种类:
 hwite.info.breakProgress=进度:
 
-# HIWLA
+## Other
+hwite.info.second=秒
+hwite.info.minute=分钟
+hwite.info.hour=小时
+
+## HIWLA
 hiwla.info.animal_growing_time=剩余成长时间:
 hiwla.info.protection=护甲值:
 hiwla.info.profession=职业:
@@ -113,8 +126,14 @@ hiwla.info.profession.librarian=图书馆管理员
 hiwla.info.profession.priest=牧师
 hiwla.info.profession.smith=武器匠
 hiwla.info.profession.butcher=屠夫
-hiwla.info.furnace.burn_time=剩余燃烧时间:
 hiwla.info.beacon.level=等级:
 hiwla.info.horse_jump=跳跃能力:
+hiwla.info.furnace.burn_time=剩余燃烧时间:
+hiwla.info.furnace.heat_level= 热值:
+hiwla.info.furnace.input=烧制物品:
+hiwla.info.furnace.output=成品:
+hiwla.info.furnace.fuel=燃料:
+hiwla.info.horse.jump=跳跃高度:
+hiwla.info.horse.speed=速度:
 
 

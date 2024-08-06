@@ -7,6 +7,8 @@ public interface IRaycastCollision {
 
     int setBlockHitID();
 
+    boolean isLiquid(Material material);
+
     boolean isTileEntity();
 
     boolean isTileEntityAt(int x, int y, int z);

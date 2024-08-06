@@ -14,22 +14,18 @@ import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
 
 public class HUDBackGroundRender extends Gui {
 
-    public static int stringWidth1;
     public static int stringWidth;
+    public static int stringHeight;
     public static int BlockRenderLeftEliminate;
-    private static final RenderItem itemRenderer = new RenderItem();
+    public static final RenderItem itemRenderer = new RenderItem();
 
-    public int getStringWidth1() {
-        return stringWidth1;
+    public int getStringWidth() {
+        return stringWidth;
     }
 
-//    public void drawHWITEHoveringText(String par1Str, int par2, int par3, Minecraft mc) {
-//        drawTooltipBackGround(Arrays.asList(new String[]{par1Str}), par2, par3, mc);
-//    }
-//
-//    public static void drawTooltipBackGround(List par1List, int par2, int par3, Minecraft mc) {
-//        drawTooltipBackGround(par1List, par2, par3, true, mc);
-//    }
+    public int getStringHeight() {
+        return stringHeight;
+    }
 
     public static void drawTooltipBackGround(List<String> par1List, int par2, int par3, boolean has_title, Minecraft mc, double zLevel) {
         if (par1List == null || par1List.isEmpty()) {
@@ -45,15 +41,15 @@ public class HUDBackGroundRender extends Gui {
         int var4 = 0;
 
         for (String s : par1List) {
-            stringWidth = fontRenderer.getStringWidth(s);
+            stringHeight = fontRenderer.getStringWidth(s);
 
-            if (stringWidth > var4) {
-                var4 = stringWidth;
+            if (stringHeight > var4) {
+                var4 = stringHeight;
             }
         }
 
-        stringWidth1 = par2 + 12;
-        stringWidth = par3 - 12;
+        stringWidth = par2 + 12;
+        stringHeight = par3 - 12;
         int var8 = 8;
 
         if (par1List.size() > 1) {
@@ -64,12 +60,12 @@ public class HUDBackGroundRender extends Gui {
             var8 -= 2;
         }
 
-        if (stringWidth1 + var4 > width) {
-            stringWidth1 -= 28 + var4;
+        if (stringWidth + var4 > width) {
+            stringWidth -= 28 + var4;
         }
 
-        if (stringWidth + var8 + 6 > height) {
-            stringWidth = height - var8 - 6;
+        if (stringHeight + var8 + 6 > height) {
+            stringHeight = height - var8 - 6;
         }
 
         BlockRenderLeftEliminate = 0;
@@ -104,23 +100,29 @@ public class HUDBackGroundRender extends Gui {
         }
 
         if (HUDBackGround.getBooleanValue()) {
-            //中
             if (HUDCentralBackground.getBooleanValue()) {
-                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
+                //中
+                drawGradientRect(stringWidth - 3 - BlockRenderLeftEliminate, stringHeight - 5, stringWidth + var4 + 3, stringHeight + var8 + 5, hudBGColor1, hudBGColor1, zLevel);
             }
             if (HUDRoundedRectangle.getBooleanValue()) {
                 //上
-                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 4, stringWidth1 + var4 + 3, stringWidth - 3, hudBGColor1, hudBGColor1, zLevel);
-                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, stringWidth1 + var4 + 3, stringWidth + var8 + 4, hudBGColor1, hudBGColor1, zLevel);
-                drawGradientRect(stringWidth1 - 4 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
+                drawGradientRect(stringWidth - 3 - BlockRenderLeftEliminate, stringHeight - 6, stringWidth + var4 + 3, stringHeight - 5, hudBGColor1, hudBGColor1, zLevel);
+                //下
+                drawGradientRect(stringWidth - 3 - BlockRenderLeftEliminate, stringHeight + var8 + 5, stringWidth + var4 + 3, stringHeight + var8 + 6, hudBGColor1, hudBGColor1, zLevel);
+                //左
+                drawGradientRect(stringWidth - 4 - BlockRenderLeftEliminate, stringHeight - 5, stringWidth - 3 - BlockRenderLeftEliminate, stringHeight + var8 + 5, hudBGColor1, hudBGColor1, zLevel);
                 //右
-                drawGradientRect(stringWidth1 + var4 + 3, stringWidth - 3, stringWidth1 + var4 + 4, stringWidth + var8 + 3, hudBGColor1, hudBGColor1, zLevel);
+                drawGradientRect(stringWidth + var4 + 3, stringHeight - 5, stringWidth + var4 + 4, stringHeight + var8 + 5, hudBGColor1, hudBGColor1, zLevel);
             }
             if (HUDFrame.getBooleanValue()) {
-                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3 + 1, stringWidth1 - 3 + 1 - BlockRenderLeftEliminate, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                drawGradientRect(stringWidth1 + var4 + 2, stringWidth - 3 + 1, stringWidth1 + var4 + 3, stringWidth + var8 + 3 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
-                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth - 3, stringWidth1 + var4 + 3, stringWidth - 3 + 1, hudFrameColorTop1, hudFrameColorTop1, zLevel);
-                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 2, stringWidth1 + var4 + 3, stringWidth + var8 + 3, hudFrameColorBottom1, hudFrameColorBottom1, zLevel);
+                //上
+                drawGradientRect(stringWidth - 3 - BlockRenderLeftEliminate, stringHeight - 5, stringWidth + var4 + 3, stringHeight - 5 + 1, hudFrameColorTop1, hudFrameColorTop1, zLevel);
+                //下
+                drawGradientRect(stringWidth - 3 - BlockRenderLeftEliminate, stringHeight + var8 + 4, stringWidth + var4 + 3, stringHeight + var8 + 5, hudFrameColorBottom1, hudFrameColorBottom1, zLevel);
+                //左
+                drawGradientRect(stringWidth - 3 - BlockRenderLeftEliminate, stringHeight - 5 + 1, stringWidth - 3 + 1 - BlockRenderLeftEliminate, stringHeight + var8 + 5 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
+                //右
+                drawGradientRect(stringWidth + var4 + 2, stringHeight - 5 + 1, stringWidth + var4 + 3, stringHeight + var8 + 5 - 1, hudFrameColorTop1, hudFrameColorBottom1, zLevel);
             }
         }
 
@@ -130,10 +132,10 @@ public class HUDBackGroundRender extends Gui {
             int progress = (int) (breakProgress * 100F);
 //                drawGradientRect(stringWidth1 - 3 - BlockRenderLeftEliminate, stringWidth + var8 + 3, stringWidth1 + var4 + 3, stringWidth + var8 + 4, var9, var9, zLevel);
             drawGradientRect(
-                    progress + stringWidth1 - 3 - BlockRenderLeftEliminate,
-                    stringWidth + var8 + 3,
-                    stringWidth1 + var4 + 3,
-                    stringWidth + var8 + 4,
+                    progress + stringWidth - 3 - BlockRenderLeftEliminate,
+                    stringHeight + var8 + 3,
+                    stringWidth + var4 + 3,
+                    stringHeight + var8 + 4,
                     BreakProgressLineColor.getColorInteger(), BreakProgressLineColor.getColorInteger(), zLevel);
 //
 //                drawHorizontalLineHwite(var15 + 10, var15 + 110, lineHeight, 0xFFFFFFFF);
@@ -142,13 +144,13 @@ public class HUDBackGroundRender extends Gui {
         }
         for (int var12 = 0; var12 < par1List.size(); ++var12) {
             String var13 = par1List.get(var12);
-            fontRenderer.drawStringWithShadow(var13, stringWidth1, stringWidth, -1);
+            fontRenderer.drawStringWithShadow(var13, stringWidth, stringHeight, -1);
 
             if (var12 == 0 && has_title) {
-                stringWidth += 2;
+                stringHeight += 2;
             }
 
-            stringWidth += 10;
+            stringHeight += 10;
         }
 
 //            zLevel = 0.0F;
@@ -166,15 +168,15 @@ public class HUDBackGroundRender extends Gui {
         Gui.drawRect(par1, par3, par2 + 1, par3 + 1, par4);
     }
 
-    public static void drawGradientRect(int par1, int par2, int par3, int par4, int par5, int par6, double zLevel) {
-        float var7 = (float) (par5 >> 24 & 255) / 255.0F;
-        float var8 = (float) (par5 >> 16 & 255) / 255.0F;
-        float var9 = (float) (par5 >> 8 & 255) / 255.0F;
-        float var10 = (float) (par5 & 255) / 255.0F;
-        float var11 = (float) (par6 >> 24 & 255) / 255.0F;
-        float var12 = (float) (par6 >> 16 & 255) / 255.0F;
-        float var13 = (float) (par6 >> 8 & 255) / 255.0F;
-        float var14 = (float) (par6 & 255) / 255.0F;
+    public static void drawGradientRect(int left, int top, int width, int height, int startColor, int endColor, double zLevel) {
+        float var7 = (float) (startColor >> 24 & 255) / 255.0F;
+        float var8 = (float) (startColor >> 16 & 255) / 255.0F;
+        float var9 = (float) (startColor >> 8 & 255) / 255.0F;
+        float var10 = (float) (startColor & 255) / 255.0F;
+        float var11 = (float) (endColor >> 24 & 255) / 255.0F;
+        float var12 = (float) (endColor >> 16 & 255) / 255.0F;
+        float var13 = (float) (endColor >> 8 & 255) / 255.0F;
+        float var14 = (float) (endColor & 255) / 255.0F;
         GL11.glDisable(3553);
         GL11.glEnable(3042);
         GL11.glDisable(3008);
@@ -183,11 +185,11 @@ public class HUDBackGroundRender extends Gui {
         Tessellator var15 = Tessellator.instance;
         var15.startDrawingQuads();
         var15.setColorRGBA_F(var8, var9, var10, var7);
-        var15.addVertex(par3, par2, zLevel);
-        var15.addVertex(par1, par2, zLevel);
+        var15.addVertex(width, top, zLevel);
+        var15.addVertex(left, top, zLevel);
         var15.setColorRGBA_F(var12, var13, var14, var11);
-        var15.addVertex(par1, par4, zLevel);
-        var15.addVertex(par3, par4, zLevel);
+        var15.addVertex(left, height, zLevel);
+        var15.addVertex(width, height, zLevel);
         var15.draw();
         GL11.glShadeModel(7424);
         GL11.glDisable(3042);

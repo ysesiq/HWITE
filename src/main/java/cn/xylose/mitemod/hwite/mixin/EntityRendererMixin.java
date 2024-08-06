@@ -9,8 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static cn.xylose.mitemod.hwite.config.HwiteConfigs.Liquids;
-import static cn.xylose.mitemod.hwite.config.HwiteConfigs.NonCollidingEntity;
+import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
 import static net.minecraft.EntityRenderer.setDebugInfoForSelectedObject;
 
 @Mixin(EntityRenderer.class)

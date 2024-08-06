@@ -5,3 +5,5 @@ accessible field net/minecraft/Minecraft renderEngine Lnet/minecraft/TextureMana
 accessible method net/minecraft/GuiIngame renderBossHealth ()V
 accessible field net/minecraft/EntityAnimal breeding I
 accessible field net/minecraft/GuiScreen mc Lnet/minecraft/Minecraft;
+accessible field net/minecraft/BlockFurnace isActive Z
+accessible field net/minecraft/Minecraft timer Lnet/minecraft/Timer;

@@ -1,10 +1,12 @@
 {
   "schemaVersion": 1,
   "id": "hwite",
-  "version": "v1.1.1",
+  "version": "1.2.0",
   "depends": {
     "fishmodloader": ">=3.3.2",
-    "many-lib": ">=2.0.1"
+    "many-lib": ">=2.1.0",
+    "emi": ">=1.0.0",
+    "pinin": ">=1.6.0"
   },
   "environment": "*",
   "name": "Here's What Is Too Easy",
@@ -14,6 +16,7 @@
     "Huix",
     "Debris"
   ],
+  "License": "MIT license",
   "entrypoints": {
     "CLIENT": [
       "cn.xylose.mitemod.hwite.client.HwiteModClient"
