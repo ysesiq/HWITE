@@ -3,7 +3,7 @@
 config.name.hwite.RenderHwiteHud=渲染HUD
 config.name.hwite.View=[WIP]预览
 config.comment.hwite.View=配置界面预览
-config.name.hwite.debugRenderHud=调试界面渲染HUD
+config.name.hwite.debugRenderHud=调试界面隐藏HUD
 config.name.hwite.EntityRender=[WIP]实体渲染
 config.name.hwite.BlockRender=方块渲染
 config.name.hwite.Liquids=流体信息
@@ -17,12 +17,10 @@ config.name.hwite.Redstone=红石信息
 config.comment.hwite.Redstone=红石能量强度,拉杆.压力板状态,比较器状态,中继器状态
 config.name.hwite.SpawnerType=刷怪笼种类
 ## values
-config.name.hwite.HUDPosOverride=HUD位置调整
-config.comment.hwite.HUDPosOverride=打开后请使用位置子页面第2,3个配置项调整
 config.name.hwite.HUDX=HUD横向偏移
-config.comment.hwite.HUDX=请打开HUD位置调整
 config.name.hwite.HUDY=HUD的纵向偏移
-config.comment.hwite.HUDY=请打开HUD位置调整
+config.name.hwite.HUDAlpha=HUD Alpha
+config.name.hwite.HUDScale=HUD Scale
 config.name.hwite.EntityInfoX=实体渲染横向偏移
 config.comment.hwite.EntityInfoX=请打开[WIP]实体渲染
 config.name.hwite.EntityInfoY=实体渲染纵向偏移

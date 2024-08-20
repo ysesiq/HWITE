@@ -1,10 +1,7 @@
 package cn.xylose.mitemod.hwite.mixin;
 
-import cn.xylose.mitemod.hwite.client.HwiteModClient;
-import cn.xylose.mitemod.hwite.config.HwiteConfigs;
 import cn.xylose.mitemod.hwite.render.HUDRenderer;
 import net.minecraft.*;
-import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,12 +26,12 @@ public class GuiIngameMixin extends Gui {
                     shift = At.Shift.BEFORE)})
     private void injectRenderHWITEHud(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
         if (DebugRenderHud.getBooleanValue()) {
-            if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && RenderHwiteHud.getBooleanValue() && !(mc.currentScreen instanceof GuiContainer)) {
-                HUDRenderer.RenderHWITEHud(this, this.mc, 300);
+            if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && !mc.gameSettings.showDebugInfo && RenderHwiteHud.getBooleanValue() && !(mc.currentScreen instanceof GuiContainer)) {
+                HUDRenderer.RenderHWITEHud(this, this.mc);
             }
         } else {
-            if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && !mc.gameSettings.showDebugInfo && RenderHwiteHud.getBooleanValue() && !(mc.currentScreen instanceof GuiContainer)) {
-                HUDRenderer.RenderHWITEHud(this, this.mc, 300);
+            if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && RenderHwiteHud.getBooleanValue() && !(mc.currentScreen instanceof GuiContainer)) {
+                HUDRenderer.RenderHWITEHud(this, this.mc);
             }
         }
     }

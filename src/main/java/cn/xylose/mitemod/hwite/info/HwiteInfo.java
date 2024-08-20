@@ -1,7 +1,6 @@
 package cn.xylose.mitemod.hwite.info;
 
 import emi.dev.emi.emi.api.EmiApi;
-import emi.dev.emi.emi.api.stack.EmiIngredient;
 import emi.dev.emi.emi.api.stack.EmiStack;
 import net.minecraft.*;
 import net.xiaoyu233.fml.api.block.IBlock;
@@ -19,13 +18,14 @@ public class HwiteInfo extends Gui {
     public static String info_line_1 = "";
     public static String info_line_2 = "";
     public static String break_info = "";
-    public static EntityLivingBase entityInfo;
+    public static Entity entityInfo;
     public static Block blockInfo;
     public static ItemStack itemStackInfo;
     public static String unlocalizedNameInfo = "";
     public static int blockPosX = 0;
     public static int blockPosY = 0;
     public static int blockPosZ = 0;
+    public static boolean hasIcon;
 
     static int mobSpawnerID = Block.mobSpawner.blockID;
     static int wheatCropID = Block.crops.blockID;
@@ -86,6 +86,7 @@ public class HwiteInfo extends Gui {
             break_info = " ";
             unlocalizedNameInfo = "";
         }
+        hasIcon = false;
     }
 
     private static void updateRCBlock(RaycastCollision rc, EntityPlayer player) {
@@ -94,6 +95,7 @@ public class HwiteInfo extends Gui {
         blockPosY = rc.block_hit_y;
         blockPosZ = rc.block_hit_z;
         updateBlockInfo(rc, player);
+        hasIcon = true;
     }
 
     private static void updateEntityLivingBaseInfo(EntityLivingBase entityLivingBase) {
@@ -126,16 +128,18 @@ public class HwiteInfo extends Gui {
     }
 
     private static void updateBlockInfo(RaycastCollision rc, EntityPlayer player) {
-        Block block = Block.blocksList[player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z)];
-        int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-        blockInfo = block;
-        if (block != null) {
-            itemStackInfo = block.createStackedBlock(metadata);
-            info_line_1 = "";
-            info_line_2 = "";
-            unlocalizedNameInfo = "";
-            updateBreakInfo(rc, player);
-            updateInfoMain(block.createStackedBlock(metadata), block, metadata);
+        if (rc != null) {
+            Block block = Block.blocksList[player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z)];
+            int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
+            blockInfo = block;
+            if (block != null) {
+                itemStackInfo = block.createStackedBlock(metadata);
+                info_line_1 = "";
+                info_line_2 = "";
+                unlocalizedNameInfo = "";
+                updateBreakInfo(rc, player);
+                updateInfoMain(block.createStackedBlock(metadata), block, metadata);
+            }
         }
     }
 
@@ -158,8 +162,8 @@ public class HwiteInfo extends Gui {
 
     public static String updateInfoLine2(RaycastCollision rc, EntityPlayer player) {
         String info2;
-        Block block = rc.getBlockHit();
         if (rc != null && rc.isBlock()) {
+            Block block = rc.getBlockHit();
             int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             int min_harvest_level = block.getMinHarvestLevel(metadata);
             if (min_harvest_level != 0 && player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) > 0.0) {
@@ -171,8 +175,8 @@ public class HwiteInfo extends Gui {
 
 
     public static String updateMITEDetailsInfo(RaycastCollision rc, EntityPlayer player) {
-        Block block = rc.getBlockHit();
         if (rc != null && rc.isBlock()) {
+            Block block = rc.getBlockHit();
             int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             float block_hardness = player.worldObj.getBlockHardness(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             int min_harvest_level = block.getMinHarvestLevel(metadata);
@@ -337,7 +341,7 @@ public class HwiteInfo extends Gui {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         if (rc != null && rc.isEntity()) {
             if (rc.getEntityHit() instanceof EntityHorse horse && HorseInfo.getBooleanValue()) {
-                return horseInfo = gray + I18n.getString("hiwla.info.horse.jump") + decimalFormat.format(horse.getHorseJumpStrength()) + " " + I18n.getString("hiwla.info.horse.speed") + decimalFormat.format(horse.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
+                return horseInfo = gray + I18n.getString("hiwla.info.horse.jump") + decimalFormat.format(1 + horse.getHorseJumpStrength()) + " " + I18n.getString("hiwla.info.horse.speed") + decimalFormat.format(horse.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
             }
         }
         return "";
@@ -444,12 +448,12 @@ public class HwiteInfo extends Gui {
 
     public static String updateModInfo(RaycastCollision rc) {
         if (rc != null) {
-            Entity entity = rc.getEntityHit();
             if (rc.isEntity()) {
+                Entity entity = rc.getEntityHit();
                 return updateModInfoByEntity(entity);
             }
-            Block block = Block.blocksList[player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z)];
             if (rc.isBlock()) {
+                Block block = rc.getBlockHit();
                 return updateModInfoByBlock(block);
             }
         }

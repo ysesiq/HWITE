@@ -2,7 +2,7 @@
 ## base
 config.name.hwite.RenderHwiteHud=Render HWITE HUD
 config.name.hwite.View=[WIP] View
-config.comment.hwite.View=Config screen render HUD
+config.comment.hwite.View=Config screen hide HUD
 config.name.hwite.debugRenderHud=Render HWITE HUD on Debug Screen
 config.name.hwite.EntityRender=[WIP] Entity Render
 config.name.hwite.BlockRender=Block Render
@@ -17,12 +17,10 @@ config.name.hwite.Redstone=Redstone Info
 config.comment.hwite.Redstone=Redstone Power, tie rod, Pressure Plate Status, Comparator Status, Repeater Status
 config.name.hwite.SpawnerType=Spawner Type
 ## values
-config.name.hwite.HUDPosOverride=HUD Pos Override
-config.comment.hwite.HUDPosOverride=After opening, please use the 2nd and 3rd config items of the Values subpage to adjust
 config.name.hwite.HUDX=HUD X Pos
-config.comment.hwite.HUDX=Please turn on hud position adjustment
 config.name.hwite.HUDY=HUD Y Pos
-config.comment.hwite.HUDY=Please turn on HUD position adjustment
+config.name.hwite.HUDAlpha=HUD Alpha
+config.name.hwite.HUDScale=HUD Scale
 config.name.hwite.EntityInfoX=Entity Render X Pos
 config.comment.hwite.EntityInfoX=Please turn on [WIP] Entity Render
 config.name.hwite.EntityInfoY=Entity Render Y Pos

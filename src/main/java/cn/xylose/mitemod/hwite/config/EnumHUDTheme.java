@@ -1,28 +1,28 @@
 package cn.xylose.mitemod.hwite.config;
 
+import fi.dy.masa.malilib.util.Color4f;
 import fi.dy.masa.malilib.util.StringUtils;
 
 public enum EnumHUDTheme {
-    Waila("#CC10010F", "#CC5001FE", "#CC28017E"),
-    Dark("#CC131313", "#CC383838", "#CC242424"),
-    TOP("#CC006699", "#CC9999ff", "#CC9999ff"),
-    Create("#CC000000", "#CC2A2626", "#CC1A1717"),
-    Tooltip("#CC130211", "#CC1F0639", "#CC160321"),
-    ;
+    Waila("#10010F", "#5001FE", "#28017E"),
+    Dark("#131313", "#383838", "#242424"),
+    TOP("#006699", "#9999ff", "#9999ff"),
+    Create("#000000", "#2A2626", "#1A1717"),
+    Tooltip("#130211", "#1F0639", "#160321");
 
-    public final int backgroundColor;
-    public final int frameColorTop;
-    public final int frameColorBottom;
+    public final Color4f backgroundColor;
+    public final Color4f frameColorTop;
+    public final Color4f frameColorBottom;
 
     EnumHUDTheme(String backgroundColor, String frameColorTop, String frameColorBottom) {
-        this.backgroundColor = StringUtils.getColor(backgroundColor, 0);
-        this.frameColorTop = StringUtils.getColor(frameColorTop, 0);
-        this.frameColorBottom = StringUtils.getColor(frameColorBottom, 0);
+        this.backgroundColor = Color4f.fromColor(StringUtils.getColor(backgroundColor, 0));
+        this.frameColorTop = Color4f.fromColor(StringUtils.getColor(frameColorTop, 0));
+        this.frameColorBottom = Color4f.fromColor(StringUtils.getColor(frameColorBottom, 0));
     }
 
     EnumHUDTheme(int BGColor, int frameColorTop, int frameColorBottom) {
-        this.backgroundColor = BGColor;
-        this.frameColorTop = frameColorTop;
-        this.frameColorBottom = frameColorBottom;
+        this.backgroundColor = Color4f.fromColor(BGColor);
+        this.frameColorTop = Color4f.fromColor(frameColorTop);
+        this.frameColorBottom = Color4f.fromColor(frameColorBottom);
     }
 }

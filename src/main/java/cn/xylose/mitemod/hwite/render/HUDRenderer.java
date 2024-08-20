@@ -2,57 +2,136 @@ package cn.xylose.mitemod.hwite.render;
 
 import cn.xylose.mitemod.hwite.info.HwiteInfo;
 import cn.xylose.mitemod.hwite.api.IBreakingProgress;
-import cn.xylose.mitemod.hwite.render.util.EnumRenderFlag;
-import cn.xylose.mitemod.hwite.render.util.ScreenConstants;
+import cn.xylose.mitemod.hwite.util.DisplayUtil;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
-import static cn.xylose.mitemod.hwite.render.HUDBackGroundRender.drawTooltipBackGround;
-import static cn.xylose.mitemod.hwite.render.util.EnumRenderFlag.Big;
-import static cn.xylose.mitemod.hwite.render.util.EnumRenderFlag.Small;
 
 public class HUDRenderer {
-    static Minecraft mc = Minecraft.getMinecraft();
+    private static Minecraft mc = Minecraft.getMinecraft();
+    protected static boolean hasBlending;
+    protected static boolean hasLight;
+    protected static boolean hasDepthTest;
+    protected static boolean hasLight1;
+    protected static int boundTexIndex;
 
-    public static void RenderHWITEHud(Gui gui, Minecraft mc, double zLevel) {
+    public static void RenderHWITEHud(Gui gui, Minecraft mc) {
         ArrayList<String> list = new ArrayList<>();
         ScaledResolution scaledResolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         int screenWidth = scaledResolution.getScaledWidth();
         int screenHeight = scaledResolution.getScaledHeight();
-        int block_info_x = ScreenConstants.getBlockInfoX(screenWidth);
 
         //draw model
         boolean mainInfoNotEmpty = !Objects.equals(HwiteInfo.infoMain, "");
         if (mainInfoNotEmpty && HwiteInfo.entityInfo != null && EntityRender.getBooleanValue()) {
             //x, y, size, ?, ?
-            GuiInventory.func_110423_a(EntityInfoX.getIntegerValue(), EntityInfoY.getIntegerValue(), EntityInfoSize.getIntegerValue(), 0, 0, HwiteInfo.entityInfo);
+            GuiInventory.func_110423_a(EntityInfoX.getIntegerValue(), EntityInfoY.getIntegerValue(), EntityInfoSize.getIntegerValue(), 0, 0, (EntityLivingBase) HwiteInfo.entityInfo);
         }
 
-        //draw text and tooltip background
-        EnumRenderFlag enumRenderFlag = addInfoToList(list);
-        drawTooltipBackGround(list, ScreenConstants.getHudX(screenWidth), ScreenConstants.getHudY(), false, mc, zLevel);
-        RenderItem renderItem = new RenderItem();
+        //draw text and tooltip box
         if (HwiteInfo.blockInfo != null) {
-            switch (enumRenderFlag) {
-                case Small, Big -> {
-                    ItemStack itemStack = HwiteInfo.blockInfo.createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ));
-                    renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, itemStack, block_info_x, (int) (HUDBackGroundRender.stringHeight / 3.3));
-                    renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, itemStack, block_info_x, (int) (HUDBackGroundRender.stringHeight / 3.3));
-                }
-            }
+            List enumRenderFlag = addInfoToList(list);
+            HUDBackGroundRender hudBackGroundRender = new HUDBackGroundRender();
+
+            GL11.glPushMatrix();
+            saveGLState();
+
+            GL11.glScalef((float) HUDScale.getDoubleValue(), (float) HUDScale.getDoubleValue(), 1.0f);
+            GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+            RenderHelper.disableStandardItemLighting();
             GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            hudBackGroundRender.drawTooltipBackGround(list, false, mc);
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL11.glDisable(GL11.GL_BLEND);
+
+            if (HwiteInfo.blockInfo != null && !Objects.equals(HwiteInfo.infoMain, "") && HwiteInfo.hasIcon) {
+                RenderHelper.enableGUIStandardItemLighting();
+                GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+                DisplayUtil.renderStack(
+                        HUDBackGroundRender.x + 5,
+                        (HUDBackGroundRender.y - HUDBackGroundRender.h / 2) - 2,
+                        new ItemStack(HwiteInfo.blockInfo, 1, mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)));
+            }
+            loadGLState();
+            GL11.glPopMatrix();
         }
     }
 
-    private static EnumRenderFlag addInfoToList(List<String> list) {
+    public static void RenderHWITEHudView(Gui gui, Minecraft mc) {
+        ArrayList<String> list = new ArrayList<>();
+        ScaledResolution scaledResolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+        int screenWidth = scaledResolution.getScaledWidth();
+        int screenHeight = scaledResolution.getScaledHeight();
+
+        //draw model
+        boolean mainInfoNotEmpty = !Objects.equals(HwiteInfo.infoMain, "");
+        if (mainInfoNotEmpty && HwiteInfo.entityInfo != null && EntityRender.getBooleanValue()) {
+            //x, y, size, ?, ?
+            GuiInventory.func_110423_a(EntityInfoX.getIntegerValue(), EntityInfoY.getIntegerValue(), EntityInfoSize.getIntegerValue(), 0, 0, (EntityLivingBase) HwiteInfo.entityInfo);
+        }
+
+        //draw text and tooltip box
+        list.add(Block.runestoneAdamantium.getLocalizedName());
+        list.add("MITE");
+        HUDBackGroundRender hudBackGroundRender = new HUDBackGroundRender();
+        RenderItem renderItem = new RenderItem();
+
+        GL11.glPushMatrix();
+        saveGLState();
+
+        GL11.glScalef((float) HUDScale.getDoubleValue(), (float) HUDScale.getDoubleValue(), 1.0f);
+        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        RenderHelper.disableStandardItemLighting();
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+
+        hudBackGroundRender.drawTooltipBackGround(list, false, mc);
+
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glDisable(GL11.GL_BLEND);
+
+            RenderHelper.enableGUIStandardItemLighting();
+            GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+            DisplayUtil.renderStack(
+                    HUDBackGroundRender.x + 5,
+                    (HUDBackGroundRender.y + HUDBackGroundRender.h / 2) - 27,
+                    new ItemStack(Block.runestoneAdamantium.blockID, 1, mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)));
+        loadGLState();
+        GL11.glPopMatrix();
+    }
+
+    public static void saveGLState() {
+        hasBlending = GL11.glGetBoolean(GL11.GL_BLEND);
+        hasLight = GL11.glGetBoolean(GL11.GL_LIGHTING);
+        hasDepthTest = GL11.glGetBoolean(GL11.GL_DEPTH_TEST);
+        boundTexIndex = GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);
+        GL11.glPushAttrib(GL11.GL_CURRENT_BIT);
+    }
+
+    public static void loadGLState() {
+        if (hasBlending) GL11.glEnable(GL11.GL_BLEND);
+        else GL11.glDisable(GL11.GL_BLEND);
+        if (hasLight1) GL11.glEnable(GL11.GL_LIGHT1);
+        else GL11.glDisable(GL11.GL_LIGHT1);
+        if (hasDepthTest) GL11.glEnable(GL11.GL_DEPTH_TEST);
+        else GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, boundTexIndex);
+        GL11.glPopAttrib();
+    }
+
+    private static List addInfoToList(List<String> list) {
         boolean mainInfoEmpty = Objects.equals(HwiteInfo.infoMain, "");
         if (mainInfoEmpty) {
-            return EnumRenderFlag.Nothing;
+            return null;
         }
 
         int breakProgress = (int) (((IBreakingProgress) Minecraft.getMinecraft().playerController).getCurrentBreakingProgress() * 100);
@@ -110,13 +189,7 @@ public class HUDRenderer {
 
         list.add(HwiteInfo.updateModInfo(mc.objectMouseOver));
 
-        if (smallFlag) {
-            return Small;
-        }
-        if (bigFlag) {
-            return Big;
-        }
-        return EnumRenderFlag.Nothing;
+        return List.of();
     }
 
     private static void tryAddExtraInfo(List<String> list, int breakProgress) {

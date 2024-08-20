@@ -1,5 +1,6 @@
 package cn.xylose.mitemod.hwite.config;
 
+import cn.xylose.mitemod.hwite.render.HUDBackGroundRender;
 import cn.xylose.mitemod.hwite.render.HUDRenderer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,6 +10,7 @@ import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.options.*;
 import fi.dy.masa.malilib.util.JsonUtils;
 import fi.dy.masa.malilib.util.KeyCodes;
+import net.minecraft.Block;
 import net.minecraft.EnumEntityReachContext;
 import net.minecraft.GuiScreen;
 import net.minecraft.Minecraft;
@@ -33,9 +35,10 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigBoolean Redstone = new ConfigBoolean("hwite.Redstone", true, "红石能量强度,拉杆.压力板状态,比较器状态,中继器状态");
     public static final ConfigBoolean SpawnerType = new ConfigBoolean("hwite.SpawnerType", true);
     //values
-    public static final ConfigBoolean HUDPosOverride = new ConfigBoolean("hwite.HUDPosOverride", false, "打开后请使用位置子页面第1,2个配置项调整");
-    public static final ConfigInteger HUDX = new ConfigInteger("hwite.HUDX", 215, 0, 500, true, "请打开HUD位置调整");
-    public static final ConfigInteger HUDY = new ConfigInteger("hwite.HUDY", 16, 0, 300, true, "请打开HUD位置调整");
+    public static final ConfigInteger HUDX = new ConfigInteger("hwite.HUDX", 50, 0, 100);
+    public static final ConfigInteger HUDY = new ConfigInteger("hwite.HUDY", 1, 0, 100);
+    public static final ConfigDouble HUDScale = new ConfigDouble("hwite.HUDScale", 1, 0, 2);
+    public static final ConfigInteger HUDAlpha = new ConfigInteger("hwite.HUDAlpha", 80, 0, 100);
     public static final ConfigInteger EntityInfoX = new ConfigInteger("hwite.EntityInfoX", 180, 0, 500, true, "请关闭实体渲染(WIP)");
     public static final ConfigInteger EntityInfoY = new ConfigInteger("hwite.EntityInfoY", 43, 0, 300, true, "请关闭实体渲染(WIP)");
     public static final ConfigInteger EntityInfoSize = new ConfigInteger("hwite.EntityInfoSize", 18, 0, 100, false, "请关闭实体渲染(WIP)");
@@ -90,7 +93,7 @@ public class HwiteConfigs extends SimpleConfigs {
 
     static {
         hwiteswitch = List.of(RenderHwiteHud, DebugRenderHud, BlockRender, EntityRender, Liquids, CanBreak, BreakProgress, BreakProgressLine, NonCollidingEntity, GrowthValue, Redstone, SpawnerType);
-        values = List.of(HUDPosOverride, HUDX, HUDY, EntityInfoX, EntityInfoY, EntityInfoSize);
+        values = List.of(HUDX, HUDY, HUDScale, HUDAlpha, EntityInfoX, EntityInfoY, EntityInfoSize);
         appearance = List.of(HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDThemeSwitch, HUDTheme, HUDBGColor, HUDFrameColor, HUDFrameColor1, BreakProgressLineColor, CanBreakString, CannotBreakString);
         dev = List.of(ShowIDAndMetadata, MITEDetailsInfo, ShowBlockOrEntityCoord, ShowDistance, ShowDirection, ShowBlockUnlocalizedName);
         hotkey = List.of(ConfigGuiHotkey, HUDHotkey, LiquidsHotkey, RecipeHotkey, UsageHotkey);
@@ -110,13 +113,17 @@ public class HwiteConfigs extends SimpleConfigs {
         tabs.add(new ConfigTab("hwite.hotkey", hotkey));
 
         ConfigGuiHotkey.setHotKeyPressCallBack(minecraft -> {
-            minecraft.displayGuiScreen(HwiteConfigs.getInstance().getValueScreen((GuiScreen) null));
+            minecraft.displayGuiScreen(HwiteConfigs.getInstance().getConfigScreen((GuiScreen) null));
         });
         HUDHotkey.setHotKeyPressCallBack(minecraft -> RenderHwiteHud.toggleBooleanValue());
         LiquidsHotkey.setHotKeyPressCallBack(minecraft -> Liquids.toggleBooleanValue());
         if (ViewMode.getBooleanValue()) {
             Minecraft mc = Minecraft.getMinecraft();
-            HUDRenderer.RenderHWITEHud(HwiteConfigs.getInstance().getValueScreen((GuiScreen) null), mc, 300);
+            ArrayList<String> list = new ArrayList<>();
+            HUDBackGroundRender hudBackGroundRender = new HUDBackGroundRender();
+            list.add(Block.runestoneAdamantium.getLocalizedName());
+            list.add("MITE");
+            hudBackGroundRender.drawTooltipBackGround(list, false, mc);
         }
         Instance = new HwiteConfigs();
     }
