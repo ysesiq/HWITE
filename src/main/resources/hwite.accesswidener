@@ -8,3 +8,5 @@ accessible field net/minecraft/GuiScreen mc Lnet/minecraft/Minecraft;
 accessible field net/minecraft/BlockFurnace isActive Z
 accessible field net/minecraft/Minecraft timer Lnet/minecraft/Timer;
 accessible field net/minecraft/EntityLivestock production_counter I
+accessible field net/minecraft/GuiIngame updateCounter I
+accessible field net/minecraft/NetClientHandler mc Lnet/minecraft/Minecraft;

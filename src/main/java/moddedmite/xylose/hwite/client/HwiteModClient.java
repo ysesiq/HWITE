@@ -1,6 +1,6 @@
-package cn.xylose.mitemod.hwite.client;
+package moddedmite.xylose.hwite.client;
 
-import cn.xylose.mitemod.hwite.config.HwiteConfigs;
+import moddedmite.xylose.hwite.config.HwiteConfigs;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.GuiScreen;
 

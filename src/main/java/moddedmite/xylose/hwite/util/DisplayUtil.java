@@ -1,6 +1,7 @@
-package cn.xylose.mitemod.hwite.util;
+package moddedmite.xylose.hwite.util;
 
-import cn.xylose.mitemod.hwite.render.IconUI;
+import moddedmite.xylose.hwite.render.IconUI;
+import moddedmite.xylose.hwite.api.SpecialChars;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
 
@@ -8,8 +9,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
-
-import static cn.xylose.mitemod.hwite.api.SpecialChars.*;
 
 public class DisplayUtil {
     private static FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
@@ -21,14 +20,14 @@ public class DisplayUtil {
 
         int width = 0;
 
-        Matcher renderMatcher = patternRender.matcher(s);
+        Matcher renderMatcher = SpecialChars.patternRender.matcher(s);
         while (renderMatcher.find()) {
 //            IWailaTooltipRenderer renderer = ModuleRegistrar.instance().getTooltipRenderer(renderMatcher.group("name"));
 //            if (renderer != null)
 //                width += renderer.getSize(renderMatcher.group("args").split(","), DataAccessorCommon.instance).width;
         }
 
-        Matcher iconMatcher = patternIcon.matcher(s);
+        Matcher iconMatcher = SpecialChars.patternIcon.matcher(s);
         while (iconMatcher.find()) width += 8;
 
         width += fontRenderer.getStringWidth(stripSymbols(s));
@@ -42,15 +41,15 @@ public class DisplayUtil {
     }
 
     public static String stripSymbols(String s) {
-        String result = patternRender.matcher(s).replaceAll("");
-        result = patternMinecraft.matcher(result).replaceAll("");
-        result = patternWaila.matcher(result).replaceAll("");
+        String result = SpecialChars.patternRender.matcher(s).replaceAll("");
+        result = SpecialChars.patternMinecraft.matcher(result).replaceAll("");
+        result = SpecialChars.patternWaila.matcher(result).replaceAll("");
         return result;
     }
 
     public static String stripWailaSymbols(String s) {
-        String result = patternRender.matcher(s).replaceAll("");
-        result = patternWaila.matcher(result).replaceAll("");
+        String result = SpecialChars.patternRender.matcher(s).replaceAll("");
+        result = SpecialChars.patternWaila.matcher(result).replaceAll("");
         return result;
     }
 

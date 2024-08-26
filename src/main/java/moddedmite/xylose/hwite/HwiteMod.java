@@ -1,6 +1,6 @@
-package cn.xylose.mitemod.hwite;
+package moddedmite.xylose.hwite;
 
-import cn.xylose.mitemod.hwite.config.HwiteConfigs;
+import moddedmite.xylose.hwite.config.HwiteConfigs;
 import fi.dy.masa.malilib.config.ConfigManager;
 import net.fabricmc.api.ModInitializer;
 

@@ -1,8 +1,8 @@
-package cn.xylose.mitemod.hwite.render.util;
+package moddedmite.xylose.hwite.render.util;
 
-import cn.xylose.mitemod.hwite.api.IWailaTooltipRenderer;
-import cn.xylose.mitemod.hwite.render.IconUI;
-import cn.xylose.mitemod.hwite.util.DisplayUtil;
+import moddedmite.xylose.hwite.api.IWailaTooltipRenderer;
+import moddedmite.xylose.hwite.render.IconUI;
+import moddedmite.xylose.hwite.util.DisplayUtil;
 import net.minecraft.MathHelper;
 import net.minecraft.RaycastCollision;
 

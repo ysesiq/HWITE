@@ -1,6 +1,7 @@
-package cn.xylose.mitemod.hwite.mixin;
+package moddedmite.xylose.hwite.mixin;
 
-import cn.xylose.mitemod.hwite.render.HUDRenderer;
+import moddedmite.xylose.hwite.render.TooltipRenderer;
+import moddedmite.xylose.hwite.config.HwiteConfigs;
 import net.minecraft.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -8,9 +9,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import static cn.xylose.mitemod.hwite.config.HwiteConfigs.DebugRenderHud;
-import static cn.xylose.mitemod.hwite.config.HwiteConfigs.RenderHwiteHud;
 
 
 @Mixin(GuiIngame.class)
@@ -25,13 +23,13 @@ public class GuiIngameMixin extends Gui {
                     target = "Lnet/minecraft/Minecraft;inDevMode()Z",
                     shift = At.Shift.BEFORE)})
     private void injectRenderHWITEHud(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
-        if (DebugRenderHud.getBooleanValue()) {
-            if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && !mc.gameSettings.showDebugInfo && RenderHwiteHud.getBooleanValue() && !(mc.currentScreen instanceof GuiContainer)) {
-                HUDRenderer.RenderHWITEHud(this, this.mc);
+        if (HwiteConfigs.DebugRenderHud.getBooleanValue()) {
+            if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && !mc.gameSettings.showDebugInfo && HwiteConfigs.DisplayTooltip.getBooleanValue() && !(mc.currentScreen instanceof GuiContainer)) {
+                TooltipRenderer.RenderHWITEHud(this, this.mc);
             }
         } else {
-            if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && RenderHwiteHud.getBooleanValue() && !(mc.currentScreen instanceof GuiContainer)) {
-                HUDRenderer.RenderHWITEHud(this, this.mc);
+            if (mc.gameSettings.gui_mode == 0 && !mc.gameSettings.keyBindPlayerList.pressed && HwiteConfigs.DisplayTooltip.getBooleanValue() && !(mc.currentScreen instanceof GuiContainer)) {
+                TooltipRenderer.RenderHWITEHud(this, this.mc);
             }
         }
     }

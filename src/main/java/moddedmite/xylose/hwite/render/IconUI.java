@@ -1,9 +1,9 @@
-package cn.xylose.mitemod.hwite.render;
+package moddedmite.xylose.hwite.render;
 
 import java.util.HashMap;
 
-import static cn.xylose.mitemod.hwite.api.SpecialChars.WailaIcon;
-import static cn.xylose.mitemod.hwite.api.SpecialChars.WailaStyle;
+import static moddedmite.xylose.hwite.api.SpecialChars.WailaIcon;
+import static moddedmite.xylose.hwite.api.SpecialChars.WailaStyle;
 
 public enum IconUI {
 

@@ -1,26 +1,29 @@
 # Config
 ## base
-config.name.hwite.RenderHwiteHud=Render HWITE HUD
+config.name.hwite.DisplayTooltip=Display Tooltip
 config.name.hwite.View=[WIP] View
 config.comment.hwite.View=Config screen hide HUD
 config.name.hwite.debugRenderHud=Render HWITE HUD on Debug Screen
-config.name.hwite.EntityRender=[WIP] Entity Render
+config.name.hwite.DisplayBlock=Display Blocks
+config.name.hwite.DisplayLiquid=Display Liquid
+config.name.hwite.DisplayEntity=Display Entities
+config.name.hwite.DisplayNonCollidingEntity=Display Non Colliding Entity
 config.name.hwite.BlockRender=Block Render
-config.name.hwite.Liquids=Liquids Info
-config.name.hwite.CanBreak=Break Tips
+config.name.hwite.EntityRender=[WIP] Entity Render
+## general
+config.name.hwite.BreakInfo=Break Tips
 config.name.hwite.BreakProgress=Break Progress
 config.name.hwite.BreakProgressLine=[WIP] Break Progress Line
-config.name.hwite.NonCollidingEntity=Non Colliding Entity
 config.comment.hwite.NonCollidingEntity=For example, experience balls, drops, fishing rod buoys
 config.name.hwite.GrowthValue=Crop Growth Value
 config.name.hwite.Redstone=Redstone Info
 config.comment.hwite.Redstone=Redstone Power, tie rod, Pressure Plate Status, Comparator Status, Repeater Status
 config.name.hwite.SpawnerType=Spawner Type
 ## values
-config.name.hwite.HUDX=HUD X Pos
-config.name.hwite.HUDY=HUD Y Pos
-config.name.hwite.HUDAlpha=HUD Alpha
-config.name.hwite.HUDScale=HUD Scale
+config.name.hwite.TooltipX=Tooltip X Pos
+config.name.hwite.TooltipY=Tooltip Y Pos
+config.name.hwite.TooltipAlpha=Tooltip Alpha
+config.name.hwite.TooltipScale=Tooltip Scale
 config.name.hwite.EntityInfoX=Entity Render X Pos
 config.comment.hwite.EntityInfoX=Please turn on [WIP] Entity Render
 config.name.hwite.EntityInfoY=Entity Render Y Pos
@@ -69,9 +72,10 @@ config.comment.hwite.UsageHotkey=View Usages
 config.name.hiwla.AnimalGrowthTime=Animal Growth Time
 config.name.hiwla.LivingProtection=Living Protection
 config.name.hiwla.VillagerProfession=Villager Profession
-config.name.hiwla.FurnaceInfo=Furnace Burning Info(WIP)
+config.name.hiwla.FurnaceInfo=[WIP]Furnace Burning Info
 config.name.hiwla.BeaconLevel=Beacon Level
 config.name.hiwla.HorseInfo=Horse Info
+config.name.hiwla.EffectInfo=[WIP]Effect Info
 ## enum
 configs.name.hwite.HUDTheme=HUD Theme
 config.enum.HUDTheme.Waila=Waila
@@ -81,10 +85,9 @@ config.enum.HUDTheme.Create=Create
 config.enum.HUDTheme.Tooltip=Tooltip
 ## config Comment
 config.value.comment.HWITE=What am i looking at
-config.hotkey.comment.HWITE=Here's What You're Looking At
 ## config tab
-config.tab.hwite.switch=Switch
-config.tab.hwite.values=Values
+config.tab.hwite.hwite=HWITE
+config.tab.hwite.general=General
 config.tab.hwite.appearance=Appearance
 config.tab.hwite.dev=Dev
 config.tab.hwite.hiwla=HIWLA
@@ -92,7 +95,7 @@ config.tab.hwite.hotkey=Hotkeys
 
 # HWITE
 hwite.info.health=Health:
-hwite.info.attack= Attack:
+hwite.info.attack=Attack:
 hwite.info.hardness=Hardness:
 hwite.info.str_vs_block= StrVsBlock:
 hwite.info.harvest_level= HarvestLevel:

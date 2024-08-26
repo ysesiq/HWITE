@@ -1,4 +1,4 @@
-package cn.xylose.mitemod.hwite.api;
+package moddedmite.xylose.hwite.api;
 
 import net.minecraft.*;
 

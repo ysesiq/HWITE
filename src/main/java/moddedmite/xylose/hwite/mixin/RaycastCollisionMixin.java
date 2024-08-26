@@ -1,8 +1,7 @@
-package cn.xylose.mitemod.hwite.mixin;
+package moddedmite.xylose.hwite.mixin;
 
-import cn.xylose.mitemod.hwite.api.IRaycastCollision;
+import moddedmite.xylose.hwite.api.IRaycastCollision;
 import net.minecraft.*;
-import net.xiaoyu233.fml.util.ReflectHelper;
 import org.spongepowered.asm.mixin.*;
 
 @Mixin(RaycastCollision.class)

@@ -1,7 +1,6 @@
-package cn.xylose.mitemod.hwite.config;
+package moddedmite.xylose.hwite.config;
 
-import cn.xylose.mitemod.hwite.render.HUDBackGroundRender;
-import cn.xylose.mitemod.hwite.render.HUDRenderer;
+import moddedmite.xylose.hwite.render.TooltipBGRender;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import fi.dy.masa.malilib.config.ConfigTab;
@@ -9,9 +8,7 @@ import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.options.*;
 import fi.dy.masa.malilib.util.JsonUtils;
-import fi.dy.masa.malilib.util.KeyCodes;
 import net.minecraft.Block;
-import net.minecraft.EnumEntityReachContext;
 import net.minecraft.GuiScreen;
 import net.minecraft.Minecraft;
 import org.lwjgl.input.Keyboard;
@@ -22,27 +19,29 @@ import java.util.List;
 public class HwiteConfigs extends SimpleConfigs {
     //switch
     public static final ConfigBoolean ViewMode = new ConfigBoolean("hwite.View", false, "配置界面预览");
-    public static final ConfigBoolean RenderHwiteHud = new ConfigBoolean("hwite.RenderHwiteHud", true);
+    public static final ConfigBoolean DisplayTooltip = new ConfigBoolean("hwite.DisplayTooltip", true);
     public static final ConfigBoolean DebugRenderHud = new ConfigBoolean("hwite.debugRenderHud", true);
+    public static final ConfigBoolean DisplayBlock = new ConfigBoolean("hwite.DisplayBlock", true);
+    public static final ConfigBoolean DisplayLiquids = new ConfigBoolean("hwite.DisplayLiquid", false);
+    public static final ConfigBoolean DisplayEntity = new ConfigBoolean("hwite.DisplayEntity", true);
+    public static final ConfigBoolean DisplayNonCollidingEntity = new ConfigBoolean("hwite.DisplayNonCollidingEntity", false, "例如经验球,掉落物,钓鱼竿的浮标");
     public static final ConfigBoolean EntityRender = new ConfigBoolean("hwite.EntityRender", false);
     public static final ConfigBoolean BlockRender = new ConfigBoolean("hwite.BlockRender", true);
-    public static final ConfigBoolean Liquids = new ConfigBoolean("hwite.Liquids", false);
-    public static final ConfigBoolean CanBreak = new ConfigBoolean("hwite.CanBreak", true);
+    //general
+    public static final ConfigBoolean BreakInfo = new ConfigBoolean("hwite.BreakInfo", true);
     public static final ConfigBoolean BreakProgress = new ConfigBoolean("hwite.BreakProgress", true);
     public static final ConfigBoolean BreakProgressLine = new ConfigBoolean("hwite.BreakProgressLine", false);
-    public static final ConfigBoolean NonCollidingEntity = new ConfigBoolean("hwite.NonCollidingEntity", false, "例如经验球,掉落物,钓鱼竿的浮标");
     public static final ConfigBoolean GrowthValue = new ConfigBoolean("hwite.GrowthValue", true);
     public static final ConfigBoolean Redstone = new ConfigBoolean("hwite.Redstone", true, "红石能量强度,拉杆.压力板状态,比较器状态,中继器状态");
     public static final ConfigBoolean SpawnerType = new ConfigBoolean("hwite.SpawnerType", true);
-    //values
-    public static final ConfigInteger HUDX = new ConfigInteger("hwite.HUDX", 50, 0, 100);
-    public static final ConfigInteger HUDY = new ConfigInteger("hwite.HUDY", 1, 0, 100);
-    public static final ConfigDouble HUDScale = new ConfigDouble("hwite.HUDScale", 1, 0, 2);
-    public static final ConfigInteger HUDAlpha = new ConfigInteger("hwite.HUDAlpha", 80, 0, 100);
+    //appearance
+    public static final ConfigInteger TooltipX = new ConfigInteger("hwite.TooltipX", 50, 0, 100);
+    public static final ConfigInteger TooltipY = new ConfigInteger("hwite.TooltipY", 1, 0, 100);
+    public static final ConfigDouble TooltipScale = new ConfigDouble("hwite.TooltipScale", 1, 0.2, 2);
+    public static final ConfigInteger TooltipAlpha = new ConfigInteger("hwite.TooltipAlpha", 80, 0, 100);
     public static final ConfigInteger EntityInfoX = new ConfigInteger("hwite.EntityInfoX", 180, 0, 500, true, "请关闭实体渲染(WIP)");
     public static final ConfigInteger EntityInfoY = new ConfigInteger("hwite.EntityInfoY", 43, 0, 300, true, "请关闭实体渲染(WIP)");
     public static final ConfigInteger EntityInfoSize = new ConfigInteger("hwite.EntityInfoSize", 18, 0, 100, false, "请关闭实体渲染(WIP)");
-    //appearance
     public static final ConfigBoolean HUDBackGround = new ConfigBoolean("hwite.HUDBackGround", true);
     public static final ConfigBoolean HUDRoundedRectangle = new ConfigBoolean("hwite.HUDRoundedRectangle", true);
     public static final ConfigBoolean HUDFrame = new ConfigBoolean("hwite.HUDFrame", true);
@@ -71,15 +70,16 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigHotkey UsageHotkey = new ConfigHotkey("hwite.UsageHotkey", Keyboard.KEY_NUMPAD4);
     //Hard Is We Looking At
     public static final ConfigBoolean AnimalGrowthTime = new ConfigBoolean("hiwla.AnimalGrowthTime", true);
-    public static final ConfigBoolean LivingProtection = new ConfigBoolean("hiwla.LivingProtection", true);
+    public static final ConfigBoolean LivingProtectionAttack = new ConfigBoolean("hiwla.LivingProtection", true);
     public static final ConfigBoolean VillagerProfession = new ConfigBoolean("hiwla.VillagerProfession", true);
     public static final ConfigBoolean FurnaceInfo = new ConfigBoolean("hiwla.FurnaceInfo", false);
     public static final ConfigBoolean BeaconLevel = new ConfigBoolean("hiwla.BeaconLevel", true);
     public static final ConfigBoolean HorseInfo = new ConfigBoolean("hiwla.HorseInfo", true);
+    public static final ConfigBoolean EffectInfo = new ConfigBoolean("hiwla.EffectInfo", false);
 
     private static final HwiteConfigs Instance;
-    public static final List<ConfigBase<?>> hwiteswitch;
-    public static final List<ConfigBase<?>> values;
+    public static final List<ConfigBase<?>> hwite;
+    public static final List<ConfigBase<?>> general;
     public static final List<ConfigBase<?>> appearance;
     public static final List<ConfigBase<?>> dev;
     public static final List<ConfigHotkey> hotkey;
@@ -88,25 +88,24 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final List<ConfigTab> tabs = new ArrayList<>();
 
     public HwiteConfigs() {
-        super("HWITE", hotkey, values, "⚡⚡⚡ 你看到的我~~~ ⚡⚡⚡", "⚡⚡⚡ 是哪一种颜色~~~ ⚡⚡⚡");
+        super("HWITE", hotkey, hwite, "⚡⚡⚡ 你看到的我~~~ ⚡⚡⚡");
     }
 
     static {
-        hwiteswitch = List.of(RenderHwiteHud, DebugRenderHud, BlockRender, EntityRender, Liquids, CanBreak, BreakProgress, BreakProgressLine, NonCollidingEntity, GrowthValue, Redstone, SpawnerType);
-        values = List.of(HUDX, HUDY, HUDScale, HUDAlpha, EntityInfoX, EntityInfoY, EntityInfoSize);
-        appearance = List.of(HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDThemeSwitch, HUDTheme, HUDBGColor, HUDFrameColor, HUDFrameColor1, BreakProgressLineColor, CanBreakString, CannotBreakString);
+        hwite = List.of(DisplayTooltip, DebugRenderHud, DisplayBlock, DisplayLiquids, DisplayEntity, DisplayNonCollidingEntity, BlockRender, EntityRender);
+        general = List.of(BreakInfo, BreakProgress, BreakProgressLine, GrowthValue, Redstone, SpawnerType);
+        appearance = List.of(TooltipX, TooltipY, TooltipScale, TooltipAlpha, EntityInfoX, EntityInfoY, EntityInfoSize, HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDThemeSwitch, HUDTheme, HUDBGColor, HUDFrameColor, HUDFrameColor1, BreakProgressLineColor, CanBreakString, CannotBreakString);
         dev = List.of(ShowIDAndMetadata, MITEDetailsInfo, ShowBlockOrEntityCoord, ShowDistance, ShowDirection, ShowBlockUnlocalizedName);
         hotkey = List.of(ConfigGuiHotkey, HUDHotkey, LiquidsHotkey, RecipeHotkey, UsageHotkey);
-        hiwla = List.of(AnimalGrowthTime, LivingProtection, VillagerProfession, FurnaceInfo, BeaconLevel, HorseInfo);
+        hiwla = List.of(AnimalGrowthTime, LivingProtectionAttack, VillagerProfession, FurnaceInfo, BeaconLevel, HorseInfo, EffectInfo);
         List<ConfigBase<?>> configValues = new ArrayList<>();
-        configValues.addAll(hwiteswitch);
+        configValues.addAll(hwite);
         configValues.addAll(appearance);
         configValues.addAll(dev);
-        configValues.addAll(HwiteConfigs.values);
         configValues.addAll(hiwla);
         configValues.addAll(hotkey);
-        tabs.add(new ConfigTab("hwite.switch", hwiteswitch));
-        tabs.add(new ConfigTab("hwite.values", HwiteConfigs.values));
+        tabs.add(new ConfigTab("hwite.hwite", hwite));
+        tabs.add(new ConfigTab("hwite.general", general));
         tabs.add(new ConfigTab("hwite.appearance", appearance));
         tabs.add(new ConfigTab("hwite.dev", dev));
         tabs.add(new ConfigTab("hwite.hiwla", hiwla));
@@ -115,12 +114,12 @@ public class HwiteConfigs extends SimpleConfigs {
         ConfigGuiHotkey.setHotKeyPressCallBack(minecraft -> {
             minecraft.displayGuiScreen(HwiteConfigs.getInstance().getConfigScreen((GuiScreen) null));
         });
-        HUDHotkey.setHotKeyPressCallBack(minecraft -> RenderHwiteHud.toggleBooleanValue());
-        LiquidsHotkey.setHotKeyPressCallBack(minecraft -> Liquids.toggleBooleanValue());
+        HUDHotkey.setHotKeyPressCallBack(minecraft -> DisplayTooltip.toggleBooleanValue());
+        LiquidsHotkey.setHotKeyPressCallBack(minecraft -> DisplayLiquids.toggleBooleanValue());
         if (ViewMode.getBooleanValue()) {
             Minecraft mc = Minecraft.getMinecraft();
             ArrayList<String> list = new ArrayList<>();
-            HUDBackGroundRender hudBackGroundRender = new HUDBackGroundRender();
+            TooltipBGRender hudBackGroundRender = new TooltipBGRender();
             list.add(Block.runestoneAdamantium.getLocalizedName());
             list.add("MITE");
             hudBackGroundRender.drawTooltipBackGround(list, false, mc);
@@ -140,8 +139,8 @@ public class HwiteConfigs extends SimpleConfigs {
     @Override
     public void save() {
         JsonObject root = new JsonObject();
-        ConfigUtils.writeConfigBase(root, "开关", hwiteswitch);
-        ConfigUtils.writeConfigBase(root, "数值", values);
+        ConfigUtils.writeConfigBase(root, "HWITE", hwite);
+        ConfigUtils.writeConfigBase(root, "基础", general);
         ConfigUtils.writeConfigBase(root, "外观", appearance);
         ConfigUtils.writeConfigBase(root, "开发", dev);
         ConfigUtils.writeConfigBase(root, "快捷键", hotkey);
@@ -157,8 +156,8 @@ public class HwiteConfigs extends SimpleConfigs {
             JsonElement jsonElement = JsonUtils.parseJsonFile(this.optionsFile);
             if (jsonElement != null && jsonElement.isJsonObject()) {
                 JsonObject root = jsonElement.getAsJsonObject();
-                ConfigUtils.readConfigBase(root, "开关", hwiteswitch);
-                ConfigUtils.readConfigBase(root, "数值", values);
+                ConfigUtils.readConfigBase(root, "HWITE", hwite);
+                ConfigUtils.readConfigBase(root, "基础", general);
                 ConfigUtils.readConfigBase(root, "外观", appearance);
                 ConfigUtils.readConfigBase(root, "开发", dev);
                 ConfigUtils.readConfigBase(root, "快捷键", hotkey);

@@ -1,33 +1,35 @@
 # Config
 ## base
-config.name.hwite.RenderHwiteHud=渲染HUD
+config.name.hwite.DisplayTooltip=显示提示框
 config.name.hwite.View=[WIP]预览
 config.comment.hwite.View=配置界面预览
 config.name.hwite.debugRenderHud=调试界面隐藏HUD
-config.name.hwite.EntityRender=[WIP]实体渲染
+config.name.hwite.DisplayBlock=显示方块
+config.name.hwite.DisplayLiquid=显示流体
+config.name.hwite.DisplayEntity=显示实体
+config.name.hwite.DisplayNonCollidingEntity=显示不可碰撞实体
 config.name.hwite.BlockRender=方块渲染
-config.name.hwite.Liquids=流体信息
-config.name.hwite.CanBreak=挖掘提示
+config.name.hwite.EntityRender=[WIP]实体渲染
+## general
+config.name.hwite.BreakInfo=挖掘提示
 config.name.hwite.BreakProgress=挖掘进度
 config.name.hwite.BreakProgressLine=[WIP]挖掘进度条
-config.name.hwite.NonCollidingEntity=不可碰撞实体
 config.comment.hwite.NonCollidingEntity=例如经验球,掉落物,钓鱼竿的浮标
 config.name.hwite.GrowthValue=作物生长进度
 config.name.hwite.Redstone=红石信息
 config.comment.hwite.Redstone=红石能量强度,拉杆.压力板状态,比较器状态,中继器状态
 config.name.hwite.SpawnerType=刷怪笼种类
-## values
-config.name.hwite.HUDX=HUD横向偏移
-config.name.hwite.HUDY=HUD的纵向偏移
-config.name.hwite.HUDAlpha=HUD Alpha
-config.name.hwite.HUDScale=HUD Scale
+## appearance
+config.name.hwite.TooltipX=提示框横向位置
+config.name.hwite.TooltipY=提示框纵向位置
+config.name.hwite.TooltipAlpha=提示框透明度
+config.name.hwite.TooltipScale=提示框尺寸
 config.name.hwite.EntityInfoX=实体渲染横向偏移
 config.comment.hwite.EntityInfoX=请打开[WIP]实体渲染
 config.name.hwite.EntityInfoY=实体渲染纵向偏移
 config.comment.hwite.EntityInfoY=请打开[WIP]实体渲染
 config.name.hwite.EntityInfoSize=实体渲染尺寸
 config.comment.hwite.EntityInfoSize=请打开[WIP]实体渲染
-## appearance
 config.name.hwite.HUDBackGround=背景总开关
 config.name.hwite.HUDRoundedRectangle=圆角矩形
 config.name.hwite.HUDFrame=边框
@@ -69,9 +71,10 @@ config.comment.hwite.UsageHotkey=查看参与配方
 config.name.hiwla.AnimalGrowthTime=动物成长时间
 config.name.hiwla.LivingProtection=生物护甲值
 config.name.hiwla.VillagerProfession=村民职业
-config.name.hiwla.FurnaceInfo=熔炉烧制信息(WIP)
+config.name.hiwla.FurnaceInfo=[WIP]熔炉烧制信息
 config.name.hiwla.BeaconLevel=信标等级
 config.name.hiwla.HorseInfo=马匹信息
+config.name.hiwla.EffectInfo=[WIP]状态效果
 ## enum
 configs.name.hwite.HUDTheme=HUD主题
 config.enum.HUDTheme.Waila=经典
@@ -81,10 +84,9 @@ config.enum.HUDTheme.Create=机械动力
 config.enum.HUDTheme.Tooltip=物品提示框
 ## config comment
 config.value.comment.HWITE=⚡⚡⚡ 你看到的我~~~ ⚡⚡⚡
-config.hotkey.comment.HWITE="⚡⚡⚡ 是哪一种颜色~~~ ⚡⚡⚡
 ## config tab
-config.tab.hwite.switch=开关
-config.tab.hwite.values=数值
+config.tab.hwite.hwite=HWITE
+config.tab.hwite.general=基础
 config.tab.hwite.appearance=外观
 config.tab.hwite.dev=开发
 config.tab.hwite.hiwla=HIWLA
@@ -92,7 +94,7 @@ config.tab.hwite.hotkey=快捷键
 
 # HWITE
 hwite.info.health=生命值:
-hwite.info.attack= 伤害:
+hwite.info.attack=伤害:
 hwite.info.hardness=硬度:
 hwite.info.str_vs_block= 挖掘速度:
 hwite.info.harvest_level= 挖掘等级:

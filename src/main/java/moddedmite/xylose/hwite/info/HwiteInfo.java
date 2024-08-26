@@ -1,14 +1,16 @@
-package cn.xylose.mitemod.hwite.info;
+package moddedmite.xylose.hwite.info;
 
 import emi.dev.emi.emi.api.EmiApi;
 import emi.dev.emi.emi.api.stack.EmiStack;
+import moddedmite.xylose.hwite.config.HwiteConfigs;
 import net.minecraft.*;
 import net.xiaoyu233.fml.api.block.IBlock;
 import net.xiaoyu233.fml.api.entity.IEntity;
 
 import java.text.DecimalFormat;
-
-import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 
 public class HwiteInfo extends Gui {
     static Minecraft mc = Minecraft.getMinecraft();
@@ -26,6 +28,7 @@ public class HwiteInfo extends Gui {
     public static int blockPosY = 0;
     public static int blockPosZ = 0;
     public static boolean hasIcon;
+    public static boolean renderHealth = false;
 
     static int mobSpawnerID = Block.mobSpawner.blockID;
     static int wheatCropID = Block.crops.blockID;
@@ -54,14 +57,18 @@ public class HwiteInfo extends Gui {
         }
         entityInfo = null;
         if (rc.isEntity()) {
-            updateRCEntity(rc);
+            if (HwiteConfigs.DisplayEntity.getBooleanValue())
+                updateRCEntity(rc);
             updateDevInfoInfo(rc, player);
             updateHiwlaExtraInfo(rc, player);
+            hotKeyPress(rc);
         } else if (rc.isBlock()) {
-            updateRCBlock(rc, player);
-            updateGrowthInfo(rc, player);
-            updateRedStoneInfo(rc, player);
-            updateMobSpawnerInfo(rc, player);
+            if (HwiteConfigs.DisplayBlock.getBooleanValue()) {
+                updateRCBlock(rc, player);
+                updateGrowthInfo(rc, player);
+                updateRedStoneInfo(rc, player);
+                updateMobSpawnerInfo(rc, player);
+            }
             updateDevInfoInfo(rc, player);
             hotKeyPress(rc);
         } else {
@@ -71,12 +78,23 @@ public class HwiteInfo extends Gui {
         }
     }
 
+    private static void updateRCBlock(RaycastCollision rc, EntityPlayer player) {
+        Block block = Block.blocksList[player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z)];
+        blockPosX = rc.block_hit_x;
+        blockPosY = rc.block_hit_y;
+        blockPosZ = rc.block_hit_z;
+        updateBlockInfo(rc, player);
+        if (HwiteConfigs.BlockRender.getBooleanValue())
+            hasIcon = true;
+        renderHealth = false;
+    }
+
     private static void updateRCEntity(RaycastCollision rc) {
         Entity entity = rc.getEntityHit();
         if (entity instanceof EntityLivingBase entityLivingBase) {
             updateEntityLivingBaseInfo(entityLivingBase);
         } else {
-            if (ShowIDAndMetadata.getBooleanValue()) {
+            if (HwiteConfigs.ShowIDAndMetadata.getBooleanValue()) {
                 infoMain = entity.getTranslatedEntityName() + " (" + EntityList.getEntityID(entity) + ")";
             } else {
                 infoMain = entity.getTranslatedEntityName();
@@ -89,14 +107,13 @@ public class HwiteInfo extends Gui {
         hasIcon = false;
     }
 
-    private static void updateRCBlock(RaycastCollision rc, EntityPlayer player) {
-        Block block = Block.blocksList[player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z)];
-        blockPosX = rc.block_hit_x;
-        blockPosY = rc.block_hit_y;
-        blockPosZ = rc.block_hit_z;
-        updateBlockInfo(rc, player);
-        hasIcon = true;
+    public static int updateEntityLivingBaseMaxHealth(RaycastCollision rc) {
+        if (rc != null && rc.isEntity() && rc.getEntityHit() instanceof EntityLivingBase entityLivingBase) {
+            return (int) entityLivingBase.getMaxHealth();
+        }
+        return 0;
     }
+
 
     private static void updateEntityLivingBaseInfo(EntityLivingBase entityLivingBase) {
         entityInfo = entityLivingBase;
@@ -108,22 +125,20 @@ public class HwiteInfo extends Gui {
         } else {
             total_melee_damage = 0.0F;
         }
-        if (ShowIDAndMetadata.getBooleanValue()) {
+        if (HwiteConfigs.ShowIDAndMetadata.getBooleanValue()) {
             infoMain = entityLivingBase.getEntityName() + " (" + EntityList.getEntityID(entityLivingBase) + ")";
         } else {
             infoMain = entityLivingBase.getEntityName();
         }
 
-        if (total_melee_damage == 0.0F) {
-            info_line_1 = gray + I18n.getString("hwite.info.health") + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth();
-            info_line_2 = " ";
-            break_info = "  ";
-            unlocalizedNameInfo = "";
-        } else {
-            info_line_1 = gray + I18n.getString("hwite.info.health") + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth() + I18n.getString("hwite.info.attack") + total_melee_damage;
-            info_line_2 = " ";
-            break_info = "  ";
-            unlocalizedNameInfo = "";
+        if (!renderHealth) {
+            if (entityLivingBase.getMaxHealth() > 20) {
+                info_line_1 = gray + I18n.getString("hwite.info.health") + (int) entityLivingBase.getHealth() + "/" + (int) entityLivingBase.getMaxHealth();
+                info_line_2 = " ";
+                break_info = "  ";
+                unlocalizedNameInfo = "";
+                renderHealth = false;
+            }
         }
     }
 
@@ -180,9 +195,8 @@ public class HwiteInfo extends Gui {
             int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             float block_hardness = player.worldObj.getBlockHardness(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             int min_harvest_level = block.getMinHarvestLevel(metadata);
-            if (MITEDetailsInfo.getBooleanValue()) {
+            if (HwiteConfigs.MITEDetailsInfo.getBooleanValue()) {
                 return updateInfoLine1(min_harvest_level, rc, block_hardness, player);
-//                return updateInfoLine2(min_harvest_level, rc, block_hardness, player);
             }
         }
         return "";
@@ -190,9 +204,9 @@ public class HwiteInfo extends Gui {
 
     private static void updateBreakInfo(RaycastCollision rc, EntityPlayer player) {
         if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-            break_info = EnumChatFormatting.DARK_RED + CannotBreakString.getStringValue() + EnumChatFormatting.WHITE;
+            break_info = EnumChatFormatting.DARK_RED + HwiteConfigs.CannotBreakString.getStringValue() + EnumChatFormatting.WHITE;
         } else {
-            break_info = EnumChatFormatting.DARK_GREEN + CanBreakString.getStringValue() + EnumChatFormatting.WHITE;
+            break_info = EnumChatFormatting.DARK_GREEN + HwiteConfigs.CanBreakString.getStringValue() + EnumChatFormatting.WHITE;
         }
     }
 
@@ -201,7 +215,7 @@ public class HwiteInfo extends Gui {
         if (rc != null) {
             int blockID = player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-            if (GrowthValue.getBooleanValue()) {
+            if (HwiteConfigs.GrowthValue.getBooleanValue()) {
                 if (rc.getBlockHitID() == wheatCropID || (Block.blocksList[blockID] instanceof BlockCrops) || Block.blocksList[blockID] instanceof BlockStem || blockID == netherStalkID) {
                     int growthValue = (int) (blockID == netherStalkID ? metadata / 3.0F * 100F : (metadata & 7) / 7.0F * 100.0F);
                     if (growthValue != 100.0D) {
@@ -220,7 +234,7 @@ public class HwiteInfo extends Gui {
         if (rc != null) {
             int blockID = player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-            if (Redstone.getBooleanValue()) {
+            if (HwiteConfigs.Redstone.getBooleanValue()) {
                 if (blockID == leverID) {
                     String leverOn = ((metadata & 0x8) == 0) ? EnumChatFormatting.RED + I18n.getString("hwite.info.off") : EnumChatFormatting.GREEN + I18n.getString("hwite.info.on");
                     return redstoneInfo = gray + I18n.getString("hwite.info.state") + leverOn;
@@ -254,7 +268,7 @@ public class HwiteInfo extends Gui {
         if (rc != null) {
             int blockID = player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             TileEntity tileEntity = player.worldObj.getBlockTileEntity(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-            if (SpawnerType.getBooleanValue() && blockID == mobSpawnerID && tileEntity instanceof TileEntityMobSpawner) {
+            if (HwiteConfigs.SpawnerType.getBooleanValue() && blockID == mobSpawnerID && tileEntity instanceof TileEntityMobSpawner) {
                 return spawnerInfo = gray + I18n.getString("hwite.info.type") + (((TileEntityMobSpawner) tileEntity).getSpawnerLogic().getEntityNameToSpawn());
             }
         }
@@ -269,31 +283,31 @@ public class HwiteInfo extends Gui {
             double distance = Double.parseDouble(decimalFormat.format(rc.getDistanceFromOriginToCollisionPoint()));
             if (rc.isBlock()) {
                 EnumDirection direction = rc.getBlockHit().getDirectionFacing(rc.block_hit_metadata);
-                if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDistance.getBooleanValue() && ShowDirection.getBooleanValue() && direction != null) {
+                if (HwiteConfigs.ShowBlockOrEntityCoord.getBooleanValue() && HwiteConfigs.ShowDistance.getBooleanValue() && HwiteConfigs.ShowDirection.getBooleanValue() && direction != null) {
                     return devInfo = gray + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z + " [" + distance + "]" + " {" + direction + "}";
-                } else if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDistance.getBooleanValue()) {
+                } else if (HwiteConfigs.ShowBlockOrEntityCoord.getBooleanValue() && HwiteConfigs.ShowDistance.getBooleanValue()) {
                     return devInfo = gray + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z + " [" + distance + "]";
-                } else if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDirection.getBooleanValue() && direction != null) {
+                } else if (HwiteConfigs.ShowBlockOrEntityCoord.getBooleanValue() && HwiteConfigs.ShowDirection.getBooleanValue() && direction != null) {
                     return devInfo = gray + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z + " {" + direction + "}";
-                } else if (ShowDistance.getBooleanValue() && ShowDirection.getBooleanValue() && direction != null) {
+                } else if (HwiteConfigs.ShowDistance.getBooleanValue() && HwiteConfigs.ShowDirection.getBooleanValue() && direction != null) {
                     return devInfo = gray + "[" + distance + "]" + " {" + direction + "}";
-                } else if (ShowBlockOrEntityCoord.getBooleanValue()) {
+                } else if (HwiteConfigs.ShowBlockOrEntityCoord.getBooleanValue()) {
                     return devInfo = gray + String.valueOf(rc.block_hit_x) + " " + rc.block_hit_y + " " + rc.block_hit_z;
-                } else if (ShowDistance.getBooleanValue()) {
+                } else if (HwiteConfigs.ShowDistance.getBooleanValue()) {
                     return devInfo = gray + "[" + distance + "]";
-                } else if (ShowDirection.getBooleanValue() && direction != null) {
+                } else if (HwiteConfigs.ShowDirection.getBooleanValue() && direction != null) {
                     return devInfo = gray + "{" + direction + "}";
                 }
-                if (ShowBlockUnlocalizedName.getBooleanValue()) {
+                if (HwiteConfigs.ShowBlockUnlocalizedName.getBooleanValue()) {
                     return unlocalizedNameInfo = gray + rc.getBlockHit().getUnlocalizedName();
                 }
             } else if (rc.isEntity()) {
                 if (rc.getEntityHit() instanceof EntityLivingBase) {
-                    if (ShowBlockOrEntityCoord.getBooleanValue() && ShowDistance.getBooleanValue()) {
+                    if (HwiteConfigs.ShowBlockOrEntityCoord.getBooleanValue() && HwiteConfigs.ShowDistance.getBooleanValue()) {
                         return devInfo = gray + String.valueOf((int) rc.getEntityHit().posX) + " " + (int) rc.getEntityHit().posY + " " + (int) rc.getEntityHit().posZ + " [" + distance + "]";
-                    } else if (ShowBlockOrEntityCoord.getBooleanValue()) {
+                    } else if (HwiteConfigs.ShowBlockOrEntityCoord.getBooleanValue()) {
                         return devInfo = gray + String.valueOf((int) rc.getEntityHit().posX) + " " + (int) rc.getEntityHit().posY + " " + (int) rc.getEntityHit().posZ;
-                    } else if (ShowDistance.getBooleanValue()) {
+                    } else if (HwiteConfigs.ShowDistance.getBooleanValue()) {
                         return devInfo = gray + "[" + distance + "]";
                     }
                 }
@@ -340,8 +354,44 @@ public class HwiteInfo extends Gui {
         String horseInfo;
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         if (rc != null && rc.isEntity()) {
-            if (rc.getEntityHit() instanceof EntityHorse horse && HorseInfo.getBooleanValue()) {
+            if (rc.getEntityHit() instanceof EntityHorse horse && HwiteConfigs.HorseInfo.getBooleanValue()) {
                 return horseInfo = gray + I18n.getString("hiwla.info.horse.jump") + decimalFormat.format(1 + horse.getHorseJumpStrength()) + " " + I18n.getString("hiwla.info.horse.speed") + decimalFormat.format(horse.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
+            }
+        }
+        return "";
+    }
+
+    public static String updateBreakInfo(RaycastCollision rc) {
+        String breakInfo;
+        if (rc != null && rc.isBlock()) {
+            int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
+            if (HwiteConfigs.BreakInfo.getBooleanValue()) {
+                for (int i = 0; i < Item.itemsList.length; ++i) {
+                    Item item = Item.getItem(i);
+                    if (item instanceof ItemTool tool) {
+                        if (tool.getStrVsBlock(rc.getBlockHit(), metadata) > 1.5F) {
+                            return breakInfo = gray + tool.getToolType() + ":" + rc.getBlockHit().getMinHarvestLevel(metadata) + ":" + break_info;
+                        }
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    public static String updateEffectInfo(RaycastCollision rc) {
+        String effectInfo;
+
+        if (rc != null && rc.isEntity() && rc.getEntityHit() instanceof EntityLivingBase entityLivingBase && entityLivingBase.hasActivePotionEffects()) {
+            Collection potion_effects = entityLivingBase.getActivePotionEffects();
+            Iterator i = potion_effects.iterator();
+            PotionEffect potion_effect = (PotionEffect) i.next();
+            Potion potion = Potion.get(potion_effect.getPotionID());
+            int level = potion_effect.getAmplifier();
+            Map attribute_modifiers = potion.func_111186_k();
+            int duration = potion_effect.getDuration();
+            if (duration != 0 && HwiteConfigs.EffectInfo.getBooleanValue()) {
+                return effectInfo = gray + I18n.getString(potion.getName()) + " " + StringHelper.getRomanNumeral(level + 1) + " (" + StringUtils.ticksToElapsedTime(duration) + ")";
             }
         }
         return "";
@@ -353,27 +403,43 @@ public class HwiteInfo extends Gui {
             if (rc.isBlock()) {
                 TileEntity tileEntity = rc.world.getBlockTileEntity(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
                 int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-                if (FurnaceInfo.getBooleanValue() && rc.getBlockHit() instanceof BlockFurnace furnace && tileEntity instanceof TileEntityFurnace tileEntityFurnace && tileEntityFurnace.furnaceBurnTime != 0 && tileEntityFurnace.getFuelItemStack() != null) {
+                if (HwiteConfigs.FurnaceInfo.getBooleanValue() && rc.getBlockHit() instanceof BlockFurnace furnace && tileEntity instanceof TileEntityFurnace tileEntityFurnace && tileEntityFurnace.furnaceBurnTime != 0 && tileEntityFurnace.getFuelItemStack() != null) {
                     if (tileEntityFurnace.isBurning() && furnace.isActive)
                         return hiwlaInfo = gray + I18n.getString("hiwla.info.furnace.burn_time") + tileEntityFurnace.furnaceBurnTime / 20 + I18n.getString("hwite.info.second") + I18n.getString("hiwla.info.furnace.heat_level") + tileEntityFurnace.heat_level;
                 }
-                if (BeaconLevel.getBooleanValue() && rc.getBlockHit() instanceof BlockBeacon && tileEntity instanceof TileEntityBeacon tileEntityBeacon && tileEntityBeacon.getLevels() > -1) {
+                if (HwiteConfigs.BeaconLevel.getBooleanValue() && rc.getBlockHit() instanceof BlockBeacon && tileEntity instanceof TileEntityBeacon tileEntityBeacon && tileEntityBeacon.getLevels() > -1) {
                     return hiwlaInfo = gray + I18n.getString("hiwla.info.beacon.level") + tileEntityBeacon.getLevels();
                 }
+
             } else if (rc.isEntity()) {
                 if (rc.getEntityHit() instanceof EntityLivingBase living) {
-                    if (LivingProtection.getBooleanValue() && living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)) > 0) {
+                    float total_melee_damage;
+                    if (living.isEntityPlayer()) {
+                        total_melee_damage = living.getAsPlayer().calcRawMeleeDamageVs((Entity) null, false, false);
+                    } else if (living.hasEntityAttribute(SharedMonsterAttributes.attackDamage)) {
+                        total_melee_damage = (float) living.getEntityAttributeValue(SharedMonsterAttributes.attackDamage);
+                    } else {
+                        total_melee_damage = 0.0F;
+                    }
+                    if (HwiteConfigs.LivingProtectionAttack.getBooleanValue()) {
                         DecimalFormat decimalFormat = new DecimalFormat("0.00");
-                        return hiwlaInfo = gray + I18n.getString("hiwla.info.protection") + decimalFormat.format((living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null))));
+                        if (living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)) > 0 && total_melee_damage > 0.0F) {
+                            return hiwlaInfo = gray + I18n.getString("hiwla.info.protection") + decimalFormat.format((living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)))) + " " + I18n.getString("hwite.info.attack") + total_melee_damage;
+                        } else if (living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)) > 0) {
+                            return hiwlaInfo = gray + I18n.getString("hiwla.info.protection") + decimalFormat.format((living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null))));
+                        } else if (total_melee_damage > 0.0F) {
+                            return hiwlaInfo = gray + I18n.getString("hwite.info.attack") + total_melee_damage;
+                        }
+
                     }
                     if (rc.getEntityHit() instanceof EntityAnimal animal) {
-                        if (AnimalGrowthTime.getBooleanValue() && animal.getGrowingAge() < 0) {
+                        if (HwiteConfigs.AnimalGrowthTime.getBooleanValue() && animal.getGrowingAge() < 0) {
                             return hiwlaInfo = gray + I18n.getString("hiwla.info.animal_growing_time") + Math.abs(animal.getGrowingAge()) / 20;
                         }
                     }
                     if (rc.getEntityHit() instanceof EntityVillager villager) {
                         String villagerProfession = getProfession(villager);
-                        if (VillagerProfession.getBooleanValue() && villager.getProfession() > -1) {
+                        if (HwiteConfigs.VillagerProfession.getBooleanValue() && villager.getProfession() > -1) {
                             return hiwlaInfo = gray + I18n.getString("hiwla.info.profession") + villagerProfession;
                         }
                     }
@@ -405,13 +471,13 @@ public class HwiteInfo extends Gui {
 
     private static void updateInfoMain(ItemStack itemStack, Block block, int metadata) {
         if (itemStack != null) {
-            if (ShowIDAndMetadata.getBooleanValue()) {
+            if (HwiteConfigs.ShowIDAndMetadata.getBooleanValue()) {
                 infoMain = itemStack.getDisplayName() + " (" + itemStack.itemID + ":" + metadata + ")";
             } else {
                 infoMain = itemStack.getDisplayName();
             }
         } else {
-            if (ShowIDAndMetadata.getBooleanValue()) {
+            if (HwiteConfigs.ShowIDAndMetadata.getBooleanValue()) {
                 infoMain = block.getLocalizedName() + " (" + block.blockID + ":" + metadata + ")";
             } else {
                 infoMain = block.getLocalizedName();
@@ -463,10 +529,10 @@ public class HwiteInfo extends Gui {
     private static void hotKeyPress(RaycastCollision rc) {
         if (rc != null && rc.isBlock()) {
             EmiStack itemStack = EmiStack.of(rc.getBlockHit().createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)));
-            RecipeHotkey.setHotKeyPressCallBack(minecraft -> {
+            HwiteConfigs.RecipeHotkey.setHotKeyPressCallBack(minecraft -> {
                 EmiApi.displayRecipes(itemStack);
             });
-            UsageHotkey.setHotKeyPressCallBack(minecraft -> {
+            HwiteConfigs.UsageHotkey.setHotKeyPressCallBack(minecraft -> {
                 EmiApi.displayUses(itemStack);
             });
         }

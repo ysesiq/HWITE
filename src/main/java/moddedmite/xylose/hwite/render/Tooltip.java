@@ -1,8 +1,8 @@
-package cn.xylose.mitemod.hwite.render;
+package moddedmite.xylose.hwite.render;
 
-import cn.xylose.mitemod.hwite.api.IWailaTooltipRenderer;
-import cn.xylose.mitemod.hwite.config.HwiteConfigs;
-import cn.xylose.mitemod.hwite.util.DisplayUtil;
+import moddedmite.xylose.hwite.api.IWailaTooltipRenderer;
+import moddedmite.xylose.hwite.config.HwiteConfigs;
+import moddedmite.xylose.hwite.util.DisplayUtil;
 import net.minecraft.ItemStack;
 import net.minecraft.Minecraft;
 import net.minecraft.RaycastCollision;
@@ -12,9 +12,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
 
-import static cn.xylose.mitemod.hwite.api.SpecialChars.*;
+import static moddedmite.xylose.hwite.api.SpecialChars.*;
 
 public class Tooltip {
 
@@ -193,8 +192,8 @@ public class Tooltip {
 
     private void computePositionAndSize(boolean hasIcon) {
         this.pos = new Point(
-                HwiteConfigs.HUDX.getIntegerValue(),
-                HwiteConfigs.HUDY.getIntegerValue());
+                HwiteConfigs.TooltipX.getIntegerValue(),
+                HwiteConfigs.TooltipY.getIntegerValue());
         this.hasIcon = hasIcon;
 
         int paddingW = hasIcon ? 29 : 13;

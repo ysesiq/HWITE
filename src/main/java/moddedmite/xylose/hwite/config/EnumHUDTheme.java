@@ -1,4 +1,4 @@
-package cn.xylose.mitemod.hwite.config;
+package moddedmite.xylose.hwite.config;
 
 import fi.dy.masa.malilib.util.Color4f;
 import fi.dy.masa.malilib.util.StringUtils;
@@ -8,7 +8,8 @@ public enum EnumHUDTheme {
     Dark("#131313", "#383838", "#242424"),
     TOP("#006699", "#9999ff", "#9999ff"),
     Create("#000000", "#2A2626", "#1A1717"),
-    Tooltip("#130211", "#1F0639", "#160321");
+    Tooltip("#130211", "#1F0639", "#160321"),
+    Achievement("#212121", "#555555", "#555555");
 
     public final Color4f backgroundColor;
     public final Color4f frameColorTop;

@@ -1,19 +1,20 @@
-package cn.xylose.mitemod.hwite.render;
+package moddedmite.xylose.hwite.render;
 
-import cn.xylose.mitemod.hwite.info.HwiteInfo;
-import cn.xylose.mitemod.hwite.api.IBreakingProgress;
-import cn.xylose.mitemod.hwite.util.DisplayUtil;
+import moddedmite.xylose.hwite.info.HwiteInfo;
+import moddedmite.xylose.hwite.api.IBreakingProgress;
+import moddedmite.xylose.hwite.render.util.TTRenderHealth;
+import moddedmite.xylose.hwite.util.DisplayUtil;
+import moddedmite.xylose.hwite.config.HwiteConfigs;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.xylose.mitemod.hwite.config.HwiteConfigs.*;
-
-public class HUDRenderer {
+public class TooltipRenderer {
     private static Minecraft mc = Minecraft.getMinecraft();
     protected static boolean hasBlending;
     protected static boolean hasLight;
@@ -24,25 +25,29 @@ public class HUDRenderer {
     public static void RenderHWITEHud(Gui gui, Minecraft mc) {
         ArrayList<String> list = new ArrayList<>();
         ScaledResolution scaledResolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+        TTRenderHealth ttRenderHealth = new TTRenderHealth();
+        Point pos = new Point(HwiteConfigs.TooltipX.getIntegerValue(), HwiteConfigs.TooltipY.getIntegerValue());
+        Tooltip.Renderable renderable = new Tooltip.Renderable(ttRenderHealth, pos);
+        RaycastCollision rc = mc.objectMouseOver;
         int screenWidth = scaledResolution.getScaledWidth();
         int screenHeight = scaledResolution.getScaledHeight();
 
         //draw model
         boolean mainInfoNotEmpty = !Objects.equals(HwiteInfo.infoMain, "");
-        if (mainInfoNotEmpty && HwiteInfo.entityInfo != null && EntityRender.getBooleanValue()) {
+        if (mainInfoNotEmpty && HwiteInfo.entityInfo != null && HwiteConfigs.EntityRender.getBooleanValue()) {
             //x, y, size, ?, ?
-            GuiInventory.func_110423_a(EntityInfoX.getIntegerValue(), EntityInfoY.getIntegerValue(), EntityInfoSize.getIntegerValue(), 0, 0, (EntityLivingBase) HwiteInfo.entityInfo);
+            GuiInventory.func_110423_a(HwiteConfigs.EntityInfoX.getIntegerValue(), HwiteConfigs.EntityInfoY.getIntegerValue(), HwiteConfigs.EntityInfoSize.getIntegerValue(), 0, 0, (EntityLivingBase) HwiteInfo.entityInfo);
         }
 
         //draw text and tooltip box
-        if (HwiteInfo.blockInfo != null) {
+        if (rc != null) {
             List enumRenderFlag = addInfoToList(list);
-            HUDBackGroundRender hudBackGroundRender = new HUDBackGroundRender();
+            TooltipBGRender hudBackGroundRender = new TooltipBGRender();
 
             GL11.glPushMatrix();
             saveGLState();
 
-            GL11.glScalef((float) HUDScale.getDoubleValue(), (float) HUDScale.getDoubleValue(), 1.0f);
+            GL11.glScalef((float) HwiteConfigs.TooltipScale.getDoubleValue(), (float) HwiteConfigs.TooltipScale.getDoubleValue(), 1.0f);
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             RenderHelper.disableStandardItemLighting();
             GL11.glDisable(GL11.GL_LIGHTING);
@@ -52,61 +57,29 @@ public class HUDRenderer {
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             GL11.glDisable(GL11.GL_BLEND);
 
-            if (HwiteInfo.blockInfo != null && !Objects.equals(HwiteInfo.infoMain, "") && HwiteInfo.hasIcon) {
+            if (!Objects.equals(HwiteInfo.infoMain, "") && HwiteInfo.hasIcon && HwiteConfigs.BlockRender.getBooleanValue()) {
                 RenderHelper.enableGUIStandardItemLighting();
                 GL11.glEnable(GL12.GL_RESCALE_NORMAL);
                 DisplayUtil.renderStack(
-                        HUDBackGroundRender.x + 5,
-                        (HUDBackGroundRender.y - HUDBackGroundRender.h / 2) - 2,
+                        TooltipBGRender.x + 5,
+                        (TooltipBGRender.y - TooltipBGRender.h / 2) - 3,
                         new ItemStack(HwiteInfo.blockInfo, 1, mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)));
             }
             loadGLState();
+
+            if (rc.getEntityHit() != null) {
+                int healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) + 3;
+                if (list.size() == 4) {
+                    healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 3;
+                } else if (list.size() == 5) {
+                    healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 7;;
+                } else if (list.size() == 6) {
+                    healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 11;
+                }
+                hudBackGroundRender.drawIcons(rc, TooltipBGRender.x + 8, healthY);
+            }
             GL11.glPopMatrix();
         }
-    }
-
-    public static void RenderHWITEHudView(Gui gui, Minecraft mc) {
-        ArrayList<String> list = new ArrayList<>();
-        ScaledResolution scaledResolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
-        int screenWidth = scaledResolution.getScaledWidth();
-        int screenHeight = scaledResolution.getScaledHeight();
-
-        //draw model
-        boolean mainInfoNotEmpty = !Objects.equals(HwiteInfo.infoMain, "");
-        if (mainInfoNotEmpty && HwiteInfo.entityInfo != null && EntityRender.getBooleanValue()) {
-            //x, y, size, ?, ?
-            GuiInventory.func_110423_a(EntityInfoX.getIntegerValue(), EntityInfoY.getIntegerValue(), EntityInfoSize.getIntegerValue(), 0, 0, (EntityLivingBase) HwiteInfo.entityInfo);
-        }
-
-        //draw text and tooltip box
-        list.add(Block.runestoneAdamantium.getLocalizedName());
-        list.add("MITE");
-        HUDBackGroundRender hudBackGroundRender = new HUDBackGroundRender();
-        RenderItem renderItem = new RenderItem();
-
-        GL11.glPushMatrix();
-        saveGLState();
-
-        GL11.glScalef((float) HUDScale.getDoubleValue(), (float) HUDScale.getDoubleValue(), 1.0f);
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        RenderHelper.disableStandardItemLighting();
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-
-        hudBackGroundRender.drawTooltipBackGround(list, false, mc);
-
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glDisable(GL11.GL_BLEND);
-
-            RenderHelper.enableGUIStandardItemLighting();
-            GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-            DisplayUtil.renderStack(
-                    HUDBackGroundRender.x + 5,
-                    (HUDBackGroundRender.y + HUDBackGroundRender.h / 2) - 27,
-                    new ItemStack(Block.runestoneAdamantium.blockID, 1, mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)));
-        loadGLState();
-        GL11.glPopMatrix();
     }
 
     public static void saveGLState() {
@@ -140,30 +113,22 @@ public class HUDRenderer {
         boolean line1IsABlank = Objects.equals(HwiteInfo.info_line_1, " ");
         boolean line2IsABlank = Objects.equals(HwiteInfo.info_line_2, " ");
         boolean breadInfoEmpty = Objects.equals(HwiteInfo.break_info, "");
-        boolean blockInfoNonNull = HwiteInfo.blockInfo != null;
-
-        boolean smallFlag = false;
-        boolean bigFlag = false;
 
         if (HwiteInfo.entityInfo != null) {
             list.add(HwiteInfo.infoMain);
+            if (HwiteInfo.renderHealth) {
+                list.add("");
+            }
             tryAddExtraInfo(list, breakProgress);
             if (!line1Empty) {
                 list.add(HwiteInfo.info_line_1);
             }
         } else if (line2Empty) {
-            if (!breadInfoEmpty && CanBreak.getBooleanValue()) {
-                list.add(HwiteInfo.infoMain + "  " + HwiteInfo.break_info);
-                tryAddExtraInfo(list, breakProgress);
-            } else {
-                list.add(HwiteInfo.infoMain);
-                tryAddExtraInfo(list, breakProgress);
-            }
+
+            list.add(HwiteInfo.infoMain);
+            tryAddExtraInfo(list, breakProgress);
             if (!line1Empty) {
                 list.add(HwiteInfo.info_line_1);
-            }
-            if (BlockRender.getBooleanValue() && blockInfoNonNull) {
-                smallFlag = true;
             }
         } else if (line1IsABlank && line2IsABlank) {
             list.add(HwiteInfo.infoMain);
@@ -171,19 +136,11 @@ public class HUDRenderer {
                 list.add(String.format("%d", breakProgress) + "%");
             }
         } else {
-            if (!breadInfoEmpty && CanBreak.getBooleanValue()) {
-                list.add(HwiteInfo.infoMain + "  " + HwiteInfo.break_info);
-                tryAddExtraInfo(list, breakProgress);
-            } else {
                 list.add(HwiteInfo.infoMain);
                 tryAddExtraInfo(list, breakProgress);
-            }
             if (!line1Empty) {
                 list.add(HwiteInfo.info_line_1);
                 list.add(HwiteInfo.info_line_2);
-            }
-            if (BlockRender.getBooleanValue() && blockInfoNonNull) {
-                bigFlag = true;
             }
         }
 
@@ -193,76 +150,90 @@ public class HUDRenderer {
     }
 
     private static void tryAddExtraInfo(List<String> list, int breakProgress) {
+        tryAddBreakInfo(list);
         tryAddBreakProgress(list, breakProgress);
         tryAddGrowthValue(list);
         tryAddRedstoneValue(list);
         tryAddSpawnerValue(list);
         tryAddDevValue(list);
-        tryAddHiwlaValue(list);
+        tryAddHiwlaInfo(list);
         tryAddMITEDetailsInfo(list);
         tryAddMITEDetailsInfo1(list);
         tryAddFurnaceInputItemInfo(list);
         tryAddFurnaceOutputItemInfo(list);
         tryAddFurnaceFuelItemInfo(list);
         tryAddHorseInfo(list);
+        tryAddEffectInfo(list);
     }
 
     private static void tryAddBreakProgress(List<String> list, int breakProgress) {
-        if (breakProgress > 0 && BreakProgress.getBooleanValue()) {
+        if (breakProgress > 0 && HwiteConfigs.BreakProgress.getBooleanValue()) {
             list.add(String.format(EnumChatFormatting.DARK_GRAY + I18n.getString("hwite.info.breakProgress") + "%d", breakProgress) + "%");
         }
     }
 
+    private static void tryAddBreakInfo(List<String> list) {
+        if (HwiteConfigs.BreakInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateBreakInfo(mc.objectMouseOver), "")) {
+            list.add(HwiteInfo.updateBreakInfo(mc.objectMouseOver));
+        }
+    }
+
+    private static void tryAddEffectInfo(List<String> list) {
+        if (!Objects.equals(HwiteInfo.updateEffectInfo(mc.objectMouseOver), "")) {
+            list.add(HwiteInfo.updateEffectInfo(mc.objectMouseOver));
+        }
+    }
+
     private static void tryAddHorseInfo(List<String> list) {
-        if (HorseInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateHorseInfo(mc.objectMouseOver), "")) {
+        if (HwiteConfigs.HorseInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateHorseInfo(mc.objectMouseOver), "")) {
             list.add(HwiteInfo.updateHorseInfo(mc.objectMouseOver));
         }
     }
 
     private static void tryAddFurnaceFuelItemInfo(List<String> list) {
-        if (FurnaceInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateFurnaceFuelItemInfo(mc.objectMouseOver), "")) {
+        if (HwiteConfigs.FurnaceInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateFurnaceFuelItemInfo(mc.objectMouseOver), "")) {
             list.add(HwiteInfo.updateFurnaceFuelItemInfo(mc.objectMouseOver));
         }
     }
 
     private static void tryAddFurnaceOutputItemInfo(List<String> list) {
-        if (FurnaceInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateFurnaceOutputItemInfo(mc.objectMouseOver), "")) {
+        if (HwiteConfigs.FurnaceInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateFurnaceOutputItemInfo(mc.objectMouseOver), "")) {
             list.add(HwiteInfo.updateFurnaceOutputItemInfo(mc.objectMouseOver));
         }
     }
 
     private static void tryAddFurnaceInputItemInfo(List<String> list) {
-        if (FurnaceInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateFurnaceInputItemInfo(mc.objectMouseOver), "")) {
+        if (HwiteConfigs.FurnaceInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateFurnaceInputItemInfo(mc.objectMouseOver), "")) {
             list.add(HwiteInfo.updateFurnaceInputItemInfo(mc.objectMouseOver));
         }
     }
 
     private static void tryAddMITEDetailsInfo(List<String> list) {
-        if (MITEDetailsInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateMITEDetailsInfo(mc.objectMouseOver, mc.thePlayer), "")) {
+        if (HwiteConfigs.MITEDetailsInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateMITEDetailsInfo(mc.objectMouseOver, mc.thePlayer), "")) {
             list.add(HwiteInfo.updateMITEDetailsInfo(mc.objectMouseOver, mc.thePlayer));
         }
     }
 
     private static void tryAddMITEDetailsInfo1(List<String> list) {
-        if (MITEDetailsInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateInfoLine2(mc.objectMouseOver, mc.thePlayer), "")) {
+        if (HwiteConfigs.MITEDetailsInfo.getBooleanValue() && !Objects.equals(HwiteInfo.updateInfoLine2(mc.objectMouseOver, mc.thePlayer), "")) {
             list.add(HwiteInfo.updateInfoLine2(mc.objectMouseOver, mc.thePlayer));
         }
     }
 
     private static void tryAddGrowthValue(List<String> list) {
-        if (GrowthValue.getBooleanValue() && !Objects.equals(HwiteInfo.updateGrowthInfo(mc.objectMouseOver, mc.thePlayer), "")) {
+        if (HwiteConfigs.GrowthValue.getBooleanValue() && !Objects.equals(HwiteInfo.updateGrowthInfo(mc.objectMouseOver, mc.thePlayer), "")) {
             list.add(HwiteInfo.updateGrowthInfo(mc.objectMouseOver, mc.thePlayer));
         }
     }
 
     private static void tryAddRedstoneValue(List<String> list) {
-        if (Redstone.getBooleanValue() && !Objects.equals(HwiteInfo.updateRedStoneInfo(mc.objectMouseOver, mc.thePlayer), "")) {
+        if (HwiteConfigs.Redstone.getBooleanValue() && !Objects.equals(HwiteInfo.updateRedStoneInfo(mc.objectMouseOver, mc.thePlayer), "")) {
             list.add(HwiteInfo.updateRedStoneInfo(mc.objectMouseOver, mc.thePlayer));
         }
     }
 
     private static void tryAddSpawnerValue(List<String> list) {
-        if (SpawnerType.getBooleanValue() && !Objects.equals(HwiteInfo.updateMobSpawnerInfo(mc.objectMouseOver, mc.thePlayer), "")) {
+        if (HwiteConfigs.SpawnerType.getBooleanValue() && !Objects.equals(HwiteInfo.updateMobSpawnerInfo(mc.objectMouseOver, mc.thePlayer), "")) {
             list.add(HwiteInfo.updateMobSpawnerInfo(mc.objectMouseOver, mc.thePlayer));
         }
     }
@@ -276,7 +247,7 @@ public class HUDRenderer {
         }
     }
 
-    private static void tryAddHiwlaValue(List<String> list) {
+    private static void tryAddHiwlaInfo(List<String> list) {
         if (!Objects.equals(HwiteInfo.updateHiwlaExtraInfo(mc.objectMouseOver, mc.thePlayer), "")) {
             list.add(HwiteInfo.updateHiwlaExtraInfo(mc.objectMouseOver, mc.thePlayer));
         }

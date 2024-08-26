@@ -1,6 +1,6 @@
-package cn.xylose.mitemod.hwite.mixin;
+package moddedmite.xylose.hwite.mixin;
 
-import cn.xylose.mitemod.hwite.api.IBreakingProgress;
+import moddedmite.xylose.hwite.api.IBreakingProgress;
 import net.minecraft.PlayerControllerMP;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
