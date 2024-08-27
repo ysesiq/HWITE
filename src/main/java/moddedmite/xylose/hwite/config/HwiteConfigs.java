@@ -21,6 +21,7 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigBoolean ViewMode = new ConfigBoolean("hwite.View", false, "配置界面预览");
     public static final ConfigBoolean DisplayTooltip = new ConfigBoolean("hwite.DisplayTooltip", true);
     public static final ConfigBoolean DebugRenderHud = new ConfigBoolean("hwite.debugRenderHud", true);
+    public static final ConfigBoolean devMoveDownTooltip = new ConfigBoolean("hwite.devMoveDownTooltip", true);
     public static final ConfigBoolean DisplayBlock = new ConfigBoolean("hwite.DisplayBlock", true);
     public static final ConfigBoolean DisplayLiquids = new ConfigBoolean("hwite.DisplayLiquid", false);
     public static final ConfigBoolean DisplayEntity = new ConfigBoolean("hwite.DisplayEntity", true);
@@ -92,7 +93,7 @@ public class HwiteConfigs extends SimpleConfigs {
     }
 
     static {
-        hwite = List.of(DisplayTooltip, DebugRenderHud, DisplayBlock, DisplayLiquids, DisplayEntity, DisplayNonCollidingEntity, BlockRender, EntityRender);
+        hwite = List.of(DisplayTooltip, DebugRenderHud, devMoveDownTooltip, DisplayBlock, DisplayLiquids, DisplayEntity, DisplayNonCollidingEntity, BlockRender, EntityRender);
         general = List.of(BreakInfo, BreakProgress, BreakProgressLine, GrowthValue, Redstone, SpawnerType);
         appearance = List.of(TooltipX, TooltipY, TooltipScale, TooltipAlpha, EntityInfoX, EntityInfoY, EntityInfoSize, HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDThemeSwitch, HUDTheme, HUDBGColor, HUDFrameColor, HUDFrameColor1, BreakProgressLineColor, CanBreakString, CannotBreakString);
         dev = List.of(ShowIDAndMetadata, MITEDetailsInfo, ShowBlockOrEntityCoord, ShowDistance, ShowDirection, ShowBlockUnlocalizedName);

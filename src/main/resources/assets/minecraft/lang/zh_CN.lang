@@ -4,6 +4,7 @@ config.name.hwite.DisplayTooltip=显示提示框
 config.name.hwite.View=[WIP]预览
 config.comment.hwite.View=配置界面预览
 config.name.hwite.debugRenderHud=调试界面隐藏HUD
+config.name.hwite.devMoveDownTooltip=DEV下移提示框
 config.name.hwite.DisplayBlock=显示方块
 config.name.hwite.DisplayLiquid=显示流体
 config.name.hwite.DisplayEntity=显示实体

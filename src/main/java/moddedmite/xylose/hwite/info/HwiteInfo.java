@@ -143,11 +143,11 @@ public class HwiteInfo extends Gui {
     }
 
     private static void updateBlockInfo(RaycastCollision rc, EntityPlayer player) {
-        if (rc != null) {
+        if (rc != null && rc.isBlock()) {
             Block block = Block.blocksList[player.worldObj.getBlockId(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z)];
-            int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-            blockInfo = block;
             if (block != null) {
+                int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
+                blockInfo = block;
                 itemStackInfo = block.createStackedBlock(metadata);
                 info_line_1 = "";
                 info_line_2 = "";

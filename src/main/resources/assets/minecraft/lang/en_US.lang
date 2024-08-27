@@ -4,6 +4,7 @@ config.name.hwite.DisplayTooltip=Display Tooltip
 config.name.hwite.View=[WIP] View
 config.comment.hwite.View=Config screen hide HUD
 config.name.hwite.debugRenderHud=Render HWITE HUD on Debug Screen
+config.name.hwite.devMoveDownTooltip=DEV Move DownT ooltip
 config.name.hwite.DisplayBlock=Display Blocks
 config.name.hwite.DisplayLiquid=Display Liquid
 config.name.hwite.DisplayEntity=Display Entities

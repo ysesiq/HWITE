@@ -1,6 +1,7 @@
 package moddedmite.xylose.hwite.render;
 
 import moddedmite.xylose.hwite.config.EnumHUDTheme;
+import moddedmite.xylose.hwite.config.HwiteConfigs;
 import moddedmite.xylose.hwite.info.HwiteInfo;
 import moddedmite.xylose.hwite.api.IBreakingProgress;
 import moddedmite.xylose.hwite.util.DisplayUtil;
@@ -181,7 +182,8 @@ public class TooltipBGRender extends Gui {
         } else if (BossStatus.bossName != null && BossStatus.statusBarLength > 0) {
             y += 20;
         } else if (Minecraft.inDevMode() && mc.gameSettings.gui_mode == 0) {
-            y += 10;
+            if (HwiteConfigs.devMoveDownTooltip.getBooleanValue())
+                y += 10;
         }
 
         if (y + var8 + 6 > height) {
