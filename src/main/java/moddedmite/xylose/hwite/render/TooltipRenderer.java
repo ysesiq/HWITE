@@ -68,18 +68,25 @@ public class TooltipRenderer {
             loadGLState();
 
             if (rc.getEntityHit() != null) {
-                int healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) + 3;
-                if (list.size() == 4) {
-                    healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 3;
-                } else if (list.size() == 5) {
-                    healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 7;;
-                } else if (list.size() == 6) {
-                    healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 11;
-                }
+                int healthY = getHealthY(list);
                 hudBackGroundRender.drawIcons(rc, TooltipBGRender.x + 8, healthY);
             }
             GL11.glPopMatrix();
         }
+    }
+
+    private static int getHealthY(ArrayList<String> list) {
+        int healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) + 3;
+        if (list.size() == 4) {
+            healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 3;
+        } else if (list.size() == 5) {
+            healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 7;;
+        } else if (list.size() == 6) {
+            healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 11;
+        } else if (list.size() == 7) {
+            healthY = (TooltipBGRender.y - TooltipBGRender.h / 2) - 14;
+        }
+        return healthY;
     }
 
     public static void saveGLState() {

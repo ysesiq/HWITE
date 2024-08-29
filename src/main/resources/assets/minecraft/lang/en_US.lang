@@ -2,8 +2,8 @@
 ## base
 config.name.hwite.DisplayTooltip=Display Tooltip
 config.name.hwite.View=[WIP] View
-config.comment.hwite.View=Config screen hide HUD
-config.name.hwite.debugRenderHud=Render HWITE HUD on Debug Screen
+config.comment.hwite.View=Config screen hide Tooltip
+config.name.hwite.debugRenderTooltip=Render HWITE Tooltip on Debug Screen
 config.name.hwite.devMoveDownTooltip=DEV Move DownT ooltip
 config.name.hwite.DisplayBlock=Display Blocks
 config.name.hwite.DisplayLiquid=Display Liquid
@@ -14,7 +14,7 @@ config.name.hwite.EntityRender=[WIP] Entity Render
 ## general
 config.name.hwite.BreakInfo=Break Tips
 config.name.hwite.BreakProgress=Break Progress
-config.name.hwite.BreakProgressLine=[WIP] Break Progress Line
+config.name.hwite.BreakProgressLine=Break Progress Line
 config.comment.hwite.NonCollidingEntity=For example, experience balls, drops, fishing rod buoys
 config.name.hwite.GrowthValue=Crop Growth Value
 config.name.hwite.Redstone=Redstone Info
@@ -32,21 +32,18 @@ config.comment.hwite.EntityInfoY=Please turn on [WIP] Entity Render
 config.name.hwite.EntityInfoSize=Entity Render Size
 config.comment.hwite.EntityInfoSize=Please turn on [WIP] Entity Render
 ## appearance
-config.name.hwite.HUDBackGround=HUD Background
-config.name.hwite.HUDRoundedRectangle=HUD Rounded Rectangle
-config.name.hwite.HUDFrame=HUD Frame
-config.name.hwite.HUDCentralBackground=HUD Central Background
-config.name.hwite.HUDThemeSwitch=HUD Theme Switch
-config.comment.hwite.HUDThemeSwitch=For custom themes, turn off this item
-config.name.hwite.HUDTheme=HUD Theme
-config.name.hwite.HUDBGColor=HUD Background Color
-config.comment.hwite.HUDBGColor=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
-config.name.hwite.HUDFrameColor=HUD Frame Color(Top)
-config.comment.hwite.HUDFrameColor=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
-config.name.hwite.HUDFrameColor1=HUD Frame Color(Bottom)
-config.comment.hwite.HUDFrameColor1=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
-config.name.hwite.BreakProgressLineColor=Break Progress Line Color
-config.comment.hwite.BreakProgressLineColor=This is a hexadecimal number, 12 bits are transparent, 34 bits are red channels, 56 bits are green channels, and 78 bits are blue channels
+config.name.hwite.TooltipBackGround=Tooltip Background
+config.name.hwite.TooltipRoundedRectangle=Tooltip Rounded Rectangle
+config.name.hwite.TooltipFrame=Tooltip Frame
+config.name.hwite.TooltipCentralBackground=Tooltip Central Background
+config.name.hwite.TooltipThemeSwitch=Tooltip Theme Switch
+config.comment.hwite.TooltipThemeSwitch=For custom themes, turn off this item
+config.name.hwite.TooltipTheme=Tooltip Theme
+config.name.hwite.TooltipBGColor=Tooltip Background Color
+config.name.hwite.TooltipFrameColorTop=Tooltip Frame Color(Top)
+config.name.hwite.TooltipFrameColorBottom=Tooltip Frame Color(Bottom)
+config.name.hwite.BreakProgressLineColorFront=Break Progress Line Color(Front)
+config.name.hwite.BreakProgressLineColorBehind=Break Progress Line Color(Behind)
 config.name.hwite.ModNameTextColor=Mod Name Color
 config.name.hwite.CanBreakString=Can Break Indicator
 config.name.hwite.CannotBreakString=Cannot Break Indicator
@@ -61,8 +58,8 @@ config.name.hwite.ShowBlockUnlocalizedName=Block Unlocalized Name
 ## hotkey
 config.name.hwite.ConfigGuiHotkey=Open Config Screen
 config.comment.hwite.ConfigGuiHotkey=Open Config Screen
-config.name.hwite.HUDHotkey=Show/Hide HUD
-config.comment.hwite.HUDHotkey=Show/Hide HUD
+config.name.hwite.TooltipHotkey=Show/Hide Tooltip
+config.comment.hwite.TooltipHotkey=Show/Hide Tooltip
 config.name.hwite.LiquidsHotkey=Show/Hide Liquids
 config.comment.hwite.LiquidsHotkey=Show/Hide Liquids
 config.name.hwite.RecipeHotkey=View Recipes
@@ -78,12 +75,12 @@ config.name.hiwla.BeaconLevel=Beacon Level
 config.name.hiwla.HorseInfo=Horse Info
 config.name.hiwla.EffectInfo=[WIP]Effect Info
 ## enum
-configs.name.hwite.HUDTheme=HUD Theme
-config.enum.HUDTheme.Waila=Waila
-config.enum.HUDTheme.Dark=Dark
-config.enum.HUDTheme.TOP=The One Probe
-config.enum.HUDTheme.Create=Create
-config.enum.HUDTheme.Tooltip=Tooltip
+configs.name.hwite.TooltipTheme=Tooltip Theme
+config.enum.TooltipTheme.Waila=Waila
+config.enum.TooltipTheme.Dark=Dark
+config.enum.TooltipTheme.TOP=The One Probe
+config.enum.TooltipTheme.Create=Create
+config.enum.TooltipTheme.Tooltip=Tooltip
 ## config Comment
 config.value.comment.HWITE=What am i looking at
 ## config tab

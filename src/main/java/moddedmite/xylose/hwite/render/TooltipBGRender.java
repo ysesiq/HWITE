@@ -1,6 +1,6 @@
 package moddedmite.xylose.hwite.render;
 
-import moddedmite.xylose.hwite.config.EnumHUDTheme;
+import moddedmite.xylose.hwite.config.EnumTooltipTheme;
 import moddedmite.xylose.hwite.config.HwiteConfigs;
 import moddedmite.xylose.hwite.info.HwiteInfo;
 import moddedmite.xylose.hwite.api.IBreakingProgress;
@@ -165,7 +165,7 @@ public class TooltipBGRender extends Gui {
 
         int paddingBlockW = HwiteInfo.hasIcon ? 29 : 13;
         int health = Math.min(HwiteInfo.updateEntityLivingBaseMaxHealth(Minecraft.theMinecraft.objectMouseOver), 20);
-        int paddingHealthW = HwiteInfo.renderHealth ? health * 5 : 0;
+        int paddingHealthW = HwiteInfo.renderHealth ? (int) (health * 5.5) : 0;
         int paddingW = Math.max(paddingBlockW, paddingHealthW);
         int paddingH = HwiteInfo.hasIcon ? 24 : 0;
         int offsetX = HwiteInfo.hasIcon ? 24 : 6;
@@ -195,18 +195,18 @@ public class TooltipBGRender extends Gui {
         Color4f tooltipFrameColorTop;
         Color4f tooltipFrameColorBottom;
         float alpha = (float) TooltipAlpha.getIntegerValue() / 100;
-        if (HUDThemeSwitch.getBooleanValue()) {
-            EnumHUDTheme theme = HUDTheme.getEnumValue();
+        if (TooltipThemeSwitch.getBooleanValue()) {
+            EnumTooltipTheme theme = TooltipTheme.getEnumValue();
             tooltipBGColor = Color4f.fromColor(theme.backgroundColor, alpha);
             tooltipFrameColorTop = Color4f.fromColor(theme.frameColorTop, alpha);
             tooltipFrameColorBottom = Color4f.fromColor(theme.frameColorBottom, alpha);
         } else {
-            tooltipBGColor = Color4f.fromColor(HUDBGColor.getColorInteger(), alpha);
-            tooltipFrameColorTop = Color4f.fromColor(HUDFrameColor.getColorInteger(), alpha);
-            tooltipFrameColorBottom = Color4f.fromColor(HUDFrameColor1.getColorInteger(), alpha);
+            tooltipBGColor = Color4f.fromColor(TooltipBGColor.getColorInteger(), alpha);
+            tooltipFrameColorTop = Color4f.fromColor(TooltipFrameColorTop.getColorInteger(), alpha);
+            tooltipFrameColorBottom = Color4f.fromColor(TooltipFrameColorBottom.getColorInteger(), alpha);
         }
 
-        if (HUDBackGround.getBooleanValue()) {
+        if (TooltipBackGround.getBooleanValue()) {
 //            if (HUDCentralBackground.getBooleanValue()) {
 //                //中
 //                drawGradientRect(stringWidth - 3 - BlockRenderLeftEliminate, stringHeight - 5, stringWidth + var4 + 3, stringHeight + var8 + 5, tooltipBGColor, tooltipBGColor, zLevel);
@@ -231,17 +231,17 @@ public class TooltipBGRender extends Gui {
 //                //右
 //                drawGradientRect(stringWidth + var4 + 2, stringHeight - 5 + 1, stringWidth + var4 + 3, stringHeight + var8 + 5 - 1, tooltipFrameColorTop, tooltipFrameColorBottom, zLevel);
 //            }
-            if (HUDRoundedRectangle.getBooleanValue() && !(HUDTheme.getEnumValue() == EnumHUDTheme.TOP)) {
+            if (TooltipRoundedRectangle.getBooleanValue() && !(TooltipTheme.getEnumValue() == EnumTooltipTheme.TOP)) {
                 DisplayUtil.drawGradientRect(x + 1, y, w - 1, 1, tooltipBGColor.intValue, tooltipBGColor.intValue);
                 DisplayUtil.drawGradientRect(x + 1, y + h, w - 1, 1, tooltipBGColor.intValue, tooltipBGColor.intValue);
                 DisplayUtil.drawGradientRect(x, y + 1, 1, h - 1, tooltipBGColor.intValue, tooltipBGColor.intValue);
                 DisplayUtil.drawGradientRect(x + w, y + 1, 1, h - 1, tooltipBGColor.intValue, tooltipBGColor.intValue);
             }
 
-            if (HUDCentralBackground.getBooleanValue())
+            if (TooltipCentralBackground.getBooleanValue())
                 DisplayUtil.drawGradientRect(x + 1, y + 1, w - 1, h - 1, tooltipBGColor.intValue, tooltipBGColor.intValue);// center
 
-            if (HUDFrame.getBooleanValue()) {
+            if (TooltipFrame.getBooleanValue()) {
                 DisplayUtil.drawGradientRect(x + 1, y + 2, 1, h - 3, tooltipFrameColorTop.intValue, tooltipFrameColorBottom.intValue);
                 DisplayUtil.drawGradientRect(x + w - 1, y + 2, 1, h - 3, tooltipFrameColorTop.intValue, tooltipFrameColorBottom.intValue);
                 DisplayUtil.drawGradientRect(x + 1, y + 1, w - 1, 1, tooltipFrameColorTop.intValue, tooltipFrameColorTop.intValue);
@@ -252,8 +252,11 @@ public class TooltipBGRender extends Gui {
 
         float breakProgress = ((IBreakingProgress) Minecraft.getMinecraft().playerController).getCurrentBreakingProgress();
         if (breakProgress > 0 && BreakProgressLine.getBooleanValue()) {
+            float breakProgress1 = 1 - breakProgress;
             int progress = (int) (breakProgress * 100F);
-            DisplayUtil.drawGradientRect(progress + x + 1, y + h,w - 1, 1, BreakProgressLineColor.getColorInteger(), BreakProgressLineColor.getColorInteger());
+            int progressLine = (int) ((progress / (double) 100) * w);
+            if (progress > 0)
+                DisplayUtil.drawGradientRect(x + 1, y + h, progressLine, 1, BreakProgressLineColorFront.getColorInteger(), BreakProgressLineColorBehind.getColorInteger());
        }
         for (int var12 = 0; var12 < par1List.size(); ++var12) {
             String var13 = par1List.get(var12);

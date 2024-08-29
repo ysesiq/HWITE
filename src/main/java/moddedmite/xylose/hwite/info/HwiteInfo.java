@@ -56,25 +56,27 @@ public class HwiteInfo extends Gui {
             return;
         }
         entityInfo = null;
-        if (rc.isEntity()) {
-            if (HwiteConfigs.DisplayEntity.getBooleanValue())
-                updateRCEntity(rc);
-            updateDevInfoInfo(rc, player);
-            updateHiwlaExtraInfo(rc, player);
-            hotKeyPress(rc);
-        } else if (rc.isBlock()) {
-            if (HwiteConfigs.DisplayBlock.getBooleanValue()) {
-                updateRCBlock(rc, player);
-                updateGrowthInfo(rc, player);
-                updateRedStoneInfo(rc, player);
-                updateMobSpawnerInfo(rc, player);
+        if (rc != null) {
+            if (rc.isEntity()) {
+                if (HwiteConfigs.DisplayEntity.getBooleanValue())
+                    updateRCEntity(rc);
+                updateDevInfoInfo(rc, player);
+                updateHiwlaExtraInfo(rc, player);
+                hotKeyPress(rc);
+            } else if (rc.isBlock()) {
+                if (HwiteConfigs.DisplayBlock.getBooleanValue()) {
+                    updateRCBlock(rc, player);
+                    updateGrowthInfo(rc, player);
+                    updateRedStoneInfo(rc, player);
+                    updateMobSpawnerInfo(rc, player);
+                }
+                updateDevInfoInfo(rc, player);
+                hotKeyPress(rc);
+            } else {
+                info_line_1 = "";
+                info_line_2 = "";
+                unlocalizedNameInfo = "";
             }
-            updateDevInfoInfo(rc, player);
-            hotKeyPress(rc);
-        } else {
-            info_line_1 = "";
-            info_line_2 = "";
-            unlocalizedNameInfo = "";
         }
     }
 
@@ -158,21 +160,13 @@ public class HwiteInfo extends Gui {
         }
     }
 
-    public static String updateInfoLine1(int min_harvest_level, RaycastCollision rc, float block_hardness, EntityPlayer player) {
+    public static String updateInfoLine1(RaycastCollision rc, float block_hardness, EntityPlayer player) {
         String info1;
-        if (min_harvest_level == 0) {
             if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
                 return info1 = gray + I18n.getString("hwite.info.hardness") + block_hardness;
             } else {
-                return info1 = gray + I18n.getString("hwite.info.hardness") + block_hardness + I18n.getString("hwite.info.str_vs_block") + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
+                return info1 = gray + I18n.getString("hwite.info.hardness") + block_hardness + " " + I18n.getString("hwite.info.str_vs_block") + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
             }
-        } else {
-            if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-                return info1 = gray + I18n.getString("hwite.info.hardness") + block_hardness + I18n.getString("hwite.info.harvest_level") + min_harvest_level;
-            } else {
-                return info1 = gray + I18n.getString("hwite.info.hardness") + block_hardness + I18n.getString("hwite.info.harvest_level") + min_harvest_level;
-            }
-        }
     }
 
     public static String updateInfoLine2(RaycastCollision rc, EntityPlayer player) {
@@ -196,7 +190,7 @@ public class HwiteInfo extends Gui {
             float block_hardness = player.worldObj.getBlockHardness(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             int min_harvest_level = block.getMinHarvestLevel(metadata);
             if (HwiteConfigs.MITEDetailsInfo.getBooleanValue()) {
-                return updateInfoLine1(min_harvest_level, rc, block_hardness, player);
+                return updateInfoLine1(rc, block_hardness, player);
             }
         }
         return "";
@@ -370,7 +364,11 @@ public class HwiteInfo extends Gui {
                     Item item = Item.getItem(i);
                     if (item instanceof ItemTool tool) {
                         if (tool.getStrVsBlock(rc.getBlockHit(), metadata) > 1.5F) {
-                            return breakInfo = gray + tool.getToolType() + ":" + rc.getBlockHit().getMinHarvestLevel(metadata) + ":" + break_info;
+                            if (rc.getBlockHit().getMinHarvestLevel(metadata) > 1) {
+                                return breakInfo = gray + tool.getToolType() + " : " + rc.getBlockHit().getMinHarvestLevel(metadata) + " :" + " " + break_info;
+                            } else {
+                                return breakInfo = gray + tool.getToolType() + " :" + " " + break_info;
+                            }
                         }
                     }
                 }

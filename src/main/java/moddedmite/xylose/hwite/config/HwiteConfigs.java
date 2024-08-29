@@ -20,7 +20,7 @@ public class HwiteConfigs extends SimpleConfigs {
     //switch
     public static final ConfigBoolean ViewMode = new ConfigBoolean("hwite.View", false, "配置界面预览");
     public static final ConfigBoolean DisplayTooltip = new ConfigBoolean("hwite.DisplayTooltip", true);
-    public static final ConfigBoolean DebugRenderHud = new ConfigBoolean("hwite.debugRenderHud", true);
+    public static final ConfigBoolean DebugRenderTooltip = new ConfigBoolean("hwite.debugRenderTooltip", true);
     public static final ConfigBoolean devMoveDownTooltip = new ConfigBoolean("hwite.devMoveDownTooltip", true);
     public static final ConfigBoolean DisplayBlock = new ConfigBoolean("hwite.DisplayBlock", true);
     public static final ConfigBoolean DisplayLiquids = new ConfigBoolean("hwite.DisplayLiquid", false);
@@ -30,8 +30,8 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigBoolean BlockRender = new ConfigBoolean("hwite.BlockRender", true);
     //general
     public static final ConfigBoolean BreakInfo = new ConfigBoolean("hwite.BreakInfo", true);
-    public static final ConfigBoolean BreakProgress = new ConfigBoolean("hwite.BreakProgress", true);
-    public static final ConfigBoolean BreakProgressLine = new ConfigBoolean("hwite.BreakProgressLine", false);
+    public static final ConfigBoolean BreakProgress = new ConfigBoolean("hwite.BreakProgress", false);
+    public static final ConfigBoolean BreakProgressLine = new ConfigBoolean("hwite.BreakProgressLine", true);
     public static final ConfigBoolean GrowthValue = new ConfigBoolean("hwite.GrowthValue", true);
     public static final ConfigBoolean Redstone = new ConfigBoolean("hwite.Redstone", true, "红石能量强度,拉杆.压力板状态,比较器状态,中继器状态");
     public static final ConfigBoolean SpawnerType = new ConfigBoolean("hwite.SpawnerType", true);
@@ -43,16 +43,17 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigInteger EntityInfoX = new ConfigInteger("hwite.EntityInfoX", 180, 0, 500, true, "请关闭实体渲染(WIP)");
     public static final ConfigInteger EntityInfoY = new ConfigInteger("hwite.EntityInfoY", 43, 0, 300, true, "请关闭实体渲染(WIP)");
     public static final ConfigInteger EntityInfoSize = new ConfigInteger("hwite.EntityInfoSize", 18, 0, 100, false, "请关闭实体渲染(WIP)");
-    public static final ConfigBoolean HUDBackGround = new ConfigBoolean("hwite.HUDBackGround", true);
-    public static final ConfigBoolean HUDRoundedRectangle = new ConfigBoolean("hwite.HUDRoundedRectangle", true);
-    public static final ConfigBoolean HUDFrame = new ConfigBoolean("hwite.HUDFrame", true);
-    public static final ConfigBoolean HUDCentralBackground = new ConfigBoolean("hwite.HUDCentralBackground", true);
-    public static final ConfigBoolean HUDThemeSwitch = new ConfigBoolean("hwite.HUDThemeSwitch", true, "自定义主题请关闭本项");
-    public static final ConfigEnum<EnumHUDTheme> HUDTheme = new ConfigEnum<>("hwite.HUDTheme", EnumHUDTheme.Waila);
-    public static final ConfigColor HUDBGColor = new ConfigColor("hwite.HUDBGColor", "#CC10010F", "此项为16进制数,12位数为透明度,34位为红色通道,56位为绿色通道,78位为蓝色通道");
-    public static final ConfigColor HUDFrameColor = new ConfigColor("hwite.HUDFrameColor", "#CC5001FE", "此项为16进制数,12位数为透明度,34位为红色通道,56位为绿色通道,78位为蓝色通道");
-    public static final ConfigColor HUDFrameColor1 = new ConfigColor("hwite.HUDFrameColor1", "#CC28017E", "此项为16进制数,12位数为透明度,34位为红色通道,56位为绿色通道,78位为蓝色通道");
-    public static final ConfigColor BreakProgressLineColor = new ConfigColor("hwite.BreakProgressLineColor", "#FFFFFFFF", "此项为16进制数,12位数为透明度,34位为红色通道,56位为绿色通道,78位为蓝色通道");
+    public static final ConfigBoolean TooltipBackGround = new ConfigBoolean("hwite.TooltipBackGround", true);
+    public static final ConfigBoolean TooltipRoundedRectangle = new ConfigBoolean("hwite.TooltipRoundedRectangle", true);
+    public static final ConfigBoolean TooltipFrame = new ConfigBoolean("hwite.TooltipFrame", true);
+    public static final ConfigBoolean TooltipCentralBackground = new ConfigBoolean("hwite.TooltipCentralBackground", true);
+    public static final ConfigBoolean TooltipThemeSwitch = new ConfigBoolean("hwite.TooltipThemeSwitch", true, "自定义主题请关闭本项");
+    public static final ConfigEnum<EnumTooltipTheme> TooltipTheme = new ConfigEnum<>("hwite.TooltipTheme", EnumTooltipTheme.Waila);
+    public static final ConfigColor TooltipBGColor = new ConfigColor("hwite.TooltipBGColor", "#CC10010F");
+    public static final ConfigColor TooltipFrameColorTop = new ConfigColor("hwite.TooltipFrameColorTop", "#CC5001FE");
+    public static final ConfigColor TooltipFrameColorBottom = new ConfigColor("hwite.TooltipFrameColorBottom", "#CC28017E");
+    public static final ConfigColor BreakProgressLineColorFront = new ConfigColor("hwite.BreakProgressLineColorFront", "#FF74766B");
+    public static final ConfigColor BreakProgressLineColorBehind = new ConfigColor("hwite.BreakProgressLineColorBehind", "#FF74766B");
     public static final ConfigString ModNameTextColor = new ConfigString("hwite.ModNameTextColor", "§9§o");
     public static final ConfigString CanBreakString = new ConfigString("hwite.CanBreakString", "✔");
     public static final ConfigString CannotBreakString = new ConfigString("hwite.CannotBreakString", "✘");
@@ -65,7 +66,7 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigBoolean ShowDirection = new ConfigBoolean("hwite.ShowDirection", false);
     //hotkey
     public static final ConfigHotkey ConfigGuiHotkey = new ConfigHotkey("hwite.ConfigGuiHotkey", Keyboard.KEY_NUMPAD0);
-    public static final ConfigHotkey HUDHotkey = new ConfigHotkey("hwite.HUDHotkey", Keyboard.KEY_NUMPAD1);
+    public static final ConfigHotkey TooltipHotkey = new ConfigHotkey("hwite.TooltipHotkey", Keyboard.KEY_NUMPAD1);
     public static final ConfigHotkey LiquidsHotkey = new ConfigHotkey("hwite.LiquidsHotkey", Keyboard.KEY_NUMPAD2);
     public static final ConfigHotkey RecipeHotkey = new ConfigHotkey("hwite.RecipeHotkey", Keyboard.KEY_NUMPAD3);
     public static final ConfigHotkey UsageHotkey = new ConfigHotkey("hwite.UsageHotkey", Keyboard.KEY_NUMPAD4);
@@ -93,11 +94,11 @@ public class HwiteConfigs extends SimpleConfigs {
     }
 
     static {
-        hwite = List.of(DisplayTooltip, DebugRenderHud, devMoveDownTooltip, DisplayBlock, DisplayLiquids, DisplayEntity, DisplayNonCollidingEntity, BlockRender, EntityRender);
+        hwite = List.of(DisplayTooltip, DebugRenderTooltip, devMoveDownTooltip, DisplayBlock, DisplayLiquids, DisplayEntity, DisplayNonCollidingEntity, BlockRender, EntityRender);
         general = List.of(BreakInfo, BreakProgress, BreakProgressLine, GrowthValue, Redstone, SpawnerType);
-        appearance = List.of(TooltipX, TooltipY, TooltipScale, TooltipAlpha, EntityInfoX, EntityInfoY, EntityInfoSize, HUDBackGround, HUDRoundedRectangle, HUDFrame, HUDCentralBackground, HUDThemeSwitch, HUDTheme, HUDBGColor, HUDFrameColor, HUDFrameColor1, BreakProgressLineColor, CanBreakString, CannotBreakString);
+        appearance = List.of(TooltipX, TooltipY, TooltipScale, TooltipAlpha, EntityInfoX, EntityInfoY, EntityInfoSize, TooltipBackGround, TooltipRoundedRectangle, TooltipFrame, TooltipCentralBackground, TooltipThemeSwitch, TooltipTheme, TooltipBGColor, TooltipFrameColorTop, TooltipFrameColorBottom, BreakProgressLineColorFront, BreakProgressLineColorBehind, CanBreakString, CannotBreakString);
         dev = List.of(ShowIDAndMetadata, MITEDetailsInfo, ShowBlockOrEntityCoord, ShowDistance, ShowDirection, ShowBlockUnlocalizedName);
-        hotkey = List.of(ConfigGuiHotkey, HUDHotkey, LiquidsHotkey, RecipeHotkey, UsageHotkey);
+        hotkey = List.of(ConfigGuiHotkey, TooltipHotkey, LiquidsHotkey, RecipeHotkey, UsageHotkey);
         hiwla = List.of(AnimalGrowthTime, LivingProtectionAttack, VillagerProfession, FurnaceInfo, BeaconLevel, HorseInfo, EffectInfo);
         List<ConfigBase<?>> configValues = new ArrayList<>();
         configValues.addAll(hwite);
@@ -115,15 +116,15 @@ public class HwiteConfigs extends SimpleConfigs {
         ConfigGuiHotkey.setHotKeyPressCallBack(minecraft -> {
             minecraft.displayGuiScreen(HwiteConfigs.getInstance().getConfigScreen((GuiScreen) null));
         });
-        HUDHotkey.setHotKeyPressCallBack(minecraft -> DisplayTooltip.toggleBooleanValue());
+        TooltipHotkey.setHotKeyPressCallBack(minecraft -> DisplayTooltip.toggleBooleanValue());
         LiquidsHotkey.setHotKeyPressCallBack(minecraft -> DisplayLiquids.toggleBooleanValue());
         if (ViewMode.getBooleanValue()) {
             Minecraft mc = Minecraft.getMinecraft();
             ArrayList<String> list = new ArrayList<>();
-            TooltipBGRender hudBackGroundRender = new TooltipBGRender();
+            TooltipBGRender tooltipBGRender = new TooltipBGRender();
             list.add(Block.runestoneAdamantium.getLocalizedName());
             list.add("MITE");
-            hudBackGroundRender.drawTooltipBackGround(list, false, mc);
+            tooltipBGRender.drawTooltipBackGround(list, false, mc);
         }
         Instance = new HwiteConfigs();
     }
