@@ -43,7 +43,7 @@ dependencies {
 //	implementation("org.spongepowered:mixin:0.8.5")
 
 	implementation files("libs\\fastutil-8.5.12.jar")
-	implementation files("libs\\EMI-1.0.2.jar")
+	implementation files("libs\\EMI-1.0.4.jar")
 	implementation files("libs\\ManyLib-2.1.0.jar")
 	implementation files(loom.getFML().toPath())
 }

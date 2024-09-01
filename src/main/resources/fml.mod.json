@@ -1,12 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "hwite",
-  "version": "1.4.1",
+  "version": "${version}",
   "depends": {
     "fishmodloader": ">=3.3.2",
-    "many-lib": ">=2.1.0",
-    "emi": ">=1.0.0",
-    "pinin": ">=1.6.0"
+    "many-lib": ">=2.1.0"
   },
   "environment": "*",
   "name": "Here's What Is Too Easy",

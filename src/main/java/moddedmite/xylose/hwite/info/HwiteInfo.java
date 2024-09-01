@@ -1,9 +1,8 @@
 package moddedmite.xylose.hwite.info;
 
-import emi.dev.emi.emi.api.EmiApi;
-import emi.dev.emi.emi.api.stack.EmiStack;
 import moddedmite.xylose.hwite.config.HwiteConfigs;
 import net.minecraft.*;
+import net.xiaoyu233.fml.FishModLoader;
 import net.xiaoyu233.fml.api.block.IBlock;
 import net.xiaoyu233.fml.api.entity.IEntity;
 
@@ -62,7 +61,8 @@ public class HwiteInfo extends Gui {
                     updateRCEntity(rc);
                 updateDevInfoInfo(rc, player);
                 updateHiwlaExtraInfo(rc, player);
-                hotKeyPress(rc);
+                if (FishModLoader.hasMod("emi"))
+                    hotKeyPress(rc);
             } else if (rc.isBlock()) {
                 if (HwiteConfigs.DisplayBlock.getBooleanValue()) {
                     updateRCBlock(rc, player);
@@ -71,7 +71,8 @@ public class HwiteInfo extends Gui {
                     updateMobSpawnerInfo(rc, player);
                 }
                 updateDevInfoInfo(rc, player);
-                hotKeyPress(rc);
+                if (FishModLoader.hasMod("emi"))
+                    hotKeyPress(rc);
             } else {
                 info_line_1 = "";
                 info_line_2 = "";
@@ -174,8 +175,7 @@ public class HwiteInfo extends Gui {
         if (rc != null && rc.isBlock()) {
             Block block = rc.getBlockHit();
             int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-            int min_harvest_level = block.getMinHarvestLevel(metadata);
-            if (min_harvest_level != 0 && player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) > 0.0) {
+            if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) > 0.0) {
                 return info2 = EnumChatFormatting.DARK_GRAY + I18n.getString("hwite.info.str_vs_block") + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
             }
         }
@@ -185,10 +185,7 @@ public class HwiteInfo extends Gui {
 
     public static String updateMITEDetailsInfo(RaycastCollision rc, EntityPlayer player) {
         if (rc != null && rc.isBlock()) {
-            Block block = rc.getBlockHit();
-            int metadata = player.worldObj.getBlockMetadata(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
             float block_hardness = player.worldObj.getBlockHardness(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z);
-            int min_harvest_level = block.getMinHarvestLevel(metadata);
             if (HwiteConfigs.MITEDetailsInfo.getBooleanValue()) {
                 return updateInfoLine1(rc, block_hardness, player);
             }
@@ -525,14 +522,19 @@ public class HwiteInfo extends Gui {
     }
 
     private static void hotKeyPress(RaycastCollision rc) {
-        if (rc != null && rc.isBlock()) {
-            EmiStack itemStack = EmiStack.of(rc.getBlockHit().createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)));
-            HwiteConfigs.RecipeHotkey.setHotKeyPressCallBack(minecraft -> {
-                EmiApi.displayRecipes(itemStack);
-            });
-            HwiteConfigs.UsageHotkey.setHotKeyPressCallBack(minecraft -> {
-                EmiApi.displayUses(itemStack);
-            });
+        if (FishModLoader.hasMod("emi") && rc != null && rc.isBlock()) {
+            try {
+                HwiteConfigs.RecipeHotkey.setHotKeyPressCallBack(minecraft -> {
+                    dev.emi.emi.api.EmiApi.displayRecipes((dev.emi.emi.api.stack.EmiIngredient) rc.getBlockHit());
+                });
+                HwiteConfigs.UsageHotkey.setHotKeyPressCallBack(minecraft -> {
+                    dev.emi.emi.api.EmiApi.displayUses((dev.emi.emi.api.stack.EmiIngredient) rc.getBlockHit());
+                });
+            } catch (Exception ignored) {
+                ;
+            }
+        } else {
+            return;
         }
     }
 }

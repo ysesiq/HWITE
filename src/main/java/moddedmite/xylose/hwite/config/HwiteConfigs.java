@@ -11,6 +11,7 @@ import fi.dy.masa.malilib.util.JsonUtils;
 import net.minecraft.Block;
 import net.minecraft.GuiScreen;
 import net.minecraft.Minecraft;
+import net.xiaoyu233.fml.FishModLoader;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final List<ConfigBase<?>> hwite;
     public static final List<ConfigBase<?>> general;
     public static final List<ConfigBase<?>> appearance;
-    public static final List<ConfigBase<?>> dev;
+    public static final List<ConfigBase<?>> hwiteDev;
     public static final List<ConfigHotkey> hotkey;
     public static final List<ConfigBase<?>> hiwla;
 
@@ -97,19 +98,19 @@ public class HwiteConfigs extends SimpleConfigs {
         hwite = List.of(DisplayTooltip, DebugRenderTooltip, devMoveDownTooltip, DisplayBlock, DisplayLiquids, DisplayEntity, DisplayNonCollidingEntity, BlockRender, EntityRender);
         general = List.of(BreakInfo, BreakProgress, BreakProgressLine, GrowthValue, Redstone, SpawnerType);
         appearance = List.of(TooltipX, TooltipY, TooltipScale, TooltipAlpha, EntityInfoX, EntityInfoY, EntityInfoSize, TooltipBackGround, TooltipRoundedRectangle, TooltipFrame, TooltipCentralBackground, TooltipThemeSwitch, TooltipTheme, TooltipBGColor, TooltipFrameColorTop, TooltipFrameColorBottom, BreakProgressLineColorFront, BreakProgressLineColorBehind, CanBreakString, CannotBreakString);
-        dev = List.of(ShowIDAndMetadata, MITEDetailsInfo, ShowBlockOrEntityCoord, ShowDistance, ShowDirection, ShowBlockUnlocalizedName);
+        hwiteDev = List.of(ShowIDAndMetadata, MITEDetailsInfo, ShowBlockOrEntityCoord, ShowDistance, ShowDirection, ShowBlockUnlocalizedName);
         hotkey = List.of(ConfigGuiHotkey, TooltipHotkey, LiquidsHotkey, RecipeHotkey, UsageHotkey);
         hiwla = List.of(AnimalGrowthTime, LivingProtectionAttack, VillagerProfession, FurnaceInfo, BeaconLevel, HorseInfo, EffectInfo);
         List<ConfigBase<?>> configValues = new ArrayList<>();
         configValues.addAll(hwite);
         configValues.addAll(appearance);
-        configValues.addAll(dev);
+        configValues.addAll(hwiteDev);
         configValues.addAll(hiwla);
         configValues.addAll(hotkey);
         tabs.add(new ConfigTab("hwite.hwite", hwite));
         tabs.add(new ConfigTab("hwite.general", general));
         tabs.add(new ConfigTab("hwite.appearance", appearance));
-        tabs.add(new ConfigTab("hwite.dev", dev));
+        tabs.add(new ConfigTab("hwite.dev", hwiteDev));
         tabs.add(new ConfigTab("hwite.hiwla", hiwla));
         tabs.add(new ConfigTab("hwite.hotkey", hotkey));
 
@@ -118,6 +119,7 @@ public class HwiteConfigs extends SimpleConfigs {
         });
         TooltipHotkey.setHotKeyPressCallBack(minecraft -> DisplayTooltip.toggleBooleanValue());
         LiquidsHotkey.setHotKeyPressCallBack(minecraft -> DisplayLiquids.toggleBooleanValue());
+
         if (ViewMode.getBooleanValue()) {
             Minecraft mc = Minecraft.getMinecraft();
             ArrayList<String> list = new ArrayList<>();
@@ -144,7 +146,7 @@ public class HwiteConfigs extends SimpleConfigs {
         ConfigUtils.writeConfigBase(root, "HWITE", hwite);
         ConfigUtils.writeConfigBase(root, "基础", general);
         ConfigUtils.writeConfigBase(root, "外观", appearance);
-        ConfigUtils.writeConfigBase(root, "开发", dev);
+        ConfigUtils.writeConfigBase(root, "开发", hwiteDev);
         ConfigUtils.writeConfigBase(root, "快捷键", hotkey);
         ConfigUtils.writeConfigBase(root, "附属", hiwla);
         JsonUtils.writeJsonToFile(root, this.optionsFile);
@@ -161,7 +163,7 @@ public class HwiteConfigs extends SimpleConfigs {
                 ConfigUtils.readConfigBase(root, "HWITE", hwite);
                 ConfigUtils.readConfigBase(root, "基础", general);
                 ConfigUtils.readConfigBase(root, "外观", appearance);
-                ConfigUtils.readConfigBase(root, "开发", dev);
+                ConfigUtils.readConfigBase(root, "开发", hwiteDev);
                 ConfigUtils.readConfigBase(root, "快捷键", hotkey);
                 ConfigUtils.readConfigBase(root, "附属", hiwla);
             }
