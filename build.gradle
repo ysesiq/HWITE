@@ -21,7 +21,7 @@ repositories {
 loom {
 	accessWidenerPath = file("src/main/resources/hwite.accesswidener")
 	mergedMinecraftJar()
-	setFML(new File("F:\\Projects\\IDEA\\Minecraft\\MITE\\FML3\\FishModLoader-v3.3.2.jar"))
+	setFML(new File("libs\\FishModLoader-v3.3.2.jar"))
 	mods {
 		"Hwite" {
 			sourceSet sourceSets.main
@@ -31,11 +31,10 @@ loom {
 }
 
 runClient{
-	args("--username", "Player", "--session", "a.a.a.a", "--width", 854, "--height", 480)
+	args("--username", "Xy_Lose", "--session", "a.a.a.a", "--width", 854, "--height", 480)
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
 
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.fmlMCPMappings()
@@ -44,7 +43,8 @@ dependencies {
 
 	implementation files("libs\\fastutil-8.5.12.jar")
 	implementation files("libs\\EMI-1.0.4.jar")
-	implementation files("libs\\ManyLib-2.1.0.jar")
+	implementation files("libs\\ManyLib-2.2.0.jar")
+	implementation files("libs\\ModMenu-1.0.0.jar")
 	implementation files(loom.getFML().toPath())
 }
 

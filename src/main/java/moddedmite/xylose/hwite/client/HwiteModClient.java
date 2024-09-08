@@ -1,18 +1,16 @@
 package moddedmite.xylose.hwite.client;
 
+import io.github.prospector.modmenu.api.ConfigScreenFactory;
+import io.github.prospector.modmenu.api.ModMenuApi;
 import moddedmite.xylose.hwite.config.HwiteConfigs;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.GuiScreen;
 
-public class HwiteModClient implements ClientModInitializer {
-    public static boolean isViewMode = false;
-    public static int stringWidth1;
+public class HwiteModClient implements ClientModInitializer, ModMenuApi {
 
-    public void setIsViewMode() {
-        GuiScreen guiScreen = new GuiScreen();
-        if (guiScreen == HwiteConfigs.getInstance().getValueScreen(guiScreen)) {
-            isViewMode = true;
-        }
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        return (screen) -> {
+            return HwiteConfigs.getInstance().getConfigScreen(screen);
+        };
     }
 
     @Override

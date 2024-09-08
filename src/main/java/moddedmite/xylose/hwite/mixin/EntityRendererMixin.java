@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static net.minecraft.EntityRenderer.setDebugInfoForSelectedObject;
 
 @Mixin(EntityRenderer.class)
-public class EntityRendererMixin implements INamespaced {
+public class EntityRendererMixin {
 
     @Shadow
     private Minecraft mc;

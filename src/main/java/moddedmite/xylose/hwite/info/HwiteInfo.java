@@ -1,5 +1,6 @@
 package moddedmite.xylose.hwite.info;
 
+import dev.emi.emi.api.stack.EmiStack;
 import moddedmite.xylose.hwite.config.HwiteConfigs;
 import net.minecraft.*;
 import net.xiaoyu233.fml.FishModLoader;
@@ -61,8 +62,6 @@ public class HwiteInfo extends Gui {
                     updateRCEntity(rc);
                 updateDevInfoInfo(rc, player);
                 updateHiwlaExtraInfo(rc, player);
-                if (FishModLoader.hasMod("emi"))
-                    hotKeyPress(rc);
             } else if (rc.isBlock()) {
                 if (HwiteConfigs.DisplayBlock.getBooleanValue()) {
                     updateRCBlock(rc, player);
@@ -71,8 +70,6 @@ public class HwiteInfo extends Gui {
                     updateMobSpawnerInfo(rc, player);
                 }
                 updateDevInfoInfo(rc, player);
-                if (FishModLoader.hasMod("emi"))
-                    hotKeyPress(rc);
             } else {
                 info_line_1 = "";
                 info_line_2 = "";
@@ -114,6 +111,7 @@ public class HwiteInfo extends Gui {
         if (rc != null && rc.isEntity() && rc.getEntityHit() instanceof EntityLivingBase entityLivingBase) {
             return (int) entityLivingBase.getMaxHealth();
         }
+        renderHealth = false;
         return 0;
     }
 
@@ -521,20 +519,11 @@ public class HwiteInfo extends Gui {
         return "§9§o" + "Minecraft";
     }
 
-    private static void hotKeyPress(RaycastCollision rc) {
-        if (FishModLoader.hasMod("emi") && rc != null && rc.isBlock()) {
-            try {
-                HwiteConfigs.RecipeHotkey.setHotKeyPressCallBack(minecraft -> {
-                    dev.emi.emi.api.EmiApi.displayRecipes((dev.emi.emi.api.stack.EmiIngredient) rc.getBlockHit());
-                });
-                HwiteConfigs.UsageHotkey.setHotKeyPressCallBack(minecraft -> {
-                    dev.emi.emi.api.EmiApi.displayUses((dev.emi.emi.api.stack.EmiIngredient) rc.getBlockHit());
-                });
-            } catch (Exception ignored) {
-                ;
-            }
-        } else {
-            return;
+    public static EmiStack updateEmiStack() {
+        if (mc.objectMouseOver != null && mc.objectMouseOver.isBlock()) {
+            return dev.emi.emi.api.stack.EmiStack.of(mc.objectMouseOver.getBlockHit().createStackedBlock(mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)));
         }
+        return null;
     }
+
 }

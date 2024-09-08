@@ -1,5 +1,6 @@
 package moddedmite.xylose.hwite.config;
 
+import moddedmite.xylose.hwite.info.HwiteInfo;
 import moddedmite.xylose.hwite.render.TooltipBGRender;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,16 +10,16 @@ import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.options.*;
 import fi.dy.masa.malilib.util.JsonUtils;
 import net.minecraft.Block;
-import net.minecraft.GuiScreen;
 import net.minecraft.Minecraft;
 import net.xiaoyu233.fml.FishModLoader;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HwiteConfigs extends SimpleConfigs {
-    //switch
+    //base
     public static final ConfigBoolean ViewMode = new ConfigBoolean("hwite.View", false, "配置界面预览");
     public static final ConfigBoolean DisplayTooltip = new ConfigBoolean("hwite.DisplayTooltip", true);
     public static final ConfigBoolean DebugRenderTooltip = new ConfigBoolean("hwite.debugRenderTooltip", true);
@@ -114,11 +115,33 @@ public class HwiteConfigs extends SimpleConfigs {
         tabs.add(new ConfigTab("hwite.hiwla", hiwla));
         tabs.add(new ConfigTab("hwite.hotkey", hotkey));
 
-        ConfigGuiHotkey.setHotKeyPressCallBack(minecraft -> {
-            minecraft.displayGuiScreen(HwiteConfigs.getInstance().getConfigScreen((GuiScreen) null));
+        ConfigGuiHotkey.getKeybind().setCallback((keyAction, iKeybind) -> {
+            Minecraft.getMinecraft().displayGuiScreen(getInstance().getConfigScreen(null));
+            return true;
         });
-        TooltipHotkey.setHotKeyPressCallBack(minecraft -> DisplayTooltip.toggleBooleanValue());
-        LiquidsHotkey.setHotKeyPressCallBack(minecraft -> DisplayLiquids.toggleBooleanValue());
+        TooltipHotkey.getKeybind().setCallback((keyAction, iKeybind) -> {
+            DisplayTooltip.toggleBooleanValue();
+            return true;
+        });
+        LiquidsHotkey.getKeybind().setCallback((keyAction, iKeybind) -> {
+            DisplayLiquids.toggleBooleanValue();
+            return true;
+        });
+
+        if (FishModLoader.hasMod("emi")) {
+            try {
+                HwiteConfigs.RecipeHotkey.getKeybind().setCallback(((keyAction, iKeybind) -> {
+                    dev.emi.emi.api.EmiApi.displayRecipes(Objects.requireNonNull(HwiteInfo.updateEmiStack()));
+                return true;
+                }));
+                HwiteConfigs.UsageHotkey.getKeybind().setCallback(((keyAction, iKeybind) -> {
+                    dev.emi.emi.api.EmiApi.displayUses(Objects.requireNonNull(HwiteInfo.updateEmiStack()));
+                return true;
+                }));
+            } catch (Exception ignored) {
+                ;
+            }
+        }
 
         if (ViewMode.getBooleanValue()) {
             Minecraft mc = Minecraft.getMinecraft();

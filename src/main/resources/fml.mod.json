@@ -4,27 +4,49 @@
   "version": "${version}",
   "depends": {
     "fishmodloader": ">=3.3.2",
-    "many-lib": ">=2.1.0"
+    "many-lib": ">=2.2.0"
+  },
+  "recommends": {
+    "emi": ">=1.0.4"
   },
   "environment": "*",
   "name": "Here's What Is Too Easy",
   "description": "那天,你终于知道你面前是什么玩意了",
   "authors": [
     "Xy_Lose",
-    "Huix",
     "Debris"
   ],
-  "License": "MIT license",
+  "contributors": [
+    "Huix"
+  ],
+  "License": "MIT",
+  "icon": "assets/minecraft/textures/hwite_icon.png",
+  "contact": {
+    "homepage": "https://www.mcmod.cn/class/15041.html",
+    "issues": "https://github.com/ysesiq/HWITE/issues",
+    "sources": "https://github.com/ysesiq/HWITE",
+    "qqGroup": "661223990"
+  },
   "entrypoints": {
-    "CLIENT": [
+    "client": [
       "moddedmite.xylose.hwite.client.HwiteModClient"
     ],
     "main": [
       "moddedmite.xylose.hwite.HwiteMod"
+    ],
+    "modmenu": [
+      "moddedmite.xylose.hwite.client.HwiteModClient"
     ]
   },
   "mixins": [
     "hwite.mixins.json"
   ],
-  "accessWidener": "hwite.accesswidener"
+  "accessWidener": "hwite.accesswidener",
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/RaycastCollision": [
+        "moddedmite/xylose/hwite/api/IRaycastCollision"
+      ]
+    }
+  }
 }
