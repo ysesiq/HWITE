@@ -179,7 +179,7 @@ public class TooltipBGRender extends Gui {
             w = maxStringW + paddingBlockW;
         }
 //        w = paddingW > maxStringW ? paddingW : maxStringW + paddingW;
-        h = par1List.size() * 11 + 3;
+        h = par1List.size() == 1 ? 25 : par1List.size() * 11 + 3;
 
         Dimension size = DisplayUtil.displaySize();
         x = ((int) (size.width / (float) TooltipScale.getDoubleValue()) - w - 1) * pos.x / 100;
@@ -268,7 +268,7 @@ public class TooltipBGRender extends Gui {
        }
         for (int var12 = 0; var12 < par1List.size(); ++var12) {
             String var13 = par1List.get(var12);
-            fontRenderer.drawStringWithShadow(var13, HwiteInfo.hasIcon ? x + 25 : x + 8, y + 4, -1);
+            fontRenderer.drawStringWithShadow(var13, HwiteInfo.hasIcon ? x + 25 : x + 8, par1List.size() == 1 ? y + 8 : y + 4, -1);
 
             if (var12 == 0 && has_title) {
                 y += 2;

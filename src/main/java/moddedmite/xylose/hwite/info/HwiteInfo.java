@@ -3,7 +3,6 @@ package moddedmite.xylose.hwite.info;
 import dev.emi.emi.api.stack.EmiStack;
 import moddedmite.xylose.hwite.config.HwiteConfigs;
 import net.minecraft.*;
-import net.xiaoyu233.fml.FishModLoader;
 import net.xiaoyu233.fml.api.block.IBlock;
 import net.xiaoyu233.fml.api.entity.IEntity;
 

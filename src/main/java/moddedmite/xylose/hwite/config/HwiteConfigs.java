@@ -24,6 +24,7 @@ public class HwiteConfigs extends SimpleConfigs {
     public static final ConfigBoolean DisplayTooltip = new ConfigBoolean("hwite.DisplayTooltip", true);
     public static final ConfigBoolean DebugRenderTooltip = new ConfigBoolean("hwite.debugRenderTooltip", true);
     public static final ConfigBoolean devMoveDownTooltip = new ConfigBoolean("hwite.devMoveDownTooltip", true);
+    public static final ConfigBoolean DisplayModName = new ConfigBoolean("hwite.DisplayModName", true);
     public static final ConfigBoolean DisplayBlock = new ConfigBoolean("hwite.DisplayBlock", true);
     public static final ConfigBoolean DisplayLiquids = new ConfigBoolean("hwite.DisplayLiquid", false);
     public static final ConfigBoolean DisplayEntity = new ConfigBoolean("hwite.DisplayEntity", true);
@@ -96,7 +97,7 @@ public class HwiteConfigs extends SimpleConfigs {
     }
 
     static {
-        hwite = List.of(DisplayTooltip, DebugRenderTooltip, devMoveDownTooltip, DisplayBlock, DisplayLiquids, DisplayEntity, DisplayNonCollidingEntity, BlockRender, EntityRender);
+        hwite = List.of(DisplayTooltip, DebugRenderTooltip, devMoveDownTooltip, DisplayModName, DisplayBlock, DisplayLiquids, DisplayEntity, DisplayNonCollidingEntity, BlockRender, EntityRender);
         general = List.of(BreakInfo, BreakProgress, BreakProgressLine, GrowthValue, Redstone, SpawnerType);
         appearance = List.of(TooltipX, TooltipY, TooltipScale, TooltipAlpha, EntityInfoX, EntityInfoY, EntityInfoSize, TooltipBackGround, TooltipRoundedRectangle, TooltipFrame, TooltipCentralBackground, TooltipThemeSwitch, TooltipTheme, TooltipBGColor, TooltipFrameColorTop, TooltipFrameColorBottom, BreakProgressLineColorFront, BreakProgressLineColorBehind, CanBreakString, CannotBreakString);
         hwiteDev = List.of(ShowIDAndMetadata, MITEDetailsInfo, ShowBlockOrEntityCoord, ShowDistance, ShowDirection, ShowBlockUnlocalizedName);

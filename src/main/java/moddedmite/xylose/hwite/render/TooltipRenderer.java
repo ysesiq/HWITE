@@ -62,7 +62,7 @@ public class TooltipRenderer {
                 GL11.glEnable(GL12.GL_RESCALE_NORMAL);
                 DisplayUtil.renderStack(
                         TooltipBGRender.x + 5,
-                        (TooltipBGRender.y - TooltipBGRender.h / 2) - 3,
+                        list.size() == 1 ? TooltipBGRender.y - 6  : (TooltipBGRender.y - TooltipBGRender.h / 2) - 3,
                         new ItemStack(HwiteInfo.blockInfo, 1, mc.theWorld.getBlockMetadata(HwiteInfo.blockPosX, HwiteInfo.blockPosY, HwiteInfo.blockPosZ)));
             }
             loadGLState();
@@ -151,7 +151,9 @@ public class TooltipRenderer {
             }
         }
 
-        list.add(HwiteInfo.updateModInfo(mc.objectMouseOver));
+        if (HwiteConfigs.DisplayModName.getBooleanValue()) {
+            list.add(HwiteInfo.updateModInfo(mc.objectMouseOver));
+        }
 
         return List.of();
     }

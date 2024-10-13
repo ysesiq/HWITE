@@ -35,7 +35,7 @@
       "moddedmite.xylose.hwite.HwiteMod"
     ],
     "modmenu": [
-      "moddedmite.xylose.hwite.client.HwiteModClient"
+      "moddedmite.xylose.hwite.compat.ModMenuHWITE"
     ]
   },
   "mixins": [

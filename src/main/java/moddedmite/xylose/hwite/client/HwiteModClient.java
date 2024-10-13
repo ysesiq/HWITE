@@ -5,13 +5,7 @@ import io.github.prospector.modmenu.api.ModMenuApi;
 import moddedmite.xylose.hwite.config.HwiteConfigs;
 import net.fabricmc.api.ClientModInitializer;
 
-public class HwiteModClient implements ClientModInitializer, ModMenuApi {
-
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return (screen) -> {
-            return HwiteConfigs.getInstance().getConfigScreen(screen);
-        };
-    }
+public class HwiteModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
