@@ -45,6 +45,7 @@ dependencies {
 	implementation files("libs\\EMI-1.0.4.jar")
 	implementation files("libs\\ManyLib-2.2.0.jar")
 	implementation files("libs\\ModMenu-1.0.0.jar")
+	implementation files("libs\\opencsv.jar")
 	implementation files(loom.getFML().toPath())
 }
 

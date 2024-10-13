@@ -4,11 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.ItemStack;
-
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.registry.GameData;
+import net.xiaoyu233.fml.FishModLoader;
 
 public class ModIdentification {
 
@@ -17,10 +15,10 @@ public class ModIdentification {
 
     public static void init() {
 
-        for (ModContainer mod : Loader.instance().getModList()) {
-            modSource_Name.put(mod.getSource().getName(), mod.getName());
-            modSource_ID.put(mod.getSource().getName(), mod.getModId());
-        }
+//        for (ModContainer mod : FishModLoader.getModList()) {
+//            modSource_Name.put(mod.getSource().getName(), mod.getName());
+//            modSource_ID.put(mod.getSource().getName(), mod.getModId());
+//        }
 
         // TODO : Update this to match new version (1.7.2)
         modSource_Name.put("1.6.2.jar", "Minecraft");
@@ -55,12 +53,11 @@ public class ModIdentification {
         return modName;
     }
 
-    public static String nameFromStack(ItemStack stack) {
-        try {
-            ModContainer mod = GameData.findModOwner(GameData.itemRegistry.getNameForObject(stack.getItem()));
-            return mod == null ? "Minecraft" : mod.getName();
-        } catch (NullPointerException e) {
-            return "";
-        }
-    }
+//    public static String nameFromStack(ItemStack stack) {
+//        try {
+//            return mod == null ? "Minecraft" : mod.getName();
+//        } catch (NullPointerException e) {
+//            return "";
+//        }
+//    }
 }

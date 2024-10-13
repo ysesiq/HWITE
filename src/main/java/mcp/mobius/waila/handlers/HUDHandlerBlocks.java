@@ -7,7 +7,6 @@ import static mcp.mobius.waila.api.SpecialChars.RENDER;
 import java.util.List;
 
 import net.minecraft.*;
-import net.minecraft.EntityPlayerMP;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -78,7 +77,7 @@ public class HUDHandlerBlocks implements IWailaDataProvider {
     }
 
     @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x,
+    public NBTTagCompound getNBTData(ServerPlayer player, TileEntity te, NBTTagCompound tag, World world, int x,
             int y, int z) {
         return tag;
     }

@@ -13,10 +13,6 @@ import net.minecraft.World;
 
 import org.lwjgl.input.Keyboard;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.MetaDataProvider;
@@ -40,14 +36,10 @@ public class WailaTickHandler {
         return _instance;
     }
 
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void tickRender(TickEvent.RenderTickEvent event) {
         OverlayRenderer.renderOverlay();
     }
 
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void tickClient(TickEvent.ClientTickEvent event) {
 
         if (!Keyboard.isKeyDown(KeyEvent.key_show.getKeyCode())
@@ -60,7 +52,7 @@ public class WailaTickHandler {
         World world = mc.theWorld;
         EntityPlayer player = mc.thePlayer;
         if (world != null && player != null) {
-            RayTracing.instance().fire();
+//            RayTracing.instance().fire();
             RaycastCollision target = RayTracing.instance().getTarget();
 
             List<String> currenttip;

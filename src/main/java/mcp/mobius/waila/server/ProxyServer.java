@@ -2,7 +2,6 @@ package mcp.mobius.waila.server;
 
 import java.lang.reflect.Method;
 
-import cpw.mods.fml.common.Loader;
 import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.addons.vanillamc.HUDHandlerFurnace;
 import mcp.mobius.waila.addons.vanillamc.HUDHandlerVanilla;
@@ -22,10 +21,8 @@ public class ProxyServer {
         HUDHandlerVanilla.register();
         HUDHandlerFurnace.register();
 
-        if (Loader.isModLoaded("ForgeMultipart")) {
             HUDHandlerFMP.register();
             DecoratorFMP.register();
-        }
     }
 
     public void registerIMCs() {

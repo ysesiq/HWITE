@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.minecraft.Entity;
 import net.minecraft.EntityLivingBase;
-import net.minecraft.EntityPlayerMP;
+import net.minecraft.ServerPlayer;
 import net.minecraft.NBTTagCompound;
 import net.minecraft.World;
 
@@ -83,7 +83,7 @@ public class HUDHandlerEntities implements IWailaEntityProvider {
     }
 
     @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, Entity te, NBTTagCompound tag, World world) {
+    public NBTTagCompound getNBTData(ServerPlayer player, Entity te, NBTTagCompound tag, World world) {
         return tag;
     }
 

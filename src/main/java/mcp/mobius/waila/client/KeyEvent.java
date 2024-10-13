@@ -30,7 +30,6 @@ public class KeyEvent {
                 key_usage = new KeyBinding(Constants.BIND_WAILA_USAGE, Keyboard.KEY_NUMPAD4, "Waila"));
     }
 
-    @SubscribeEvent
     public void onKeyEvent(KeyInputEvent event) {
         boolean showKey = key_show.isPressed();
         if (key_cfg.isPressed()) {

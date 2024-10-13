@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.*;
-import net.minecraft.Items;
-import net.minecraftforge.common.IShearable;
-import net.minecraftforge.common.config.Configuration;
 
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaEntityProvider;
@@ -29,18 +26,18 @@ public class RayTracing {
     private final Minecraft mc = Minecraft.getMinecraft();
     private RaycastCollision target = mc.objectMouseOver;
 
-    public void fire() {
-        if (target.isEntity()
-                && !shouldHidePlayer(mc.objectMouseOver.getEntityHit())) {
-            this.target = mc.objectMouseOver;
-            return;
-        }
-
-        EntityLivingBase viewpoint = mc.renderViewEntity;
-        if (viewpoint == null) return;
-
-        this.target = this.rayTrace(viewpoint, mc.playerController.getBlockReachDistance(), 0);
-    }
+//    public void fire() {
+//        if (target.isEntity()
+//                && !shouldHidePlayer(mc.objectMouseOver.getEntityHit())) {
+//            this.target = mc.objectMouseOver;
+//            return;
+//        }
+//
+//        EntityLivingBase viewpoint = mc.renderViewEntity;
+//        if (viewpoint == null) return;
+//
+//        this.target = this.rayTrace(viewpoint, mc.thePlayer.getReach(target.getBlockHit(), target.world.getBlockMetadata(target.block_hit_x, target.block_hit_y, target.block_hit_z)), 0);
+//    }
 
     private static boolean shouldHidePlayer(Entity targetEnt) {
         // Check if entity is player with invisibility effect
@@ -64,15 +61,15 @@ public class RayTracing {
                 : null;
     }
 
-    public RaycastCollision rayTrace(EntityLivingBase entity, double par1, float par3) {
-        Vec3 vec3 = entity.getPosition(par3);
-        Vec3 vec31 = entity.getLook(par3);
-        Vec3 vec32 = vec3.addVector(vec31.xCoord * par1, vec31.yCoord * par1, vec31.zCoord * par1);
-
-        if (ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, true))
-            return entity.worldObj.rayTraceBlocks(vec3, vec32, true);
-        else return entity.worldObj.rayTraceBlocks(vec3, vec32, false);
-    }
+//    public RaycastCollision rayTrace(EntityLivingBase entity, double par1, float par3) {
+//        Vec3 vec3 = entity.getPosition(par3);
+//        Vec3 vec31 = entity.getLook(par3);
+//        Vec3 vec32 = vec3.addVector(vec31.xCoord * par1, vec31.yCoord * par1, vec31.zCoord * par1);
+//
+//        if (ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_LIQUID, true))
+//            return entity.worldObj.rayTraceBlocks(vec3, vec32, true);
+//        else return entity.worldObj.rayTraceBlocks(vec3, vec32, false);
+//    }
 
     public ItemStack getIdentifierStack() {
         ArrayList<ItemStack> items = this.getIdentifierItems();

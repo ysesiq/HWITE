@@ -7,23 +7,17 @@ import net.minecraft.Minecraft;
 import net.minecraft.EntityLivingBase;
 import net.minecraft.EntityPlayer;
 import net.minecraft.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import mcp.mobius.waila.api.IWailaBlockDecorator;
 import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.utils.WailaExceptionHandler;
+import org.spongepowered.asm.mixin.MixinEnvironment;
 
 public class DecoratorRenderer {
 
-    @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void onRenderWorldLast(RenderWorldLastEvent event) {
         if (RayTracing.instance().getTarget() == null || RayTracing.instance().getTargetStack() == null) return;
 

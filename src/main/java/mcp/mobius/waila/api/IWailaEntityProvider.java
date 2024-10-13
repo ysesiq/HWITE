@@ -3,7 +3,7 @@ package mcp.mobius.waila.api;
 import java.util.List;
 
 import net.minecraft.Entity;
-import net.minecraft.EntityPlayerMP;
+import net.minecraft.ServerPlayer;
 import net.minecraft.NBTTagCompound;
 import net.minecraft.World;
 
@@ -90,5 +90,5 @@ public interface IWailaEntityProvider {
      * @param world  TileEntity's World.
      * @return Modified input NBTTagCompound tag.
      */
-    NBTTagCompound getNBTData(EntityPlayerMP player, Entity ent, NBTTagCompound tag, World world);
+    NBTTagCompound getNBTData(ServerPlayer player, Entity ent, NBTTagCompound tag, World world);
 }

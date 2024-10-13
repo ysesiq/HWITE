@@ -3,7 +3,7 @@ package mcp.mobius.waila.addons.vanillamc;
 import java.util.List;
 
 import net.minecraft.*;
-import net.minecraft.EntityPlayerMP;
+import net.minecraft.ServerPlayer;
 import net.minecraft.Block;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -112,7 +112,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         if (block == mobSpawner && accessor.getTileEntity() instanceof TileEntityMobSpawner
                 && config.getConfig("vanilla.spawntype")) {
             String name = currenttip.get(0);
-            String mobname = ((TileEntityMobSpawner) accessor.getTileEntity()).func_145881_a().getEntityNameToSpawn();
+            String mobname = ((TileEntityMobSpawner) accessor.getTileEntity()).getSpawnerLogic().getEntityNameToSpawn();
             currenttip.set(0, String.format("%s (%s)", name, mobname));
         }
 
@@ -212,7 +212,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
     }
 
     @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x,
+    public NBTTagCompound getNBTData(ServerPlayer player, TileEntity te, NBTTagCompound tag, World world, int x,
             int y, int z) {
         if (te != null) te.writeToNBT(tag);
         return tag;

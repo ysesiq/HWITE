@@ -7,7 +7,6 @@ import java.util.HashSet;
 
 import net.minecraft.CompressedStreamTools;
 import net.minecraft.NBTBase;
-import net.minecraft.NBTSizeTracker;
 import net.minecraft.NBTTagByte;
 import net.minecraft.NBTTagCompound;
 import net.minecraft.NBTTagInt;
@@ -75,17 +74,17 @@ public class NBTUtil {
         }
     }
 
-    public static NBTTagCompound readNBTTagCompound(DataInputStream par0DataInputStream) throws IOException {
-        short short1 = par0DataInputStream.readShort();
-
-        if (short1 < 0) {
-            return null;
-        } else {
-            byte[] abyte = new byte[short1];
-            par0DataInputStream.readFully(abyte);
-            return CompressedStreamTools.func_152457_a(abyte, NBTSizeTracker.field_152451_a);
-        }
-    }
+//    public static NBTTagCompound readNBTTagCompound(DataInputStream par0DataInputStream) throws IOException {
+//        short short1 = par0DataInputStream.readShort();
+//
+//        if (short1 < 0) {
+//            return null;
+//        } else {
+//            byte[] abyte = new byte[short1];
+//            par0DataInputStream.readFully(abyte);
+//            return CompressedStreamTools.func_152457_a(abyte, NBTSizeTracker.field_152451_a);
+//        }
+//    }
 
     public static int getNBTInteger(NBTTagCompound tag, String keyname) {
         NBTBase subtag = tag.getTag(keyname);

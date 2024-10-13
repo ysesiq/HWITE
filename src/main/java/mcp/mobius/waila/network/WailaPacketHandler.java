@@ -3,7 +3,7 @@ package mcp.mobius.waila.network;
 import java.io.IOException;
 import java.util.EnumMap;
 
-import net.minecraft.EntityPlayerMP;
+import net.minecraft.ServerPlayer;
 import net.minecraft.CompressedStreamTools;
 import net.minecraft.NBTSizeTracker;
 import net.minecraft.NBTTagCompound;
@@ -11,25 +11,21 @@ import net.minecraft.NetHandlerPlayServer;
 
 import com.google.common.base.Charsets;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
-import cpw.mods.fml.common.network.FMLIndexedMessageToMessageCodec;
-import cpw.mods.fml.common.network.FMLOutboundHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
+import net.minecraft.ServerPlayer;
+import org.spongepowered.asm.mixin.MixinEnvironment;
 
 public enum WailaPacketHandler {
 
     INSTANCE;
 
-    public EnumMap<Side, FMLEmbeddedChannel> channels;
+    public EnumMap<MixinEnvironment.Side, FMLEmbeddedChannel> channels;
 
     WailaPacketHandler() {
         this.channels = NetworkRegistry.INSTANCE.newChannel("Waila", new WailaCodec());
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+        if (FMLCommonHandler.instance().getSide() == MixinEnvironment.Side.CLIENT) {
             addClientHandlers();
             addServerHandlers();
         } else {
@@ -39,7 +35,7 @@ public enum WailaPacketHandler {
     }
 
     private void addClientHandlers() {
-        FMLEmbeddedChannel channel = this.channels.get(Side.CLIENT);
+        FMLEmbeddedChannel channel = this.channels.get(MixinEnvironment.Side.CLIENT);
         String codec = channel.findChannelHandlerNameForType(WailaCodec.class);
 
         channel.pipeline().addAfter(codec, "ServerPing", new Message0x00ServerPing());
@@ -48,7 +44,7 @@ public enum WailaPacketHandler {
     }
 
     private void addServerHandlers() {
-        FMLEmbeddedChannel channel = this.channels.get(Side.SERVER);
+        FMLEmbeddedChannel channel = this.channels.get(MixinEnvironment.Side.SERVER);
         String codec = channel.findChannelHandlerNameForType(WailaCodec.class);
 
         channel.pipeline().addAfter(codec, "TERequest", new Message0x01TERequest());
@@ -76,17 +72,17 @@ public enum WailaPacketHandler {
         }
     }
 
-    public void sendTo(IWailaMessage message, EntityPlayerMP player) {
-        channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
+    public void sendTo(IWailaMessage message, ServerPlayer player) {
+        channels.get(MixinEnvironment.Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.PLAYER);
-        channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
-        channels.get(Side.SERVER).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+        channels.get(MixinEnvironment.Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
+        channels.get(MixinEnvironment.Side.SERVER).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 
     public void sendToServer(IWailaMessage message) {
-        channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        channels.get(MixinEnvironment.Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.TOSERVER);
-        channels.get(Side.CLIENT).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+        channels.get(MixinEnvironment.Side.CLIENT).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
     }
 
     public void writeNBT(ByteBuf target, NBTTagCompound tag) throws IOException {

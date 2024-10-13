@@ -1,7 +1,6 @@
 package mcp.mobius.waila.api.impl;
 
 import net.minecraft.*;
-import net.minecraft.MovingObjectPosition.MovingObjectType;
 
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaDataAccessor;

@@ -67,7 +67,6 @@ public class ProxyClient extends ProxyServer {
 
     public static class WorldUnloadEventHandler {
 
-        @SubscribeEvent
         public void onWorldUnload(WorldEvent.Unload event) {
             DataAccessorCommon.instance = new DataAccessorCommon();
         }
