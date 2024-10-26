@@ -67,7 +67,7 @@ public class TooltipRenderer {
             }
             loadGLState();
 
-            if (rc.getEntityHit() != null) {
+            if (rc.getEntityHit() != null && rc.getEntityHit() instanceof EntityLivingBase livingBase && livingBase.getMaxHealth() <= 20) {
                 int healthY = getHealthY(list);
                 hudBackGroundRender.drawIcons(rc, TooltipBGRender.x + 8, healthY);
             }

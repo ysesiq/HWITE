@@ -117,11 +117,12 @@ public class HwiteInfo extends Gui {
 
     private static void updateEntityLivingBaseInfo(EntityLivingBase entityLivingBase) {
         entityInfo = entityLivingBase;
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
         float total_melee_damage;
         if (entityLivingBase.isEntityPlayer()) {
-            total_melee_damage = entityLivingBase.getAsPlayer().calcRawMeleeDamageVs((Entity) null, false, false);
+            total_melee_damage = Float.parseFloat(decimalFormat.format(entityLivingBase.getAsPlayer().calcRawMeleeDamageVs(entityLivingBase, false, false)));
         } else if (entityLivingBase.hasEntityAttribute(SharedMonsterAttributes.attackDamage)) {
-            total_melee_damage = (float) entityLivingBase.getEntityAttributeValue(SharedMonsterAttributes.attackDamage);
+            total_melee_damage = Float.parseFloat(decimalFormat.format((float) entityLivingBase.getEntityAttributeValue(SharedMonsterAttributes.attackDamage)));
         } else {
             total_melee_damage = 0.0F;
         }
@@ -160,11 +161,12 @@ public class HwiteInfo extends Gui {
 
     public static String updateInfoLine1(RaycastCollision rc, float block_hardness, EntityPlayer player) {
         String info1;
-            if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
-                return info1 = gray + I18n.getString("hwite.info.hardness") + block_hardness;
-            } else {
-                return info1 = gray + I18n.getString("hwite.info.hardness") + block_hardness + " " + I18n.getString("hwite.info.str_vs_block") + (short) player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true);
-            }
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        if (player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true) <= 0.0) {
+            return info1 = gray + I18n.getString("hwite.info.hardness") + block_hardness;
+        } else {
+            return info1 = gray + I18n.getString("hwite.info.hardness") + block_hardness + " " + I18n.getString("hwite.info.str_vs_block") + decimalFormat.format(player.getCurrentPlayerStrVsBlock(rc.block_hit_x, rc.block_hit_y, rc.block_hit_z, true));
+        }
     }
 
     public static String updateInfoLine2(RaycastCollision rc, EntityPlayer player) {
@@ -406,15 +408,15 @@ public class HwiteInfo extends Gui {
             } else if (rc.isEntity()) {
                 if (rc.getEntityHit() instanceof EntityLivingBase living) {
                     float total_melee_damage;
+                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
                     if (living.isEntityPlayer()) {
-                        total_melee_damage = living.getAsPlayer().calcRawMeleeDamageVs((Entity) null, false, false);
+                        total_melee_damage = Float.parseFloat(decimalFormat.format(living.getAsPlayer().calcRawMeleeDamageVs(living, false, false)));
                     } else if (living.hasEntityAttribute(SharedMonsterAttributes.attackDamage)) {
-                        total_melee_damage = (float) living.getEntityAttributeValue(SharedMonsterAttributes.attackDamage);
+                        total_melee_damage =  Float.parseFloat(decimalFormat.format((float) living.getEntityAttributeValue(SharedMonsterAttributes.attackDamage)));
                     } else {
                         total_melee_damage = 0.0F;
                     }
                     if (HwiteConfigs.LivingProtectionAttack.getBooleanValue()) {
-                        DecimalFormat decimalFormat = new DecimalFormat("0.00");
                         if (living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)) > 0 && total_melee_damage > 0.0F) {
                             return hiwlaInfo = gray + I18n.getString("hiwla.info.protection") + decimalFormat.format((living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)))) + " " + I18n.getString("hwite.info.attack") + total_melee_damage;
                         } else if (living.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)) > 0) {

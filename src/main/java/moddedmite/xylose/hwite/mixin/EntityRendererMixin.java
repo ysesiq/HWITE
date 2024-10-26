@@ -20,7 +20,8 @@ public class EntityRendererMixin {
 
     @Inject(method = "setDebugInfoForSelectedObject", at = @At("HEAD"))
     private static void setHwiteInfoForSelectedObject(RaycastCollision rc, EntityPlayer player, CallbackInfo ci) {
-        HwiteInfo.updateInfoForRC(rc, player);
+        if (rc != null)
+            HwiteInfo.updateInfoForRC(rc, player);
     }
 
     @Inject(method = "getMouseOver", at = @At("TAIL"))

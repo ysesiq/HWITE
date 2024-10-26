@@ -148,7 +148,8 @@ public class TooltipBGRender extends Gui {
             if (y > var4) {
                 var4 = y;
             }
-            maxStringW = Math.max(maxStringW, DisplayUtil.getDisplayWidth(s) + Tooltip.TabSpacing * (line.size() - 1));        }
+            maxStringW = Math.max(maxStringW, DisplayUtil.getDisplayWidth(s) + Tooltip.TabSpacing * (line.size() - 1) + 14);
+        }
 
         int var8 = 8;
 
@@ -162,9 +163,9 @@ public class TooltipBGRender extends Gui {
 
         Point pos = new Point(TooltipX.getIntegerValue(), TooltipY.getIntegerValue());
 
-        int paddingBlockW = HwiteInfo.hasIcon ? 29 : 0;
+        int paddingBlockW = HwiteInfo.hasIcon ? 15 : 0;
         int health = Math.min(HwiteInfo.updateEntityLivingBaseMaxHealth(Minecraft.theMinecraft.objectMouseOver), 20);
-        int paddingHealthW = HwiteInfo.renderHealth && Minecraft.theMinecraft.objectMouseOver.isEntity() ? (int) (health * 4) + TabSpacing * (par1List.size() - 1) : 0;
+        int paddingHealthW = HwiteInfo.renderHealth && Minecraft.theMinecraft.objectMouseOver.isEntity() ? (int) (health * 3.5) + TabSpacing * (par1List.size() - 1) : 0;
         int paddingW = Math.max(paddingBlockW, paddingHealthW);
         int paddingH = HwiteInfo.hasIcon ? 24 : 0;
         int offsetX = HwiteInfo.hasIcon ? 24 : 6;
@@ -173,7 +174,7 @@ public class TooltipBGRender extends Gui {
             if (maxStringW > paddingHealthW) {
                 w = maxStringW + 15;
             } else if (paddingHealthW > maxStringW) {
-                w = paddingHealthW;
+                w = paddingHealthW + 15;
             }
         } else if (Minecraft.getMinecraft().objectMouseOver.isBlock()) {
             w = maxStringW + paddingBlockW;
