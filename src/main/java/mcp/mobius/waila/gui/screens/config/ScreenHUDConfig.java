@@ -35,7 +35,7 @@ public class ScreenHUDConfig extends ScreenBase {
             double picX = WailaConfig.posX.getIntegerValue() / 100.0;
             double picY = WailaConfig.posY.getIntegerValue()/ 100.0;
             float picAlpha = WailaConfig.alpha.getIntegerValue() / 100.0f;
-            scale = WailaConfig.scale.getIntegerValue() / 100.0f;
+            scale = (float) (WailaConfig.scale.getDoubleValue() / 100.0f);
 
             int picSX = (int) (180 / this.rez.getScaleFactor() * scale),
                     picSY = (int) (62 / this.rez.getScaleFactor() * scale);

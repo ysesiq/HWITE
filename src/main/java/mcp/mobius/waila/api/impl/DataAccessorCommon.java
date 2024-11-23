@@ -36,18 +36,19 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
         this.player = _player;
         this.mop = _mop;
 
-        if (this.mop.isBlock()) {
+        if (this.mop != null && this.mop.isBlock()) {
             this.block = world.getBlock(_mop.block_hit_x, _mop.block_hit_y, _mop.block_hit_z);
             this.metadata = world.getBlockMetadata(_mop.block_hit_x, _mop.block_hit_y, _mop.block_hit_z);
             this.tileEntity = world.getBlockTileEntity(_mop.block_hit_x, _mop.block_hit_y, _mop.block_hit_z);
             this.entity = null;
-            this.blockID = this.block.blockID;
+            if (this.block != null)
+                this.blockID = this.block.blockID;
 //            this.blockResource = GameData.getBlockRegistry().getNameForObject(this.block);
             try {
                 this.stack = new ItemStack(this.block, 1, this.metadata);
             } catch (Exception ignored) {}
 
-        } else if (this.mop.isEntity()) {
+        } else if (this.mop != null && this.mop.isEntity()) {
             this.block = null;
             this.metadata = -1;
             this.tileEntity = null;

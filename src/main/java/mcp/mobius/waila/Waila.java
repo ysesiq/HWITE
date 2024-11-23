@@ -34,35 +34,16 @@ import mcp.mobius.waila.utils.ModIdentification;
 
 public class Waila implements ModInitializer {
     public static Waila instance;
-    private KeyBinding keyBinding;
     public static Logger log = LogManager.getLogger("Waila");
     public boolean serverPresent = false;
     private WailaPacketHandler wailaPacketHandler;
     public static ProxyClient proxy;
-    private boolean enableKeybind;
-
-    public String getModName(ItemStack itemStack) {
-        if (itemStack != null) {
-            return itemStack.getItem().getItemDisplayName(itemStack);
-        }
-        return "";
-    }
 
     public void load() {
         instance = new Waila();
         proxy = new ProxyClient();
         proxy.registerHandlers();
-        initKeybind();
-    }
-
-    public void initKeybind() {
-        this.enableKeybind = true;
-        this.keyBinding = new KeyBinding(StatCollector.translateToLocal("key.waila.hidden"), 35);
-        GameSettings settings = Minecraft.getMinecraft().gameSettings;
-        KeyBinding[] keyBindings = settings.keyBindings;
-        KeyBinding[] keyBindings2 = (KeyBinding[]) Arrays.copyOf(keyBindings, keyBindings.length + 1);
-        keyBindings2[keyBindings2.length - 1] = this.keyBinding;
-        settings.keyBindings = keyBindings2;
+        OverlayConfig.updateColors();
     }
 
     @Deprecated
@@ -88,7 +69,7 @@ public class Waila implements ModInitializer {
     }
 
     public void onInitialize() {
-        log.info("Waila Version 1.0.7 beta Initializing...");
+        log.info("Hwite Version 2.0.0 beta Initializing...");
         MITEEvents.MITE_EVENT_BUS.register(new WailaEventFish());
         WailaConfig.init();
         WailaConfig.getInstance().load();

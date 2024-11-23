@@ -1,5 +1,6 @@
 package mcp.mobius.waila.overlay;
 
+import mcp.mobius.waila.Waila;
 import moddedmite.waila.config.WailaConfig;
 import net.minecraft.Gui;
 import net.minecraft.Minecraft;
@@ -11,6 +12,7 @@ import org.lwjgl.opengl.GL12;
 
 
 public class OverlayRenderer {
+    public OverlayRenderer() {}
 
     protected static boolean hasBlending;
     protected static boolean hasLight;
@@ -21,7 +23,7 @@ public class OverlayRenderer {
     protected static boolean hasColorMaterial;
     protected static int boundTexIndex;
 
-    public static void renderOverlay() {
+    public void renderOverlay() {
         Minecraft mc = Minecraft.getMinecraft();
         RaycastCollision rc =  mc.objectMouseOver;
         if (!(mc.currentScreen == null && mc.theWorld != null
@@ -29,21 +31,25 @@ public class OverlayRenderer {
                 && !mc.gameSettings.keyBindPlayerList.isPressed()
                 && WailaConfig.showTooltip.getBooleanValue()
                 && RayTracing.instance().getTarget() != null
-                && rc != null))
+                ))
             return;
 
-        if (rc.isBlock()
-                && RayTracing.instance().getTargetStack() != null) {
-            renderOverlay(WailaTickHandler.instance().tooltip);
-        }
+        if (rc != null) {
+            if (rc.isBlock()
+                    && RayTracing.instance().getTargetStack() != null) {
+                renderOverlay(WailaTickHandler.instance().tooltip);
+                Waila.log.error("renderOverlay: Block ok");
+            }
 
-        if (rc.isEntity()
-                && WailaConfig.showEnts.getBooleanValue()) {
-            renderOverlay(WailaTickHandler.instance().tooltip);
+            if (rc.isEntity()
+                    && WailaConfig.showEnts.getBooleanValue()) {
+                renderOverlay(WailaTickHandler.instance().tooltip);
+                Waila.log.error("renderOverlay: Entity ok");
+            }
         }
     }
 
-    public static void renderOverlay(Tooltip tooltip) {
+    public void renderOverlay(Tooltip tooltip) {
 
         GL11.glPushMatrix();
         saveGLState();
@@ -63,10 +69,6 @@ public class OverlayRenderer {
                 OverlayConfig.bgcolor,
                 OverlayConfig.gradient1,
                 OverlayConfig.gradient2);
-        System.out.println("x:" + tooltip.x);
-        System.out.println("y:" + tooltip.y);
-        System.out.println("w:" + tooltip.w);
-        System.out.println("h:" + tooltip.h);
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -84,6 +86,7 @@ public class OverlayRenderer {
 
         loadGLState();
         GL11.glPopMatrix();
+        Waila.log.error("renderOverlay(Tooltip): ok");
 
     }
 

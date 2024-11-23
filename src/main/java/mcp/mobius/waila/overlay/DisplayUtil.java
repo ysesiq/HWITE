@@ -99,7 +99,7 @@ public class DisplayUtil {
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
-//        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+        GL11.glBlendFunc(770, 771);
         GL11.glShadeModel(GL11.GL_SMOOTH);
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();

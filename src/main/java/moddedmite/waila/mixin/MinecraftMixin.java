@@ -11,6 +11,5 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MinecraftMixin {
     @Inject(method = "startGame", at = @At("TAIL"))
     private void onWorldUnload(CallbackInfo ci) {
-        DataAccessorCommon.instance = new DataAccessorCommon();
     }
 }

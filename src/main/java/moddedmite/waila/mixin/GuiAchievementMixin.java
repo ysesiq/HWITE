@@ -10,14 +10,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({GuiAchievement.class})
 public abstract class GuiAchievementMixin {
-    private Waila wailaAddon;
 
     @Inject(method = {"updateAchievementWindow"}, at = {@At("RETURN")})
     public void updateAchievementWindow(CallbackInfo info) {
-        if (this.wailaAddon == null) {
-            this.wailaAddon = new Waila();
-            this.wailaAddon.load();
-        }
+
 //        if (Minecraft.getMinecraft().theWorld != null) {
 //            this.wailaAddon.checkKeybind();
 //        }

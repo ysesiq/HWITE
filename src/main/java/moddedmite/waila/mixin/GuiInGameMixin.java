@@ -23,7 +23,8 @@ public class GuiInGameMixin {
                     shift = At.Shift.BEFORE)})
     private void injectRenderExtraGuiIngame(float par1, boolean par2, int par3, int par4, CallbackInfo ci) {
         if (mc.gameSettings.gui_mode == 0) {
-            OverlayRenderer.renderOverlay();
+            OverlayRenderer overlayRenderer = new OverlayRenderer();
+            overlayRenderer.renderOverlay();
         }
     }
 }

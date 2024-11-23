@@ -17,11 +17,11 @@ public class WailaConfig extends SimpleConfigs implements IWailaConfigHandler {
     public static final ConfigInteger posX = new ConfigInteger("posX", 5000);
     public static final ConfigInteger posY = new ConfigInteger("posY", 100);
     public static final ConfigInteger alpha = new ConfigInteger("alpha", 80);
-    public static final ConfigColor bgcolor = new ConfigColor("bgcolor", "0x100010");
-    public static final ConfigColor gradient1 = new ConfigColor("gradient1", "0x100010");
-    public static final ConfigColor gradient2 = new ConfigColor("gradient2", "0x100010");
-    public static final ConfigColor fontcolor = new ConfigColor("fontcolor", "0x100010");
-    public static final ConfigInteger scale = new ConfigInteger("scale", 100);
+    public static final ConfigColor bgcolor = new ConfigColor("bgcolor", "#CC10010F");
+    public static final ConfigColor gradient1 = new ConfigColor("gradient1", "#CC5001FE");
+    public static final ConfigColor gradient2 = new ConfigColor("gradient2", "#CC28017E");
+    public static final ConfigColor fontcolor = new ConfigColor("fontcolor", "#FFFFFF");
+    public static final ConfigDouble scale = new ConfigDouble("scale", 1, 0.2, 2);
 
     public static final ConfigBoolean showTooltip = new ConfigBoolean("showTooltip", true);
     public static final ConfigBoolean showEnts = new ConfigBoolean("showEnts", true);
@@ -39,6 +39,8 @@ public class WailaConfig extends SimpleConfigs implements IWailaConfigHandler {
     public static final ConfigBoolean CFG_WAILA_METADATA = new ConfigBoolean("CFG_WAILA_METADATA", false);
     public static final ConfigBoolean CFG_WAILA_SHIFTBLOCK = new ConfigBoolean("CFG_WAILA_SHIFTBLOCK", false);
     public static final ConfigBoolean CFG_WAILA_SHIFTENTS = new ConfigBoolean("CFG_WAILA_SHIFTENTS", false);
+    public static final ConfigBoolean CFG_WAILA_LIQUID = new ConfigBoolean("CFG_WAILA_LIQUID", false);
+
     private static WailaConfig Instance;
     public static List<ConfigBase> show;
     public static List<ConfigBase> pos;
@@ -49,7 +51,8 @@ public class WailaConfig extends SimpleConfigs implements IWailaConfigHandler {
     }
 
     public static void init() {
-        show = List.of(showTooltip, showSpawnerType, showLeverState, showGrowthValue, showRepeater, showComparator, showRedstone, showSkull, backgroundTransparency, CATEGORY_SERVER, CFG_WAILA_METADATA, showEnts, CFG_WAILA_SHIFTBLOCK, CFG_WAILA_SHIFTENTS);
+        show = List.of(showTooltip, showSpawnerType, showLeverState, showGrowthValue, showRepeater, showComparator, showRedstone,
+                showSkull, backgroundTransparency, CATEGORY_SERVER, CFG_WAILA_METADATA, showEnts, CFG_WAILA_SHIFTBLOCK, CFG_WAILA_SHIFTENTS, CFG_WAILA_LIQUID);
         key = List.of(keyBind);
         pos = List.of(posX, posY, alpha, bgcolor, gradient1, gradient2, fontcolor, scale);
         ArrayList<ConfigBase> values = new ArrayList<>();

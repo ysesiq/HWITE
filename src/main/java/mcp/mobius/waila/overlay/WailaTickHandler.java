@@ -47,8 +47,8 @@ public class WailaTickHandler {
         World world = mc.theWorld;
         EntityPlayer player = mc.thePlayer;
         if (world != null && player != null) {
-//            RayTracing.instance().fire();
             RaycastCollision target = RayTracing.instance().getTarget();
+            RayTracing.instance().fire();
 
             List<String> currenttip;
             List<String> currenttipHead;
