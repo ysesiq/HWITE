@@ -86,6 +86,17 @@ public class NBTUtil {
 //        }
 //    }
 
+    public static NBTTagCompound readNBTTagCompound(DataInputStream par0DataInputStream) throws IOException {
+        short short1 = par0DataInputStream.readShort();
+        if (short1 < 0) {
+            return null;
+        } else {
+            byte[] abyte = new byte[short1];
+            par0DataInputStream.readFully(abyte);
+            return CompressedStreamTools.decompress(abyte);
+        }
+    }
+
     public static int getNBTInteger(NBTTagCompound tag, String keyname) {
         NBTBase subtag = tag.getTag(keyname);
         if (subtag instanceof NBTTagInt) return tag.getInteger(keyname);

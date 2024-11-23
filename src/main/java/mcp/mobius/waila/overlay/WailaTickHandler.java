@@ -4,6 +4,7 @@ import static mcp.mobius.waila.api.SpecialChars.ITALIC;
 
 import java.util.List;
 
+import moddedmite.waila.config.WailaConfig;
 import net.minecraft.Minecraft;
 import net.minecraft.Entity;
 import net.minecraft.EntityPlayer;
@@ -13,12 +14,10 @@ import net.minecraft.World;
 
 import org.lwjgl.input.Keyboard;
 
-import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.MetaDataProvider;
 import mcp.mobius.waila.api.impl.TipList;
 import mcp.mobius.waila.cbcore.Layout;
-import mcp.mobius.waila.client.KeyEvent;
 import mcp.mobius.waila.utils.Constants;
 
 public class WailaTickHandler {
@@ -36,18 +35,14 @@ public class WailaTickHandler {
         return _instance;
     }
 
-    public void tickRender(TickEvent.RenderTickEvent event) {
-        OverlayRenderer.renderOverlay();
-    }
+    public void tickClient() {
 
-    public void tickClient(TickEvent.ClientTickEvent event) {
-
-        if (!Keyboard.isKeyDown(KeyEvent.key_show.getKeyCode())
-                && !ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)
-                && ConfigHandler.instance()
-                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, false)) {
-            ConfigHandler.instance().setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, false);
-        }
+//        if (!Keyboard.isKeyDown(KeyEvent.key_show.getKeyCode())
+//                && !ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_MODE, false)
+//                && ConfigHandler.instance()
+//                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, false)) {
+//            ConfigHandler.instance().setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHOW, false);
+//        }
 
         World world = mc.theWorld;
         EntityPlayer player = mc.thePlayer;
@@ -96,8 +91,7 @@ public class WailaTickHandler {
                             currenttipTail,
                             Layout.FOOTER);
 
-                    if (ConfigHandler.instance()
-                            .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHIFTBLOCK, false)
+                    if (WailaConfig.CFG_WAILA_SHIFTBLOCK.getBooleanValue()
                             && !currenttipBody.isEmpty()
                             && !accessor.getPlayer().isSneaking()) {
                         currenttipBody.clear();
@@ -148,8 +142,7 @@ public class WailaTickHandler {
                             currenttipTail,
                             Layout.FOOTER);
 
-                    if (ConfigHandler.instance()
-                            .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SHIFTENTS, false)
+                    if (WailaConfig.CFG_WAILA_SHIFTENTS.getBooleanValue()
                             && !currenttipBody.isEmpty()
                             && !accessor.getPlayer().isSneaking()) {
                         currenttipBody.clear();

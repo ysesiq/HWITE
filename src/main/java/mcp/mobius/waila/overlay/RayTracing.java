@@ -3,11 +3,11 @@ package mcp.mobius.waila.overlay;
 import java.util.ArrayList;
 import java.util.List;
 
+import moddedmite.waila.config.WailaConfig;
 import net.minecraft.*;
 
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaEntityProvider;
-import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.utils.Constants;
@@ -42,7 +42,7 @@ public class RayTracing {
     private static boolean shouldHidePlayer(Entity targetEnt) {
         // Check if entity is player with invisibility effect
         if (targetEnt instanceof EntityPlayer thePlayer) {
-            boolean shouldHidePlayerSetting = !ConfigHandler.instance().getConfig("vanilla.show_invisible_players");
+            boolean shouldHidePlayerSetting = !WailaConfig.showInvisiblePlayers.getBooleanValue();
             return shouldHidePlayerSetting && thePlayer.isInvisible();
         }
         return false;
@@ -90,7 +90,7 @@ public class RayTracing {
             for (List<IWailaEntityProvider> listProviders : ModuleRegistrar.instance()
                     .getOverrideEntityProviders(this.target.getEntityHit()).values()) {
                 for (IWailaEntityProvider provider : listProviders) {
-                    ents.add(provider.getWailaOverride(DataAccessorCommon.instance, ConfigHandler.instance()));
+                    ents.add(provider.getWailaOverride(DataAccessorCommon.instance, WailaConfig.getInstance()));
                 }
             }
         }
@@ -119,7 +119,7 @@ public class RayTracing {
                     .values()) {
                 for (IWailaDataProvider provider : providersList) {
                     ItemStack providerStack = provider
-                            .getWailaStack(DataAccessorCommon.instance, ConfigHandler.instance());
+                            .getWailaStack(DataAccessorCommon.instance, WailaConfig.getInstance());
                     if (providerStack != null) {
 
                         if (providerStack.getItem() == null) return new ArrayList<>();
@@ -136,7 +136,7 @@ public class RayTracing {
 
                 for (IWailaDataProvider provider : providersList) {
                     ItemStack providerStack = provider
-                            .getWailaStack(DataAccessorCommon.instance, ConfigHandler.instance());
+                            .getWailaStack(DataAccessorCommon.instance, WailaConfig.getInstance());
                     if (providerStack != null) {
 
                         if (providerStack.getItem() == null) return new ArrayList<>();
@@ -160,18 +160,18 @@ public class RayTracing {
 
         if (!items.isEmpty()) return items;
 
-        try {
-            ItemStack pick = mouseoverBlock.getPickBlock(this.target, world, x, y, z);
-            if (pick != null) items.add(pick);
-        } catch (Exception ignored) {}
+//        try {
+//            ItemStack pick = mouseoverBlock.getPickBlock(this.target, world, x, y, z);
+//            if (pick != null) items.add(pick);
+//        } catch (Exception ignored) {}
 
         if (!items.isEmpty()) return items;
 
-        if (mouseoverBlock instanceof IShearable shearable) {
-            if (shearable.isShearable(new ItemStack(Item.shears), world, x, y, z)) {
-                items.addAll(shearable.onSheared(new ItemStack(Item.shears), world, x, y, z, 0));
-            }
-        }
+//        if (mouseoverBlock instanceof IShearable shearable) {
+//            if (shearable.isShearable(new ItemStack(Item.shears), world, x, y, z)) {
+//                items.addAll(shearable.onSheared(new ItemStack(Item.shears), world, x, y, z, 0));
+//            }
+//        }
 
         if (items.isEmpty()) items.add(0, new ItemStack(mouseoverBlock, 1, world.getBlockMetadata(x, y, z)));
 

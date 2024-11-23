@@ -100,7 +100,7 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
     }
 
     @Override
-    public MovingObjectPosition getPosition() {
+    public RaycastCollision getPosition() {
         return this.mop;
     }
 
@@ -179,8 +179,8 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
     }
 
     @Override
-    public Direction getSide() {
-        return Direction.getOrientation(this.getPosition().sideHit);
+    public EnumDirection getSide() {
+        return EnumDirection.DOWN;
     }
 
     @Override

@@ -10,7 +10,7 @@ public class DataAccessorFMP implements IWailaFMPAccessor {
     String id;
     World world;
     EntityPlayer player;
-    MovingObjectPosition mop;
+    RaycastCollision mop;
     Vec3 renderingvec = null;
     TileEntity entity;
     NBTTagCompound partialNBT = null;
@@ -53,7 +53,7 @@ public class DataAccessorFMP implements IWailaFMPAccessor {
     }
 
     @Override
-    public MovingObjectPosition getPosition() {
+    public RaycastCollision getPosition() {
         return this.mop;
     }
 
@@ -103,7 +103,7 @@ public class DataAccessorFMP implements IWailaFMPAccessor {
         int y = tag.getInteger("y");
         int z = tag.getInteger("z");
 
-        if (x == this.mop.blockX && y == this.mop.blockY && z == this.mop.blockZ) return true;
+        if (x == this.mop.block_hit_x && y == this.mop.block_hit_y && z == this.mop.block_hit_z) return true;
         else {
             this.timeLastUpdate = System.currentTimeMillis() - 250;
             return false;

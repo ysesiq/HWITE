@@ -1,122 +1,70 @@
 package mcp.mobius.waila.network;
 
+import mcp.mobius.waila.Waila;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.EnumMap;
-
-import net.minecraft.ServerPlayer;
-import net.minecraft.CompressedStreamTools;
-import net.minecraft.NBTSizeTracker;
+import mcp.mobius.waila.WailaExceptionHandler;
+import mcp.mobius.waila.api.impl.DataAccessorCommon;
+import moddedmite.waila.api.PacketDispatcher;
+import moddedmite.waila.config.WailaConfig;
 import net.minecraft.NBTTagCompound;
-import net.minecraft.NetHandlerPlayServer;
+import net.minecraft.NetServerHandler;
+import net.minecraft.Packet250CustomPayload;
+import net.minecraft.TileEntity;
+import net.minecraft.TileEntityFurnace;
+import net.minecraft.TileEntitySkull;
+import net.minecraft.server.MinecraftServer;
 
-import com.google.common.base.Charsets;
-
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.ServerPlayer;
-import org.spongepowered.asm.mixin.MixinEnvironment;
-
-public enum WailaPacketHandler {
-
-    INSTANCE;
-
-    public EnumMap<MixinEnvironment.Side, FMLEmbeddedChannel> channels;
-
-    WailaPacketHandler() {
-        this.channels = NetworkRegistry.INSTANCE.newChannel("Waila", new WailaCodec());
-        if (FMLCommonHandler.instance().getSide() == MixinEnvironment.Side.CLIENT) {
-            addClientHandlers();
-            addServerHandlers();
-        } else {
-            addServerHandlers();
-        }
-
-    }
-
-    private void addClientHandlers() {
-        FMLEmbeddedChannel channel = this.channels.get(MixinEnvironment.Side.CLIENT);
-        String codec = channel.findChannelHandlerNameForType(WailaCodec.class);
-
-        channel.pipeline().addAfter(codec, "ServerPing", new Message0x00ServerPing());
-        channel.pipeline().addAfter("ServerPing", "TENBTData", new Message0x02TENBTData());
-        channel.pipeline().addAfter("TENBTData", "EntNBTData", new Message0x04EntNBTData());
-    }
-
-    private void addServerHandlers() {
-        FMLEmbeddedChannel channel = this.channels.get(MixinEnvironment.Side.SERVER);
-        String codec = channel.findChannelHandlerNameForType(WailaCodec.class);
-
-        channel.pipeline().addAfter(codec, "TERequest", new Message0x01TERequest());
-        channel.pipeline().addAfter("TERequest", "EntRequest", new Message0x03EntRequest());
-    }
-
-    private static class WailaCodec extends FMLIndexedMessageToMessageCodec<IWailaMessage> {
-
-        public WailaCodec() {
-            addDiscriminator(0, Message0x00ServerPing.class);
-            addDiscriminator(1, Message0x01TERequest.class);
-            addDiscriminator(2, Message0x02TENBTData.class);
-            addDiscriminator(3, Message0x03EntRequest.class);
-            addDiscriminator(4, Message0x04EntNBTData.class);
-        }
-
-        @Override
-        public void encodeInto(ChannelHandlerContext ctx, IWailaMessage msg, ByteBuf target) throws Exception {
-            msg.encodeInto(ctx, msg, target);
-        }
-
-        @Override
-        public void decodeInto(ChannelHandlerContext ctx, ByteBuf dat, IWailaMessage msg) {
-            msg.decodeInto(ctx, dat, msg);
+public class WailaPacketHandler {
+    public void handleCustomPacket(Packet250CustomPayload packet) {
+        if (packet.channel.equals("Waila")) {
+            try {
+                byte header = getHeader(packet);
+                if (header == 0) {
+                    Waila.log.info("Received server authentication msg. Remote sync will be activated");
+                    Waila.instance.serverPresent = true;
+                } else if (header == 2) {
+                    Packet0x02TENBTData castedPacket = new Packet0x02TENBTData(packet);
+                    DataAccessorCommon.instance.remoteNbt = castedPacket.tag;
+                }
+            } catch (Exception e) {
+            }
         }
     }
 
-    public void sendTo(IWailaMessage message, ServerPlayer player) {
-        channels.get(MixinEnvironment.Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
-                .set(FMLOutboundHandler.OutboundTarget.PLAYER);
-        channels.get(MixinEnvironment.Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
-        channels.get(MixinEnvironment.Side.SERVER).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
-    }
-
-    public void sendToServer(IWailaMessage message) {
-        channels.get(MixinEnvironment.Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET)
-                .set(FMLOutboundHandler.OutboundTarget.TOSERVER);
-        channels.get(MixinEnvironment.Side.CLIENT).writeAndFlush(message).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
-    }
-
-    public void writeNBT(ByteBuf target, NBTTagCompound tag) throws IOException {
-        if (tag == null) target.writeShort(-1);
-        else {
-            byte[] abyte = CompressedStreamTools.compress(tag);
-            target.writeShort((short) abyte.length);
-            target.writeBytes(abyte);
+    public void handleCustomPacket(NetServerHandler handler, Packet250CustomPayload packet) {
+        if (packet.channel.equals("Waila")) {
+            try {
+                byte header = getHeader(packet);
+                if (header == 1) {
+                    Packet0x01TERequest castedPacket = new Packet0x01TERequest(packet);
+                    MinecraftServer server = MinecraftServer.getServer();
+                    TileEntity entity = server.worldServers[castedPacket.worldID].getBlockTileEntity(castedPacket.posX, castedPacket.posY, castedPacket.posZ);
+                    if (entity instanceof TileEntityFurnace) {
+                        if (!WailaConfig.showSkull.getBooleanValue() && (entity instanceof TileEntitySkull)) {
+                            return;
+                        }
+                        try {
+                            NBTTagCompound tag = new NBTTagCompound();
+                            entity.writeToNBT(tag);
+                            PacketDispatcher.sendPacketToPlayer(Packet0x02TENBTData.create(tag), handler.playerEntity);
+                        } catch (Throwable e) {
+                            WailaExceptionHandler.handleErr(e, entity.getClass().toString(), null);
+                        }
+                    }
+                }
+            } catch (Exception e2) {
+            }
         }
     }
 
-    public NBTTagCompound readNBT(ByteBuf dat) throws IOException {
-        short short1 = dat.readShort();
-
-        if (short1 < 0) return null;
-        else {
-            byte[] abyte = new byte[short1];
-            dat.readBytes(abyte);
-            return CompressedStreamTools.func_152457_a(abyte, NBTSizeTracker.field_152451_a);
+    public byte getHeader(Packet250CustomPayload packet) {
+        DataInputStream inputStream = new DataInputStream(new ByteArrayInputStream(packet.data));
+        try {
+            return inputStream.readByte();
+        } catch (IOException e) {
+            return (byte) -1;
         }
-    }
-
-    public void writeString(ByteBuf buffer, String data) throws IOException {
-        byte[] abyte = data.getBytes(Charsets.UTF_8);
-        buffer.writeShort(abyte.length);
-        buffer.writeBytes(abyte);
-    }
-
-    public String readString(ByteBuf buffer) throws IOException {
-        int j = buffer.readShort();
-        return new String(buffer.readBytes(j).array(), Charsets.UTF_8);
-    }
-
-    public static EntityPlayerMP getPlayer(ChannelHandlerContext ctx) {
-        return ((NetHandlerPlayServer) ctx.channel().attr(NetworkRegistry.NET_HANDLER).get()).playerEntity;
     }
 }

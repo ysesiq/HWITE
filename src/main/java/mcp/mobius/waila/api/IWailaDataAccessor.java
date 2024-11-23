@@ -38,7 +38,7 @@ public interface IWailaDataAccessor {
 
     double getPartialFrame();
 
-    Direction getSide();
+    EnumDirection getSide();
 
     ItemStack getStack();
 }

@@ -28,14 +28,8 @@
     "qqGroup": "661223990"
   },
   "entrypoints": {
-    "client": [
-      "moddedmite.xylose.hwite.client.HwiteModClient"
-    ],
     "main": [
-      "moddedmite.xylose.hwite.HwiteMod"
-    ],
-    "modmenu": [
-      "moddedmite.xylose.hwite.client.HwiteModClient"
+      "mcp.mobius.waila.Waila"
     ]
   },
   "mixins": [
@@ -44,9 +38,6 @@
   "accessWidener": "hwite.accesswidener",
   "custom": {
     "loom:injected_interfaces": {
-      "net/minecraft/RaycastCollision": [
-        "moddedmite/xylose/hwite/api/IRaycastCollision"
-      ]
     }
   }
 }

@@ -1,11 +1,6 @@
 package mcp.mobius.waila.api;
 
-import net.minecraft.EntityPlayer;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.TileEntity;
-import net.minecraft.MovingObjectPosition;
-import net.minecraft.Vec3;
-import net.minecraft.World;
+import net.minecraft.*;
 
 /**
  * The Accessor is used to get some basic data out of the game without having to request direct access to the game
@@ -25,7 +20,7 @@ public interface IWailaFMPAccessor {
 
     TileEntity getTileEntity();
 
-    MovingObjectPosition getPosition();
+    RaycastCollision getPosition();
 
     NBTTagCompound getNBTData();
 

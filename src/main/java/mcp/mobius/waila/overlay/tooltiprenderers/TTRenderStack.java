@@ -27,7 +27,7 @@ public class TTRenderStack implements IWailaTooltipRenderer {
 
         ItemStack stack = null;
         if (type == 0) stack = new ItemStack(accessor.getBlock(), amount, meta);
-        if (type == 1) stack = new ItemStack((Item) Item.itemRegistry.getObject(name), amount, meta);
+//        if (type == 1) stack = new ItemStack((Item) Item.itemRegistry.getObject(name), amount, meta);
 
         RenderHelper.enableGUIStandardItemLighting();
         DisplayUtil.renderStack(0, 0, stack);

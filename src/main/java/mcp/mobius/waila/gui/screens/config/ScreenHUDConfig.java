@@ -1,8 +1,8 @@
 package mcp.mobius.waila.gui.screens.config;
 
+import moddedmite.waila.config.WailaConfig;
 import net.minecraft.GuiScreen;
 
-import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.gui.events.MouseEvent;
 import mcp.mobius.waila.gui.interfaces.CType;
 import mcp.mobius.waila.gui.interfaces.IWidget;
@@ -32,14 +32,10 @@ public class ScreenHUDConfig extends ScreenBase {
             super(parent);
             this.setGeometry(new WidgetGeometry(0.0, 0.0, 100.0, 100.0, CType.RELXY, CType.RELXY));
 
-            double picX = ConfigHandler.instance()
-                    .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSX, 0) / 100.0;
-            double picY = ConfigHandler.instance()
-                    .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSY, 0) / 100.0;
-            float picAlpha = ConfigHandler.instance()
-                    .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_ALPHA, 0) / 100.0f;
-            scale = ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SCALE, 0)
-                    / 100.0f;
+            double picX = WailaConfig.posX.getIntegerValue() / 100.0;
+            double picY = WailaConfig.posY.getIntegerValue()/ 100.0;
+            float picAlpha = WailaConfig.alpha.getIntegerValue() / 100.0f;
+            scale = WailaConfig.scale.getIntegerValue() / 100.0f;
 
             int picSX = (int) (180 / this.rez.getScaleFactor() * scale),
                     picSY = (int) (62 / this.rez.getScaleFactor() * scale);
@@ -253,29 +249,29 @@ public class ScreenHUDConfig extends ScreenBase {
 
             }
             if (srcwidget.equals(this.getWidget("ButtonOk")) && signal == Signal.CLICKED) {
-                ConfigHandler.instance().setConfig(
-                        Configuration.CATEGORY_GENERAL,
-                        Constants.CFG_WAILA_POSX,
-                        (int) (this.getWidget("Layout").getWidget("Picture").getGeometry().getRawPos().getX() * 100.0));
-                ConfigHandler.instance().setConfig(
-                        Configuration.CATEGORY_GENERAL,
-                        Constants.CFG_WAILA_POSY,
-                        (int) (this.getWidget("Layout").getWidget("Picture").getGeometry().getRawPos().getY() * 100.0));
-                ConfigHandler.instance().setConfig(
-                        Configuration.CATEGORY_GENERAL,
-                        Constants.CFG_WAILA_ALPHA,
-                        (int) (this.getWidget("Layout").getWidget("Picture").getAlpha() * 100.0));
-                ConfigHandler.instance()
-                        .setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SCALE, (int) (scale * 100.0));
+//                ConfigHandler.instance().setConfig(
+//                        Configuration.CATEGORY_GENERAL,
+//                        Constants.CFG_WAILA_POSX,
+//                        (int) (this.getWidget("Layout").getWidget("Picture").getGeometry().getRawPos().getX() * 100.0));
+//                ConfigHandler.instance().setConfig(
+//                        Configuration.CATEGORY_GENERAL,
+//                        Constants.CFG_WAILA_POSY,
+//                        (int) (this.getWidget("Layout").getWidget("Picture").getGeometry().getRawPos().getY() * 100.0));
+//                ConfigHandler.instance().setConfig(
+//                        Configuration.CATEGORY_GENERAL,
+//                        Constants.CFG_WAILA_ALPHA,
+//                        (int) (this.getWidget("Layout").getWidget("Picture").getAlpha() * 100.0));
+//                ConfigHandler.instance()
+//                        .setConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SCALE, (int) (scale * 100.0));
 
-                OverlayConfig.alpha = ConfigHandler.instance()
-                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_ALPHA, 0);
-                OverlayConfig.posX = ConfigHandler.instance()
-                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSX, 0);
-                OverlayConfig.posY = ConfigHandler.instance()
-                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSY, 0);
-                OverlayConfig.scale = ConfigHandler.instance()
-                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SCALE, 0) / 100.0f;
+//                OverlayConfig.alpha = ConfigHandler.instance()
+//                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_ALPHA, 0);
+//                OverlayConfig.posX = ConfigHandler.instance()
+//                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSX, 0);
+//                OverlayConfig.posY = ConfigHandler.instance()
+//                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSY, 0);
+//                OverlayConfig.scale = ConfigHandler.instance()
+//                        .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_SCALE, 0) / 100.0f;
 
                 OverlayConfig.updateColors();
             }

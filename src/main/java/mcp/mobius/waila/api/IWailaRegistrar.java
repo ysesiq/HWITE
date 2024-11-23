@@ -23,21 +23,21 @@ package mcp.mobius.waila.api;
 public interface IWailaRegistrar {
 
     /* Add a config option in the section modname with displayed text configtext and access key keyname */
-    void addConfig(String modname, String keyname, String configtext);
-
-    void addConfig(String modname, String keyname, String configtext, boolean defvalue);
-
-    void addConfigRemote(String modname, String keyname, String configtext);
-
-    void addConfigRemote(String modname, String keyname, String configtext, boolean defvalue);
-
-    void addConfig(String modname, String keyname);
-
-    void addConfig(String modname, String keyname, boolean defvalue);
-
-    void addConfigRemote(String modname, String keyname);
-
-    void addConfigRemote(String modname, String keyname, boolean defvalue);
+//    void addConfig(String modname, String keyname, String configtext);
+//
+//    void addConfig(String modname, String keyname, String configtext, boolean defvalue);
+//
+//    void addConfigRemote(String modname, String keyname, String configtext);
+//
+//    void addConfigRemote(String modname, String keyname, String configtext, boolean defvalue);
+//
+//    void addConfig(String modname, String keyname);
+//
+//    void addConfig(String modname, String keyname, boolean defvalue);
+//
+//    void addConfigRemote(String modname, String keyname);
+//
+//    void addConfigRemote(String modname, String keyname, boolean defvalue);
 
     /* Register a stack overrider for the given blockID */
     void registerStackProvider(IWailaDataProvider dataProvider, Class block);

@@ -219,14 +219,14 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
     }
 
     public static void register() {
-        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.spawntype");
-        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.leverstate");
-        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.repeater");
-        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.comparator");
-        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.redstone");
-        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.silverfish");
-        ModuleRegistrar.instance().addConfigRemote("VanillaMC", "vanilla.jukebox");
-        ModuleRegistrar.instance().addConfigRemote("VanillaMC", "vanilla.show_invisible_players");
+//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.spawntype");
+//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.leverstate");
+//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.repeater");
+//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.comparator");
+//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.redstone");
+//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.silverfish");
+//        ModuleRegistrar.instance().addConfigRemote("VanillaMC", "vanilla.jukebox");
+//        ModuleRegistrar.instance().addConfigRemote("VanillaMC", "vanilla.show_invisible_players");
 
         IWailaDataProvider provider = new HUDHandlerVanilla();
 

@@ -1,14 +1,14 @@
 package mcp.mobius.waila.overlay;
 
+import moddedmite.waila.config.WailaConfig;
+import net.minecraft.Gui;
 import net.minecraft.Minecraft;
 import net.minecraft.RaycastCollision;
 import net.minecraft.RenderHelper;
-import net.minecraft.MovingObjectPosition;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import mcp.mobius.waila.api.impl.ConfigHandler;
 
 public class OverlayRenderer {
 
@@ -26,9 +26,10 @@ public class OverlayRenderer {
         RaycastCollision rc =  mc.objectMouseOver;
         if (!(mc.currentScreen == null && mc.theWorld != null
                 && Minecraft.isGuiEnabled()
-                && !mc.gameSettings.keyBindPlayerList.getIsKeyPressed()
-                && ConfigHandler.instance().showTooltip()
-                && RayTracing.instance().getTarget() != null))
+                && !mc.gameSettings.keyBindPlayerList.isPressed()
+                && WailaConfig.showTooltip.getBooleanValue()
+                && RayTracing.instance().getTarget() != null
+                && rc != null))
             return;
 
         if (rc.isBlock()
@@ -37,7 +38,7 @@ public class OverlayRenderer {
         }
 
         if (rc.isEntity()
-                && ConfigHandler.instance().getConfig("general.showents")) {
+                && WailaConfig.showEnts.getBooleanValue()) {
             renderOverlay(WailaTickHandler.instance().tooltip);
         }
     }
@@ -62,6 +63,10 @@ public class OverlayRenderer {
                 OverlayConfig.bgcolor,
                 OverlayConfig.gradient1,
                 OverlayConfig.gradient2);
+        System.out.println("x:" + tooltip.x);
+        System.out.println("y:" + tooltip.y);
+        System.out.println("w:" + tooltip.w);
+        System.out.println("h:" + tooltip.h);
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

@@ -6,12 +6,12 @@ import static mcp.mobius.waila.api.SpecialChars.RENDER;
 
 import java.util.List;
 
+import moddedmite.waila.config.WailaConfig;
 import net.minecraft.*;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import mcp.mobius.waila.utils.Constants;
 import mcp.mobius.waila.utils.ModIdentification;
@@ -44,8 +44,7 @@ public class HUDHandlerBlocks implements IWailaDataProvider {
 
         if (currenttip.isEmpty()) currenttip.add("< Unnamed >");
         else {
-            if (ConfigHandler.instance()
-                    .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_METADATA, true)) {
+            if (WailaConfig.CFG_WAILA_METADATA.getBooleanValue()) {
                 currenttip.add(
                         String.format(
                                 ITALIC + "[%d:%d] | %s",

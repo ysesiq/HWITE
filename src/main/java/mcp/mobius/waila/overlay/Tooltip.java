@@ -14,13 +14,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import moddedmite.waila.config.WailaConfig;
 import net.minecraft.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
 import mcp.mobius.waila.api.IWailaCommonAccessor;
 import mcp.mobius.waila.api.IWailaTooltipRenderer;
-import mcp.mobius.waila.api.impl.ConfigHandler;
 import mcp.mobius.waila.api.impl.DataAccessorCommon;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderIcon;
@@ -205,8 +205,8 @@ public class Tooltip {
 
     private void computePositionAndSize(boolean hasIcon) {
         this.pos = new Point(
-                ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSX, 0),
-                ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_POSY, 0));
+                WailaConfig.posX.getIntegerValue(),
+                WailaConfig.posY.getIntegerValue());
         this.hasIcon = hasIcon;
 
         int paddingW = hasIcon ? 29 : 13;

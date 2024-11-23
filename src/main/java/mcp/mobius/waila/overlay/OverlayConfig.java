@@ -1,8 +1,6 @@
 package mcp.mobius.waila.overlay;
 
-
-import mcp.mobius.waila.api.impl.ConfigHandler;
-import mcp.mobius.waila.utils.Constants;
+import moddedmite.waila.config.WailaConfig;
 
 public class OverlayConfig {
 
@@ -13,19 +11,13 @@ public class OverlayConfig {
     public static int gradient1;
     public static int gradient2;
     public static int fontcolor;
-    public static float scale;
+    public static float scale = WailaConfig.scale.getIntegerValue();
 
     public static void updateColors() {
-        OverlayConfig.alpha = (int) (ConfigHandler.instance()
-                .getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_ALPHA, 0) / 100.0f
-                * 256) << 24;
-        OverlayConfig.bgcolor = OverlayConfig.alpha
-                + ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_BGCOLOR, 0);
-        OverlayConfig.gradient1 = OverlayConfig.alpha
-                + ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_GRADIENT1, 0);
-        OverlayConfig.gradient2 = OverlayConfig.alpha
-                + ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_GRADIENT2, 0);
-        OverlayConfig.fontcolor = OverlayConfig.alpha
-                + ConfigHandler.instance().getConfig(Configuration.CATEGORY_GENERAL, Constants.CFG_WAILA_FONTCOLOR, 0);
+        OverlayConfig.alpha = (int) (WailaConfig.alpha.getIntegerValue() / 100.0f * 256) << 24;
+        OverlayConfig.bgcolor = OverlayConfig.alpha + WailaConfig.bgcolor.getColorInteger();
+        OverlayConfig.gradient1 = OverlayConfig.alpha + WailaConfig.gradient1.getColorInteger();
+        OverlayConfig.gradient2 = OverlayConfig.alpha + WailaConfig.gradient2.getColorInteger();
+        OverlayConfig.fontcolor = OverlayConfig.alpha + WailaConfig.fontcolor.getColorInteger();
     }
 }

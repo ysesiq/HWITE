@@ -94,11 +94,11 @@ public class AccessHelper {
     public static ArrayList<IRecipe> getCraftingRecipes(ItemStack stack) {
         ArrayList<IRecipe> recipes = new ArrayList<>();
 
-        for (IRecipe recipe : CraftingManager.getInstance().getRecipeList()) {
-            if (recipe != null && recipe.getRecipeOutput() != null) {
-                if (recipe.getRecipeOutput().isItemEqual(stack)) recipes.add(recipe);
-            }
-        }
+//        for (IRecipe recipe : CraftingManager.getInstance().getRecipeList()) {
+//            if (recipe != null && recipe.getRecipeOutput() != null) {
+//                if (recipe.getRecipeOutput().isItemEqual(stack)) recipes.add(recipe);
+//            }
+//        }
 
         return recipes;
     }

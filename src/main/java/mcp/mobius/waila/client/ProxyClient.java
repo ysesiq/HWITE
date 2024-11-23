@@ -17,6 +17,7 @@ import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderHealth;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderProgressBar;
 import mcp.mobius.waila.overlay.tooltiprenderers.TTRenderStack;
 import mcp.mobius.waila.server.ProxyServer;
+import net.xiaoyu233.fml.FishModLoader;
 
 public class ProxyClient extends ProxyServer {
 
@@ -27,17 +28,17 @@ public class ProxyClient extends ProxyServer {
     @Override
     public void registerHandlers() {
 
-        LangUtil.loadLangDir("waila");
+//        LangUtil.loadLangDir("waila");
 
-        if (Loader.isModLoaded("NotEnoughItems")) {
+        if (FishModLoader.hasMod("emi")) {
             try {
                 Class.forName("mcp.mobius.waila.handlers.nei.NEIHandler").getDeclaredMethod("register").invoke(null);
             } catch (Exception e) {
                 Waila.log.error("Failed to hook into NEI properly. Reverting to Vanilla tooltip handler");
-                MinecraftForge.EVENT_BUS.register(new VanillaTooltipHandler());
+//                MinecraftForge.EVENT_BUS.register(new VanillaTooltipHandler());
             }
         } else {
-            MinecraftForge.EVENT_BUS.register(new VanillaTooltipHandler());
+//            MinecraftForge.EVENT_BUS.register(new VanillaTooltipHandler());
         }
 
         ModuleRegistrar.instance().registerHeadProvider(new HUDHandlerBlocks(), Block.class);
@@ -47,15 +48,14 @@ public class ProxyClient extends ProxyServer {
         ModuleRegistrar.instance().registerBodyProvider(new HUDHandlerEntities(), Entity.class);
         ModuleRegistrar.instance().registerTailProvider(new HUDHandlerEntities(), Entity.class);
 
-        ModuleRegistrar.instance().addConfig("General", "general.showents");
-        ModuleRegistrar.instance().addConfig("General", "general.showhp");
-        ModuleRegistrar.instance().addConfig("General", "general.showcrop");
+//        ModuleRegistrar.instance().addConfig("General", "general.showents");
+//        ModuleRegistrar.instance().addConfig("General", "general.showhp");
+//        ModuleRegistrar.instance().addConfig("General", "general.showcrop");
 
         ModuleRegistrar.instance().registerTooltipRenderer("waila.health", new TTRenderHealth());
         ModuleRegistrar.instance().registerTooltipRenderer("waila.stack", new TTRenderStack());
         ModuleRegistrar.instance().registerTooltipRenderer("waila.progress", new TTRenderProgressBar());
 
-        MinecraftForge.EVENT_BUS.register(new WorldUnloadEventHandler());
     }
 
     @Override
@@ -65,10 +65,4 @@ public class ProxyClient extends ProxyServer {
         return this.minecraftiaFont;
     }
 
-    public static class WorldUnloadEventHandler {
-
-        public void onWorldUnload(WorldEvent.Unload event) {
-            DataAccessorCommon.instance = new DataAccessorCommon();
-        }
-    }
 }

@@ -10,3 +10,4 @@ accessible field net/minecraft/Minecraft timer Lnet/minecraft/Timer;
 accessible field net/minecraft/EntityLivestock production_counter I
 accessible field net/minecraft/GuiIngame updateCounter I
 accessible field net/minecraft/NetClientHandler mc Lnet/minecraft/Minecraft;
+accessible method net/minecraft/EnumDirection getFace() Lnet/minecraft/EnumFace;

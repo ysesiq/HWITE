@@ -28,7 +28,7 @@ public interface IWailaCommonAccessor {
 
     Entity getEntity();
 
-    MovingObjectPosition getPosition();
+    RaycastCollision getPosition();
 
     Vec3 getRenderingPosition();
 
@@ -38,7 +38,7 @@ public interface IWailaCommonAccessor {
 
     double getPartialFrame();
 
-    Direction getSide();
+    EnumDirection getSide();
 
     ItemStack getStack();
 }

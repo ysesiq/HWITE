@@ -73,45 +73,45 @@ public class ModuleRegistrar implements IWailaRegistrar {
     }
 
     /* CONFIG HANDLING */
-    @Override
-    public void addConfig(String modname, String key, String configname) {
-        this.addConfig(modname, key, configname, Constants.CFG_DEFAULT_VALUE);
-    }
+//    @Override
+//    public void addConfig(String modname, String key, String configname) {
+//        this.addConfig(modname, key, configname, Constants.CFG_DEFAULT_VALUE);
+//    }
+//
+//    @Override
+//    public void addConfigRemote(String modname, String key, String configname) {
+//        this.addConfigRemote(modname, key, configname, Constants.CFG_DEFAULT_VALUE);
+//    }
+//
+//    @Override
+//    public void addConfig(String modname, String key) {
+//        this.addConfig(modname, key, Constants.CFG_DEFAULT_VALUE);
+//    }
+//
+//    @Override
+//    public void addConfigRemote(String modname, String key) {
+//        this.addConfigRemote(modname, key, Constants.CFG_DEFAULT_VALUE);
+//    }
 
-    @Override
-    public void addConfigRemote(String modname, String key, String configname) {
-        this.addConfigRemote(modname, key, configname, Constants.CFG_DEFAULT_VALUE);
-    }
-
-    @Override
-    public void addConfig(String modname, String key) {
-        this.addConfig(modname, key, Constants.CFG_DEFAULT_VALUE);
-    }
-
-    @Override
-    public void addConfigRemote(String modname, String key) {
-        this.addConfigRemote(modname, key, Constants.CFG_DEFAULT_VALUE);
-    }
-
-    @Override
-    public void addConfig(String modname, String key, String configname, boolean defvalue) {
-        ConfigHandler.instance().addConfig(modname, key, LangUtil.translateG(configname), defvalue);
-    }
-
-    @Override
-    public void addConfigRemote(String modname, String key, String configname, boolean defvalue) {
-        ConfigHandler.instance().addConfigServer(modname, key, LangUtil.translateG(configname), defvalue);
-    }
-
-    @Override
-    public void addConfig(String modname, String key, boolean defvalue) {
-        ConfigHandler.instance().addConfig(modname, key, LangUtil.translateG("option." + key), defvalue);
-    }
-
-    @Override
-    public void addConfigRemote(String modname, String key, boolean defvalue) {
-        ConfigHandler.instance().addConfigServer(modname, key, LangUtil.translateG("option." + key), defvalue);
-    }
+//    @Override
+//    public void addConfig(String modname, String key, String configname, boolean defvalue) {
+//        ConfigHandler.instance().addConfig(modname, key, LangUtil.translateG(configname), defvalue);
+//    }
+//
+//    @Override
+//    public void addConfigRemote(String modname, String key, String configname, boolean defvalue) {
+//        ConfigHandler.instance().addConfigServer(modname, key, LangUtil.translateG(configname), defvalue);
+//    }
+//
+//    @Override
+//    public void addConfig(String modname, String key, boolean defvalue) {
+//        ConfigHandler.instance().addConfig(modname, key, LangUtil.translateG("option." + key), defvalue);
+//    }
+//
+//    @Override
+//    public void addConfigRemote(String modname, String key, boolean defvalue) {
+//        ConfigHandler.instance().addConfigServer(modname, key, LangUtil.translateG("option." + key), defvalue);
+//    }
 
     /* REGISTRATION METHODS */
     @Override
