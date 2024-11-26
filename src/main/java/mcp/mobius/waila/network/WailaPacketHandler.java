@@ -42,7 +42,7 @@ public class WailaPacketHandler {
                     MinecraftServer server = MinecraftServer.getServer();
                     TileEntity entity = server.worldServers[castedPacket.worldID].getBlockTileEntity(castedPacket.posX, castedPacket.posY, castedPacket.posZ);
                     if (entity instanceof TileEntityFurnace) {
-                        if (!WailaConfig.showSkull.getBooleanValue() && (entity instanceof TileEntitySkull)) {
+                        if ((entity instanceof TileEntitySkull)) {
                             return;
                         }
                         try {

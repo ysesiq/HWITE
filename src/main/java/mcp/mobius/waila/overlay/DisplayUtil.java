@@ -7,6 +7,7 @@ import static mcp.mobius.waila.api.SpecialChars.patternWaila;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -138,9 +139,11 @@ public class DisplayUtil {
     public static List<String> itemDisplayNameMultiline(ItemStack itemstack) {
         List<String> namelist = null;
         try {
-            namelist = itemstack.getTooltip(
-                    Minecraft.getMinecraft().thePlayer,
-                    Minecraft.getMinecraft().gameSettings.advancedItemTooltips, (Slot) null);
+            namelist = Collections.singletonList(itemstack.getDisplayName());
+//                    itemstack.getTooltip(
+//                    Minecraft.getMinecraft().thePlayer,
+//                    Minecraft.getMinecraft().gameSettings.advancedItemTooltips,
+//                    (Slot) null);
         } catch (Throwable ignored) {}
 
         if (namelist == null) namelist = new ArrayList<>();
@@ -149,8 +152,8 @@ public class DisplayUtil {
 
         if (namelist.get(0) == null || namelist.get(0).isEmpty()) namelist.set(0, "Unnamed");
 
-        namelist.set(0, itemstack.getRarity().rarityColor + namelist.get(0));
-        for (int i = 1; i < namelist.size(); i++) namelist.set(i, "\u00a77" + namelist.get(i));
+//        namelist.set(0, itemstack.getRarity().rarityColor + namelist.get(0));
+//        for (int i = 1; i < namelist.size(); i++) namelist.set(i, "\u00a77" + namelist.get(i));
 
         return namelist;
     }

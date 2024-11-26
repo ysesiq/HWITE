@@ -1,9 +1,5 @@
 package mcp.mobius.waila.handlers;
 
-import static mcp.mobius.waila.api.SpecialChars.BLUE;
-import static mcp.mobius.waila.api.SpecialChars.ITALIC;
-import static mcp.mobius.waila.api.SpecialChars.RENDER;
-
 import java.util.List;
 
 import moddedmite.waila.config.WailaConfig;
@@ -15,6 +11,8 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.overlay.DisplayUtil;
 import mcp.mobius.waila.utils.Constants;
 import mcp.mobius.waila.utils.ModIdentification;
+
+import static mcp.mobius.waila.api.SpecialChars.*;
 
 public class HUDHandlerBlocks implements IWailaDataProvider {
 
@@ -47,10 +45,10 @@ public class HUDHandlerBlocks implements IWailaDataProvider {
             if (WailaConfig.CFG_WAILA_METADATA.getBooleanValue()) {
                 currenttip.add(
                         String.format(
-                                ITALIC + "[%d:%d] | %s",
+                                DGRAY + ITALIC + "[%d:%d] | %s",
                                 accessor.getBlockID(),
                                 accessor.getMetadata(),
-                                accessor.getBlockQualifiedName()));
+                                accessor.getBlockUnlocalizedName()));
             }
         }
         return currenttip;

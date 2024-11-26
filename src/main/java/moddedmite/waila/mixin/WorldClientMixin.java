@@ -12,15 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldClient.class)
 public class WorldClientMixin {
-    @Unique
-    private Waila wailaAddon;
-
     @Inject(method = "tick", at = @At("TAIL"))
     private void tick(CallbackInfo ci) {
-        if (this.wailaAddon == null) {
-            this.wailaAddon = new Waila();
-            this.wailaAddon.load();
-        }
         DataAccessorCommon.instance = new DataAccessorCommon();
         WailaTickHandler.instance().tickClient();
     }

@@ -28,9 +28,11 @@ public class RayTracing {
     private RaycastCollision target = mc.objectMouseOver;
 
     public void fire() {
-        if (target != null &&
-                target.isEntity()
-                && !shouldHidePlayer(mc.objectMouseOver.getEntityHit())) {
+        if (target != null
+//                &&
+//                target.isEntity()
+//                && !shouldHidePlayer(mc.objectMouseOver.getEntityHit())
+        ) {
             this.target = mc.objectMouseOver;
             return;
         }
@@ -66,7 +68,7 @@ public class RayTracing {
     }
 
     public Entity getTargetEntity() {
-        return this.target.isEntity() ? this.getIdentifierEntity()
+        return this.target != null && this.target.isEntity() ? this.getIdentifierEntity()
                 : null;
     }
 

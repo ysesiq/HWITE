@@ -1,7 +1,9 @@
 package mcp.mobius.waila.addons.vanillamc;
 
+import java.util.Collections;
 import java.util.List;
 
+import moddedmite.waila.config.WailaConfig;
 import net.minecraft.*;
 import net.minecraft.ServerPlayer;
 import net.minecraft.Block;
@@ -12,6 +14,8 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.SpecialChars;
 import mcp.mobius.waila.api.impl.ModuleRegistrar;
 import mcp.mobius.waila.cbcore.LangUtil;
+
+import static mcp.mobius.waila.api.SpecialChars.DGRAY;
 
 public class HUDHandlerVanilla implements IWailaDataProvider {
 
@@ -138,7 +142,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         Block block = accessor.getBlock();
         /* Crops */
         boolean iscrop = crops.getClass().isInstance(block); // Done to cover all inheriting mods
-        if (config.getConfig("general.showcrop"))
+        if (WailaConfig.showcrop.getBooleanValue())
             if (iscrop || block == melonStem || block == pumpkinStem || block == carrot || block == potato) {
                 float growthValue = (accessor.getMetadata() / 7.0F) * 100.0F;
                 if (growthValue < 100.0)
@@ -151,7 +155,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
                 return currenttip;
             }
 
-        if (block == cocoa && config.getConfig("general.showcrop")) {
+        if (block == cocoa && WailaConfig.showcrop.getBooleanValue()) {
 
             float growthValue = ((accessor.getMetadata() >> 2) / 2.0F) * 100.0F;
             if (growthValue < 100.0)
@@ -164,7 +168,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
             return currenttip;
         }
 
-        if (block == netherwart && config.getConfig("general.showcrop")) {
+        if (block == netherwart && WailaConfig.showcrop.getBooleanValue()) {
             float growthValue = (accessor.getMetadata() / 3.0F) * 100.0F;
             if (growthValue < 100.0)
                 currenttip.add(String.format("%s : %.0f %%", LangUtil.translateG("hud.msg.growth"), growthValue));
@@ -176,33 +180,33 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
             return currenttip;
         }
 
-        if (config.getConfig("vanilla.leverstate")) if (block == lever) {
+        if (WailaConfig.leverstate.getBooleanValue()) if (block == lever) {
             String redstoneOn = (accessor.getMetadata() & 8) == 0 ? LangUtil.translateG("hud.msg.off")
                     : LangUtil.translateG("hud.msg.on");
             currenttip.add(String.format("%s : %s", LangUtil.translateG("hud.msg.state"), redstoneOn));
             return currenttip;
         }
 
-        if (config.getConfig("vanilla.repeater")) if ((block == repeaterIdle) || (block == repeaterActv)) {
+        if (WailaConfig.repeater.getBooleanValue()) if ((block == repeaterIdle) || (block == repeaterActv)) {
             int tick = (accessor.getMetadata() >> 2) + 1;
             if (tick == 1) currenttip.add(String.format("%s : %s tick", LangUtil.translateG("hud.msg.delay"), tick));
             else currenttip.add(String.format("%s : %s ticks", LangUtil.translateG("hud.msg.delay"), tick));
             return currenttip;
         }
 
-        if (config.getConfig("vanilla.comparator")) if ((block == comparatorIdl) || (block == comparatorAct)) {
+        if (WailaConfig.comparator.getBooleanValue()) if ((block == comparatorIdl) || (block == comparatorAct)) {
             String mode = ((accessor.getMetadata() >> 2) & 1) == 0 ? LangUtil.translateG("hud.msg.comparator")
                     : LangUtil.translateG("hud.msg.substractor");
             currenttip.add("Mode : " + mode);
             return currenttip;
         }
 
-        if (config.getConfig("vanilla.redstone")) if (block == redstone) {
+        if (WailaConfig.redstone.getBooleanValue()) if (block == redstone) {
             currenttip.add(String.format("%s : %s", LangUtil.translateG("hud.msg.power"), accessor.getMetadata()));
             return currenttip;
         }
 
-        return currenttip;
+        return Collections.singletonList(DGRAY + currenttip);
     }
 
     @Override
@@ -243,7 +247,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         ModuleRegistrar.instance().registerStackProvider(provider, anvil.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, sapling.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, BlockSlab.class);
-        ModuleRegistrar.instance().registerStackProvider(provider, BlockWoodSlab.class);
+//        ModuleRegistrar.instance().registerStackProvider(provider, BlockWoodSlab.class);
 
         ModuleRegistrar.instance().registerHeadProvider(provider, mobSpawner.getClass());
         ModuleRegistrar.instance().registerHeadProvider(provider, melonStem.getClass());

@@ -16,6 +16,7 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
     public Block block;
     public int blockID;
     public String blockResource;
+    public String blockUnlocalizedName;
     public int metadata;
     public TileEntity tileEntity;
     public Entity entity;
@@ -41,9 +42,11 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
             this.metadata = world.getBlockMetadata(_mop.block_hit_x, _mop.block_hit_y, _mop.block_hit_z);
             this.tileEntity = world.getBlockTileEntity(_mop.block_hit_x, _mop.block_hit_y, _mop.block_hit_z);
             this.entity = null;
-            if (this.block != null)
+            if (this.block != null) {
                 this.blockID = this.block.blockID;
 //            this.blockResource = GameData.getBlockRegistry().getNameForObject(this.block);
+                this.blockUnlocalizedName = this.block.getUnlocalizedName();
+            }
             try {
                 this.stack = new ItemStack(this.block, 1, this.metadata);
             } catch (Exception ignored) {}
@@ -181,7 +184,7 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
 
     @Override
     public EnumDirection getSide() {
-        return EnumDirection.DOWN;
+        return mop.face_hit.getNormal();
     }
 
     @Override
@@ -200,5 +203,10 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
     @Override
     public String getBlockQualifiedName() {
         return this.blockResource;
+    }
+
+    @Override
+    public String getBlockUnlocalizedName() {
+        return this.blockUnlocalizedName;
     }
 }

@@ -1,23 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "hwite",
+  "id": "waila",
   "version": "${version}",
   "depends": {
-    "fishmodloader": ">=3.3.2",
+    "fishmodloader": ">=3.2.0",
     "many-lib": ">=2.2.0"
   },
   "recommends": {
     "emi": ">=1.0.4"
   },
   "environment": "*",
-  "name": "Here's What Is Too Easy",
-  "description": "那天,你终于知道你面前是什么玩意了",
+  "name": "Waila",
+  "description": "All your data are belong to us. Fork from GTNH-Waila",
   "authors": [
-    "Xy_Lose",
-    "Debris"
-  ],
-  "contributors": [
-    "Huix"
+    "ProfMobius",
+    "Xy_Lose"
   ],
   "License": "MIT",
   "icon": "assets/minecraft/textures/hwite_icon.png",

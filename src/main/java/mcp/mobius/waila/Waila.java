@@ -42,6 +42,7 @@ public class Waila implements ModInitializer {
     public void load() {
         instance = new Waila();
         proxy = new ProxyClient();
+        proxy.registerMods();
         proxy.registerHandlers();
         OverlayConfig.updateColors();
     }

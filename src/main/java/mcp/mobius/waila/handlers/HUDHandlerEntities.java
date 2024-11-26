@@ -8,6 +8,7 @@ import static mcp.mobius.waila.api.SpecialChars.getRenderString;
 
 import java.util.List;
 
+import moddedmite.waila.config.WailaConfig;
 import net.minecraft.Entity;
 import net.minecraft.EntityLivingBase;
 import net.minecraft.ServerPlayer;
@@ -33,7 +34,7 @@ public class HUDHandlerEntities implements IWailaEntityProvider {
     public List<String> getWailaHead(Entity entity, List<String> currenttip, IWailaEntityAccessor accessor,
             IWailaConfigHandler config) {
         try {
-            currenttip.add(WHITE + ((IEntity) entity).getNamespace());
+            currenttip.add(WHITE + entity.getEntityName());
         } catch (Exception e) {
             currenttip.add(WHITE + "Unknown");
         }
@@ -43,7 +44,7 @@ public class HUDHandlerEntities implements IWailaEntityProvider {
     @Override
     public List<String> getWailaBody(Entity entity, List<String> currenttip, IWailaEntityAccessor accessor,
             IWailaConfigHandler config) {
-        if (!config.getConfig("general.showhp")) return currenttip;
+        if (!WailaConfig.showhp.getBooleanValue()) return currenttip;
 
         if (entity instanceof EntityLivingBase) {
 

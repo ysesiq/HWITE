@@ -24,6 +24,8 @@ public interface IWailaDataAccessor {
 
     String getBlockQualifiedName();
 
+    String getBlockUnlocalizedName();
+
     int getMetadata();
 
     TileEntity getTileEntity();

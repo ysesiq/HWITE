@@ -21,8 +21,8 @@ public class ProxyServer {
         HUDHandlerVanilla.register();
         HUDHandlerFurnace.register();
 
-            HUDHandlerFMP.register();
-            DecoratorFMP.register();
+        HUDHandlerFMP.register();
+        DecoratorFMP.register();
     }
 
     public void registerIMCs() {
