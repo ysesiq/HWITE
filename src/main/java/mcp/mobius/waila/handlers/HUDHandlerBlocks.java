@@ -42,13 +42,13 @@ public class HUDHandlerBlocks implements IWailaDataProvider {
 
         if (currenttip.isEmpty()) currenttip.add("< Unnamed >");
         else {
-            if (WailaConfig.CFG_WAILA_METADATA.getBooleanValue()) {
+            if (WailaConfig.metadata.getBooleanValue()) {
                 currenttip.add(
                         String.format(
-                                DGRAY + ITALIC + "[%d:%d] | %s",
+                                ITALIC + "[%d:%d] | %s",
                                 accessor.getBlockID(),
                                 accessor.getMetadata(),
-                                accessor.getBlockUnlocalizedName()));
+                                accessor.getBlockQualifiedName()));
             }
         }
         return currenttip;

@@ -3,6 +3,8 @@ package mcp.mobius.waila.addons.vanillamc;
 import java.util.Collections;
 import java.util.List;
 
+import au.com.bytecode.opencsv.CSVParser;
+import mcp.mobius.waila.Waila;
 import moddedmite.waila.config.WailaConfig;
 import net.minecraft.*;
 import net.minecraft.ServerPlayer;
@@ -35,14 +37,12 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
     static Block cocoa = Block.cocoaPlant;
     static Block netherwart = Block.netherStalk;
     static Block silverfish = Block.silverfish;
-//    static Block doubleplant = Block.double_plant;
     static Block leave = Block.leaves;
-//    static Block leave2 = Block.leaves2;
     static Block log = Block.wood;
-//    static Block log2 = Block.log2;
     static Block quartz = Block.blockNetherQuartz;
     static Block anvil = Block.anvil;
     static Block sapling = Block.sapling;
+    static Block skull = Block.skull;
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -61,15 +61,6 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
         if (block == redstone) {
             return new ItemStack(Item.redstone);
         }
-
-//        if (block == doubleplant && (accessor.getMetadata() & 8) != 0) {
-//            int x = accessor.getPosition().blockX;
-//            int y = accessor.getPosition().blockY - 1;
-//            int z = accessor.getPosition().blockZ;
-//            int meta = accessor.getWorld().getBlockMetadata(x, y, z);
-//
-//            return new ItemStack(doubleplant, 0, meta);
-//        }
 
         if (block instanceof BlockRedstoneOre) {
             return new ItemStack(Block.oreRedstone);
@@ -140,6 +131,7 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
             IWailaConfigHandler config) {
         Block block = accessor.getBlock();
+        String skull2;
         /* Crops */
         boolean iscrop = crops.getClass().isInstance(block); // Done to cover all inheriting mods
         if (WailaConfig.showcrop.getBooleanValue())
@@ -206,7 +198,26 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
             return currenttip;
         }
 
-        return Collections.singletonList(DGRAY + currenttip);
+        if (WailaConfig.spawnertype.getBooleanValue() && block == mobSpawner && (accessor.getTileEntity() instanceof TileEntityMobSpawner)) {
+            currenttip.add(String.format("Type: %s", ((TileEntityMobSpawner) accessor.getTileEntity()).getSpawnerLogic().getEntityNameToSpawn()));
+        }
+
+        if (WailaConfig.skull.getBooleanValue() && block == skull && (accessor.getTileEntity() instanceof TileEntitySkull) && Waila.instance.serverPresent) {
+            NBTTagCompound tag = accessor.getNBTData();
+            byte type = tag.getByte("SkullType");
+            skull2 = switch (type) {
+                case 0 -> StatCollector.translateToLocal("item.skull.skeleton.name");
+                case 1 -> StatCollector.translateToLocal("item.skull.wither.name");
+                case 2 -> StatCollector.translateToLocal("item.skull.zombie.name");
+                case 3 -> String.format(StatCollector.translateToLocal("item.skull.player.name"), tag.getString("ExtraType"));
+                case 4 -> StatCollector.translateToLocal("item.skull.creeper.name");
+                case 5 -> StatCollector.translateToLocal("item.skull.infused.name");
+                default -> skull.unlocalizedName;
+            };
+            currenttip.add(skull2);
+        }
+
+        return currenttip;
     }
 
     @Override
@@ -223,31 +234,18 @@ public class HUDHandlerVanilla implements IWailaDataProvider {
     }
 
     public static void register() {
-//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.spawntype");
-//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.leverstate");
-//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.repeater");
-//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.comparator");
-//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.redstone");
-//        ModuleRegistrar.instance().addConfig("VanillaMC", "vanilla.silverfish");
-//        ModuleRegistrar.instance().addConfigRemote("VanillaMC", "vanilla.jukebox");
-//        ModuleRegistrar.instance().addConfigRemote("VanillaMC", "vanilla.show_invisible_players");
-
         IWailaDataProvider provider = new HUDHandlerVanilla();
 
         ModuleRegistrar.instance().registerStackProvider(provider, silverfish.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, redstone.getClass());
-//        ModuleRegistrar.instance().registerStackProvider(provider, doubleplant.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, BlockRedstoneOre.class);
         ModuleRegistrar.instance().registerStackProvider(provider, crops.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, leave.getClass());
-//        ModuleRegistrar.instance().registerStackProvider(provider, leave2.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, log.getClass());
-//        ModuleRegistrar.instance().registerStackProvider(provider, log2.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, quartz.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, anvil.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, sapling.getClass());
         ModuleRegistrar.instance().registerStackProvider(provider, BlockSlab.class);
-//        ModuleRegistrar.instance().registerStackProvider(provider, BlockWoodSlab.class);
 
         ModuleRegistrar.instance().registerHeadProvider(provider, mobSpawner.getClass());
         ModuleRegistrar.instance().registerHeadProvider(provider, melonStem.getClass());

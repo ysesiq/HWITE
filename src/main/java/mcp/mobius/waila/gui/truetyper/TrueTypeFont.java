@@ -204,7 +204,7 @@ public class TrueTypeFont {
                 if (i < 256) { // standard characters
                     charArray[i] = newIntObject;
                 } else { // custom characters
-                    customChars.put(new Character(ch), newIntObject);
+                    customChars.put(Character.valueOf(ch), newIntObject);
                 }
 
                 fontImage = null;
@@ -254,7 +254,7 @@ public class TrueTypeFont {
             if (currentChar < 256) {
                 floatObject = charArray[currentChar];
             } else {
-                floatObject = (FloatObject) customChars.get(new Character((char) currentChar));
+                floatObject = (FloatObject) customChars.get(Character.valueOf((char) currentChar));
             }
 
             if (floatObject != null) {
@@ -319,7 +319,7 @@ public class TrueTypeFont {
                     if (charCurrent < 256) {
                         floatObject = charArray[charCurrent];
                     } else {
-                        floatObject = (FloatObject) customChars.get(new Character((char) charCurrent));
+                        floatObject = (FloatObject) customChars.get(Character.valueOf((char) charCurrent));
                     }
                     totalwidth += floatObject.width - correctL;
                 }
@@ -343,7 +343,7 @@ public class TrueTypeFont {
             if (charCurrent < 256) {
                 floatObject = charArray[charCurrent];
             } else {
-                floatObject = (FloatObject) customChars.get(new Character((char) charCurrent));
+                floatObject = (FloatObject) customChars.get(Character.valueOf((char) charCurrent));
             }
 
             if (floatObject != null) {
@@ -358,7 +358,7 @@ public class TrueTypeFont {
                             if (charCurrent < 256) {
                                 floatObject = charArray[charCurrent];
                             } else {
-                                floatObject = (FloatObject) customChars.get(new Character((char) charCurrent));
+                                floatObject = (FloatObject) customChars.get(Character.valueOf((char) charCurrent));
                             }
                             totalwidth += floatObject.width - correctL;
                         }

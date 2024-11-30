@@ -47,17 +47,17 @@ public class RayTracing {
         if (Minecraft.getMinecraft().objectMouseOver != null) {
             return mc.thePlayer.getReach(Minecraft.getMinecraft().objectMouseOver.getBlockHit(), Minecraft.getMinecraft().objectMouseOver.world.getBlockMetadata(Minecraft.getMinecraft().objectMouseOver.block_hit_x, Minecraft.getMinecraft().objectMouseOver.block_hit_y, Minecraft.getMinecraft().objectMouseOver.block_hit_z));
         }
-        return 2.75F;
+        return 5.0F;
     }
 
-    private static boolean shouldHidePlayer(Entity targetEnt) {
-        // Check if entity is player with invisibility effect
-        if (targetEnt instanceof EntityPlayer thePlayer) {
-            boolean shouldHidePlayerSetting = !WailaConfig.showInvisiblePlayers.getBooleanValue();
-            return shouldHidePlayerSetting && thePlayer.isInvisible();
-        }
-        return false;
-    }
+//    private static boolean shouldHidePlayer(Entity targetEnt) {
+//        // Check if entity is player with invisibility effect
+//        if (targetEnt instanceof EntityPlayer thePlayer) {
+//            boolean shouldHidePlayerSetting = !WailaConfig.showInvisiblePlayers.getBooleanValue();
+//            return shouldHidePlayerSetting && thePlayer.isInvisible();
+//        }
+//        return false;
+//    }
 
     public RaycastCollision getTarget() {
         return this.target;
@@ -77,7 +77,7 @@ public class RayTracing {
         Vec3 vec31 = entity.getLook(par3);
         Vec3 vec32 = vec3.addVector(vec31.xCoord * par1, vec31.yCoord * par1, vec31.zCoord * par1);
 
-        if (WailaConfig.CFG_WAILA_LIQUID.getBooleanValue())
+        if (WailaConfig.liquid.getBooleanValue())
             return entity.worldObj.getBlockCollisionForSelection(vec3, vec32, true);
         else return entity.worldObj.getBlockCollisionForSelection(vec3, vec32, false);
     }

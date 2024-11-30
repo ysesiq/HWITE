@@ -218,8 +218,8 @@ public class Tooltip {
         h = Math.max(paddingH, this.getRenderableTotalHeight() + 8);
 
         Dimension size = DisplayUtil.displaySize();
-        x = ((int) (size.width / OverlayConfig.scale) - w - 1) * pos.x / 10000;
-        y = ((int) (size.height / OverlayConfig.scale) - h - 1) * pos.y / 10000;
+        x = ((int) (size.width / OverlayConfig.scale) - w - 1) * pos.x / 100;
+        y = ((int) (size.height / OverlayConfig.scale) - h - 1) * pos.y / 100;
 
         ty = (h - this.getRenderableTotalHeight()) / 2 + 1;
     }

@@ -91,7 +91,7 @@ public class WailaTickHandler {
                             currenttipTail,
                             Layout.FOOTER);
 
-                    if (WailaConfig.CFG_WAILA_SHIFTBLOCK.getBooleanValue()
+                    if (WailaConfig.shiftblock.getBooleanValue()
                             && !currenttipBody.isEmpty()
                             && !accessor.getPlayer().isSneaking()) {
                         currenttipBody.clear();
@@ -142,7 +142,7 @@ public class WailaTickHandler {
                             currenttipTail,
                             Layout.FOOTER);
 
-                    if (WailaConfig.CFG_WAILA_SHIFTENTS.getBooleanValue()
+                    if (WailaConfig.shiftents.getBooleanValue()
                             && !currenttipBody.isEmpty()
                             && !accessor.getPlayer().isSneaking()) {
                         currenttipBody.clear();

@@ -1,5 +1,6 @@
 package mcp.mobius.waila.api.impl;
 
+import mcp.mobius.waila.utils.ModIdentification;
 import net.minecraft.*;
 
 import mcp.mobius.waila.api.IWailaCommonAccessor;
@@ -44,7 +45,7 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
             this.entity = null;
             if (this.block != null) {
                 this.blockID = this.block.blockID;
-//            this.blockResource = GameData.getBlockRegistry().getNameForObject(this.block);
+                this.blockResource = this.getMod() + ":" + this.getBlockUnlocalizedName();
                 this.blockUnlocalizedName = this.block.getUnlocalizedName();
             }
             try {
@@ -208,5 +209,10 @@ public class DataAccessorCommon implements IWailaCommonAccessor, IWailaDataAcces
     @Override
     public String getBlockUnlocalizedName() {
         return this.blockUnlocalizedName;
+    }
+
+    @Override
+    public String getMod() {
+        return ModIdentification.nameFromStack(stack);
     }
 }

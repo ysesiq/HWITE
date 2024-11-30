@@ -9,11 +9,7 @@ import static mcp.mobius.waila.api.SpecialChars.getRenderString;
 import java.util.List;
 
 import moddedmite.waila.config.WailaConfig;
-import net.minecraft.Entity;
-import net.minecraft.EntityLivingBase;
-import net.minecraft.ServerPlayer;
-import net.minecraft.NBTTagCompound;
-import net.minecraft.World;
+import net.minecraft.*;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaEntityAccessor;
@@ -90,10 +86,13 @@ public class HUDHandlerEntities implements IWailaEntityProvider {
 
     private static String getEntityMod(Entity entity) {
         String modName;
-        try {
-            modName = ((IEntity) entity).getNamespace();
-        } catch (NullPointerException e) {
-            modName = "Minecraft";
+        int id = EntityList.getEntityID(entity);
+        if (id <= 100 || id == 120 || id == 200) {
+            modName = BLUE + ITALIC + "Minecraft";
+        } else if (id >= 512 && id <= 540) {
+            modName = BLUE + ITALIC + "MITE";
+        } else {
+            modName = BLUE + ITALIC + ((IEntity) entity).getNamespace();
         }
         return modName;
     }

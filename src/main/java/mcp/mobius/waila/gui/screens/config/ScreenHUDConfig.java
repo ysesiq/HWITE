@@ -32,8 +32,8 @@ public class ScreenHUDConfig extends ScreenBase {
             super(parent);
             this.setGeometry(new WidgetGeometry(0.0, 0.0, 100.0, 100.0, CType.RELXY, CType.RELXY));
 
-            double picX = WailaConfig.posX.getIntegerValue() / 100.0;
-            double picY = WailaConfig.posY.getIntegerValue()/ 100.0;
+            double picX = WailaConfig.posX.getIntegerValue();
+            double picY = WailaConfig.posY.getIntegerValue();
             float picAlpha = WailaConfig.alpha.getIntegerValue() / 100.0f;
             scale = (float) (WailaConfig.scale.getDoubleValue() / 100.0f);
 

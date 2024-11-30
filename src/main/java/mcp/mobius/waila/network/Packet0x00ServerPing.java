@@ -51,7 +51,7 @@ public class Packet0x00ServerPing {
 //                String key = (String)i$.next();
 //                if (WailaConfig.CATEGORY_SERVER.getBooleanValue()) {
 //                    Packet.writeString(key, outputStream);
-                    outputStream.writeBoolean(WailaConfig.CATEGORY_SERVER.getBooleanValue());
+                    outputStream.writeBoolean(false);
 //                }
 //            }
 

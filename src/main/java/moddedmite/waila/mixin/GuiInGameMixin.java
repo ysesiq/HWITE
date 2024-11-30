@@ -1,6 +1,5 @@
 package moddedmite.waila.mixin;
 
-import mcp.mobius.waila.Waila;
 import mcp.mobius.waila.overlay.OverlayRenderer;
 import net.minecraft.GuiIngame;
 import net.minecraft.Minecraft;

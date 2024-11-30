@@ -70,11 +70,9 @@ public class Waila implements ModInitializer {
     }
 
     public void onInitialize() {
-        log.info("Hwite Version 2.0.0 beta Initializing...");
         MITEEvents.MITE_EVENT_BUS.register(new WailaEventFish());
-        WailaConfig.init();
         WailaConfig.getInstance().load();
-        ModsScreen.getInstance().addConfig(WailaConfig.getInstance());
+        ConfigManager.getInstance().registerConfig(WailaConfig.getInstance());
     }
 }
 //@Instance("Waila")

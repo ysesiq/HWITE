@@ -30,8 +30,7 @@ public class OverlayRenderer {
                 && !mc.gameSettings.keyBindPlayerList.isPressed()
                 && WailaConfig.showTooltip.getBooleanValue()
                 && RayTracing.instance().getTarget() != null
-                && rc != null
-        ))
+                && rc != null))
             return;
 
         if (rc.isBlock()
@@ -45,6 +44,9 @@ public class OverlayRenderer {
     }
 
     public void renderOverlay(Tooltip tooltip) {
+        if (Minecraft.getMinecraft().objectMouseOver != null) {
+            return;
+        }
 
         GL11.glPushMatrix();
         saveGLState();

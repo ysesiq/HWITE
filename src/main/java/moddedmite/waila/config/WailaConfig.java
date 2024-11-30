@@ -2,92 +2,148 @@ package moddedmite.waila.config;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import fi.dy.masa.malilib.config.ConfigTab;
 import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.options.*;
+import fi.dy.masa.malilib.gui.screen.DefaultConfigScreen;
 import fi.dy.masa.malilib.util.JsonUtils;
+import fi.dy.masa.malilib.util.KeyCodes;
 import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.overlay.OverlayConfig;
+import moddedmite.waila.handlers.emi.EMIHandler;
+import net.minecraft.GuiScreen;
+import net.minecraft.Minecraft;
+import net.xiaoyu233.fml.FishModLoader;
+import org.lwjgl.input.Keyboard;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class WailaConfig extends SimpleConfigs implements IWailaConfigHandler {
-    public static final ConfigInteger posX = new ConfigInteger("posX", 5000);
-    public static final ConfigInteger posY = new ConfigInteger("posY", 100);
-    public static final ConfigInteger alpha = new ConfigInteger("alpha", 80);
-    public static final ConfigColor bgcolor = new ConfigColor("bgcolor", "#FF10010F");
-    public static final ConfigColor gradient1 = new ConfigColor("gradient1", "#FF5001FE");
-    public static final ConfigColor gradient2 = new ConfigColor("gradient2", "#FF28017E");
-    public static final ConfigColor fontcolor = new ConfigColor("fontcolor", "#FFFFFF");
-    public static final ConfigDouble scale = new ConfigDouble("scale", 1, 0.2, 2);
 
     public static final ConfigBoolean showTooltip = new ConfigBoolean("showTooltip", true);
     public static final ConfigBoolean showEnts = new ConfigBoolean("showEnts", true);
-    public static final ConfigBoolean showSpawnerType = new ConfigBoolean("showSpawnerType", true, "+ for both server and client enabled, - for client only\\n [-]Show mobspawner types");
-    public static final ConfigBoolean leverstate = new ConfigBoolean("leverstate", true);
-    public static final ConfigBoolean repeater = new ConfigBoolean("repeater", true);
-    public static final ConfigBoolean comparator = new ConfigBoolean("comparator", true);
-    public static final ConfigBoolean redstone = new ConfigBoolean("redstone", true);
-    public static final ConfigBoolean showInvisiblePlayers = new ConfigBoolean("showInvisiblePlayers", true);
-    public static final ConfigBoolean backgroundTransparency = new ConfigBoolean("backgroundTransparency", false);
-    public static final ConfigHotkey keyBind = new ConfigHotkey("KeyBind");
-    public static final ConfigBoolean CATEGORY_SERVER = new ConfigBoolean("CATEGORY_SERVER", false);
-    public static final ConfigBoolean CFG_WAILA_METADATA = new ConfigBoolean("CFG_WAILA_METADATA", false);
-    public static final ConfigBoolean CFG_WAILA_SHIFTBLOCK = new ConfigBoolean("CFG_WAILA_SHIFTBLOCK", false);
-    public static final ConfigBoolean CFG_WAILA_SHIFTENTS = new ConfigBoolean("CFG_WAILA_SHIFTENTS", false);
-    public static final ConfigBoolean CFG_WAILA_LIQUID = new ConfigBoolean("CFG_WAILA_LIQUID", false);
+    public static final ConfigBoolean metadata = new ConfigBoolean("metadata", false);
+    public static final ConfigBoolean liquid = new ConfigBoolean("liquid", false);
+    public static final ConfigBoolean shiftblock = new ConfigBoolean("shiftblock", false);
+    public static final ConfigBoolean shiftents = new ConfigBoolean("shiftents", false);
+
     public static final ConfigBoolean showhp = new ConfigBoolean("showhp", true);
     public static final ConfigBoolean showcrop = new ConfigBoolean("showcrop", true);
+    public static final ConfigBoolean spawnertype = new ConfigBoolean("spawnertype", true);
+    public static final ConfigBoolean repeater = new ConfigBoolean("repeater", true);
+    public static final ConfigBoolean redstone = new ConfigBoolean("redstone", true);
+    public static final ConfigBoolean comparator = new ConfigBoolean("comparator", true);
+    public static final ConfigBoolean leverstate = new ConfigBoolean("leverstate", true);
+    public static final ConfigBoolean skull = new ConfigBoolean("skull", true);
+
+    public static final ConfigInteger posX = new ConfigInteger("posX", 50, 0, 100, true, "");
+    public static final ConfigInteger posY = new ConfigInteger("posY", 1, 0, 100, true, "");
+    public static final ConfigInteger alpha = new ConfigInteger("alpha", 80, 0, 100, true, "");
+    public static final ConfigColor bgcolor = new ConfigColor("bgcolor", "#FF100010");
+    public static final ConfigColor gradient1 = new ConfigColor("gradient1", "#FF5000FF");
+    public static final ConfigColor gradient2 = new ConfigColor("gradient2", "#FF28007F");
+    public static final ConfigColor fontcolor = new ConfigColor("fontcolor", "#FFA0A0A0");
+    public static final ConfigDouble scale = new ConfigDouble("scale", 1, 0.2, 2, true, "");
+
+    public static final ConfigHotkey wailaconfig = new ConfigHotkey("wailaconfig", Keyboard.KEY_NUMPAD0);
+    public static final ConfigHotkey wailadisplay = new ConfigHotkey("wailadisplay", Keyboard.KEY_NUMPAD1);
+    public static final ConfigHotkey keyliquid = new ConfigHotkey("keyliquid", Keyboard.KEY_NUMPAD2);
+    public static final ConfigHotkey recipe = new ConfigHotkey("recipe", Keyboard.KEY_NUMPAD3);
+    public static final ConfigHotkey usage = new ConfigHotkey("usage", Keyboard.KEY_NUMPAD4);
 
     private static WailaConfig Instance;
-    public static List<ConfigBase> show;
-    public static List<ConfigBase> pos;
-    public static List<ConfigBase> key;
+    public static List<ConfigBase> main;
+    public static List<ConfigBase> general;
+    public static List<ConfigBase> screen;
+    public static List<ConfigHotkey> key;
 
-    public WailaConfig(String name, List<ConfigHotkey> hotkeys, List<ConfigBase> values) {
-        super(name, hotkeys, values);
+    public static final List<ConfigTab> tabs = new ArrayList<>();
+
+    public WailaConfig() {
+        super("Waila", key, main);
     }
 
-    public static void init() {
-        show = List.of(showTooltip, showSpawnerType, leverstate, repeater, comparator, redstone,
-                backgroundTransparency, CATEGORY_SERVER, CFG_WAILA_METADATA, showEnts, CFG_WAILA_SHIFTBLOCK, CFG_WAILA_SHIFTENTS, CFG_WAILA_LIQUID,
-                showhp, showcrop);
-        key = List.of(keyBind);
-        pos = List.of(posX, posY, alpha, bgcolor, gradient1, gradient2, fontcolor, scale);
+    static {
+        main = List.of(showTooltip, showEnts, metadata, liquid, shiftblock, shiftents);
+        general = List.of(showhp, showcrop, spawnertype, repeater, redstone, comparator, leverstate, skull);
+        screen = List.of(posX, posY, alpha, bgcolor, gradient1, gradient2, fontcolor, scale);
+        key = List.of(wailaconfig, wailadisplay, keyliquid, recipe, usage);
         ArrayList<ConfigBase> values = new ArrayList<>();
-        values.addAll(show);
-        values.addAll(pos);
+        values.addAll(general);
         values.addAll(key);
-        Instance = new WailaConfig("Waila", null, values);
+        tabs.add(new ConfigTab("waila.main", main));
+        tabs.add(new ConfigTab("waila.general", general));
+        tabs.add(new ConfigTab("waila.screen", screen));
+        tabs.add(new ConfigTab("waila.key", key));
+        Instance = new WailaConfig();
+
+        wailaconfig.getKeybind().setCallback((keyAction, iKeybind) -> {
+            Minecraft.getMinecraft().displayGuiScreen(getInstance().getConfigScreen(null));
+            return true;
+        });
+        wailadisplay.getKeybind().setCallback((keyAction, iKeybind) -> {
+            showTooltip.toggleBooleanValue();
+            return true;
+        });
+        keyliquid.getKeybind().setCallback((keyAction, iKeybind) -> {
+            liquid.toggleBooleanValue();
+            return true;
+        });
+
+        if (FishModLoader.hasMod("emi")) {
+            try {
+                recipe.getKeybind().setCallback(((keyAction, iKeybind) -> {
+                    dev.emi.emi.api.EmiApi.displayRecipes(Objects.requireNonNull(EMIHandler.updateEmiStack()));
+                    return true;
+                }));
+                usage.getKeybind().setCallback(((keyAction, iKeybind) -> {
+                    dev.emi.emi.api.EmiApi.displayUses(Objects.requireNonNull(EMIHandler.updateEmiStack()));
+                    return true;
+                }));
+            } catch (Exception ignored) {
+            }
+        }
+
+//        if (bgcolor.isModified() || fontcolor.isModified() || gradient1.isModified() || gradient2.isModified() ||
+//                scale.isModified() || alpha.isModified() || posX.isModified() || posY.isModified())
+    }
+
+    @Override
+    public List<ConfigTab> getConfigTabs() {
+        return tabs;
     }
 
     public static WailaConfig getInstance() {
         return Instance;
     }
 
-//    public void save() {
-//        JsonObject configRoot = new JsonObject();
-//        ConfigUtils.writeConfigBase(configRoot, "Values", show);
-//        JsonObject valuesRoot = JsonUtils.getNestedObject(configRoot, "Values", true);
-//        ConfigUtils.writeConfigBase(valuesRoot, "pos", pos);
-//        JsonUtils.writeJsonToFile(configRoot, getOptionsFile());
-//    }
-//
-//    public void load() {
-//        if (!getOptionsFile().exists()) {
-//            save();
-//            return;
-//        }
-//        JsonElement jsonElement = JsonUtils.parseJsonFile(getOptionsFile());
-//        if (jsonElement != null && jsonElement.isJsonObject()) {
-//            JsonObject obj = jsonElement.getAsJsonObject();
-//            ConfigUtils.readConfigBase(obj, "Values", show);
-//            JsonObject valuesRoot = JsonUtils.getNestedObject(obj, "Values", true);
-//            ConfigUtils.readConfigBase(valuesRoot, "pos", pos);
-//        }
-//    }
+    @Override
+    public void save() {
+        JsonObject root = new JsonObject();
+        ConfigUtils.writeConfigBase(root, "main", main);
+        ConfigUtils.writeConfigBase(root, "general", general);
+        ConfigUtils.writeConfigBase(root, "screen", screen);
+        ConfigUtils.writeConfigBase(root, "key", key);
+        JsonUtils.writeJsonToFile(root, this.optionsFile);
+        OverlayConfig.updateColors();
+    }
+
+    @Override
+    public void load() {
+        if (!this.optionsFile.exists()) {
+            this.save();
+        } else {
+            JsonElement jsonElement = JsonUtils.parseJsonFile(this.optionsFile);
+            if (jsonElement != null && jsonElement.isJsonObject()) {
+                JsonObject root = jsonElement.getAsJsonObject();
+                ConfigUtils.readConfigBase(root, "main", main);
+                ConfigUtils.readConfigBase(root, "general", general);
+                ConfigUtils.readConfigBase(root, "screen", screen);
+                ConfigUtils.readConfigBase(root, "key", key);
+            }
+        }
+    }
 
     @Override
     public Set<String> getModuleNames() {
@@ -96,7 +152,7 @@ public class WailaConfig extends SimpleConfigs implements IWailaConfigHandler {
 
     @Override
     public HashMap<String, String> getConfigKeys(String modName) {
-        return (HashMap<String, String>) keyBind.getKeybind();
+        return (HashMap<String, String>) wailaconfig.getKeybind();
     }
 
     @Override
